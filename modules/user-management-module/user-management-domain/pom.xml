@@ -5,15 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.sensilabs.projecthub</groupId>
-        <artifactId>modules</artifactId>
+        <artifactId>user-management-module</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>user-management-module</artifactId>
+    <artifactId>user-management-domain</artifactId>
     <version>${revision}</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>user-management-domain</module>
-        <module>user-management-infrastructure</module>
-        <module>user-management-rest</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>
