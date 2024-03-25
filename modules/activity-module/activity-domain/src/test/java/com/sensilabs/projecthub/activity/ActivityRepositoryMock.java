@@ -1,7 +1,6 @@
 package com.sensilabs.projecthub.activity;
 
 import com.sensilabs.projecthub.activity.model.Activity;
-import com.sensilabs.projecthub.activity.ActivityRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,3 +14,4 @@ public class ActivityRepositoryMock implements ActivityRepository{
         return activity;
     }
 }
+

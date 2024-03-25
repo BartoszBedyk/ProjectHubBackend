@@ -3,7 +3,7 @@ package com.sensilabs.projecthub.activity;
 import com.sensilabs.projecthub.activity.forms.ActivityForm;
 import com.sensilabs.projecthub.activity.model.Activity;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 
 public class ActivityServiceImpl implements ActivityService {
@@ -15,16 +15,16 @@ public class ActivityServiceImpl implements ActivityService {
         this.activityRepository = activityRepository;
     }
     @Override
-    public Activity save(ActivityForm form) {
-        Date currentDate = new Date();
+    public Activity save(ActivityForm form, String createdById) {
 
         Activity activity = Activity.builder()
                 .id(UUID.randomUUID().toString())
-                .createdById("TODO")
+                .createdById(createdById)
                 .type(form.getType())
-                .createdOn(currentDate)
+                .createdOn(Instant.now())
                 .params(form.getParams())
                 .build();
+
 
         return activityRepository.save(activity);
     }
