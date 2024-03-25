@@ -5,15 +5,25 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.sensilabs.projecthub</groupId>
-        <artifactId>commons</artifactId>
+        <artifactId>activity-module</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>rest</artifactId>
+
+    <artifactId>activity-infrastructure</artifactId>
     <version>${revision}</version>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>activity-domain</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>infrastructure</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
+
 </project>

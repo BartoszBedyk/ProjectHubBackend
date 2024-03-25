@@ -17,6 +17,7 @@
         <module>configuration</module>
         <module>modules</module>
         <module>application</module>
+        <module>modules/activity-module/activity-domain</module>
     </modules>
     <properties>
         <revision>1.0.1</revision>
