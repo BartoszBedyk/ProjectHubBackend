@@ -14,7 +14,5 @@ import java.util.Date;
 public class CreateUserForm {
     private String firstName;
     private String lastName;
-    private Date createdOn;
-
     // TODO dodać resztę atrybutów
 }

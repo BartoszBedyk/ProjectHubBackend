@@ -8,16 +8,16 @@ import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class DomainUserManagementService implements UserManagementService {
+public class UserManagementServiceImpl implements UserManagementService {
 
     private final UserManagementRepository userManagementRepository;
 
-    public DomainUserManagementService(UserManagementRepository userManagementRepository) {
+    public UserManagementServiceImpl(UserManagementRepository userManagementRepository) {
         this.userManagementRepository = userManagementRepository;
     }
 
@@ -28,7 +28,7 @@ public class DomainUserManagementService implements UserManagementService {
 
     @Override
     public Optional<User> get(String id) {
-        return userManagementRepository.findById(id);
+        return userManagementRepository.get(id);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DomainUserManagementService implements UserManagementService {
                 .id(UUID.randomUUID().toString())
                 .firstName(userRequest.getFirstName())
                 .lastName(userRequest.getLastName())
-                .createdOn(userRequest.getCreatedOn())
+                .createdOn(Instant.now())
                 .isBlocked(false)
                 .build();
         return userManagementRepository.save(user);
@@ -53,12 +53,16 @@ public class DomainUserManagementService implements UserManagementService {
 
     @Override
     public User block(String id) {
-        return userManagementRepository.block(id);
+        User user = get(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found!"));
+        user.setBlocked(true);
+        return userManagementRepository.save(user);
     }
 
     @Override
     public User unBlock(String id) {
-        return userManagementRepository.unBlock(id);
+        User user = get(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found!"));
+        user.setBlocked(false);
+        return userManagementRepository.save(user);
     }
 
     @Override
