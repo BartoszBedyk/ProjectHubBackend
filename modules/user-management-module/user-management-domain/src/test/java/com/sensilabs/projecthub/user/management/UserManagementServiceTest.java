@@ -19,7 +19,7 @@ public class UserManagementServiceTest {
     @Test
     void getTest() {
         User userSaved = service.save(new CreateUserForm("Kacper", "Koncki"));
-        Optional<User> userFound = service.get(userSaved.getId());
+        User userFound = service.get(userSaved.getId());
         Assertions.assertTrue(userFound.isPresent());
         Assertions.assertEquals(userFound.get().getFirstName(), "Kacper");
         Assertions.assertEquals(userFound.get().getLastName(), "Koncki");
@@ -31,6 +31,7 @@ public class UserManagementServiceTest {
         Instant currentDate = Instant.now();
         User user = service.save(new CreateUserForm("Kacper", "Koncki"));
         Instant dateAfterSave = Instant.now();
+        Assertions.assertNotNull(user.getId());
         Assertions.assertEquals(user.getFirstName(), "Kacper");
         Assertions.assertEquals(user.getLastName(), "Koncki");
         Assertions.assertTrue(currentDate.isBefore(user.getCreatedOn()));
@@ -64,7 +65,7 @@ public class UserManagementServiceTest {
     void deleteTest() {
         User user = service.save(new CreateUserForm("Kacper", "Koncki"));
         service.delete(user.getId());
-        Optional<User> userDeleted = service.get(user.getId());
-        Assertions.assertTrue(userDeleted.isEmpty());
+        User userDeleted = service.get(user.getId());
+        Assertions.assertTrue(userDeleted);
     }
 }
