@@ -15,18 +15,13 @@
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>activity-domain</artifactId>
-            <version>1.0.1</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
-            <artifactId>activity-infrastructure</artifactId>
-            <version>1.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>rest</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

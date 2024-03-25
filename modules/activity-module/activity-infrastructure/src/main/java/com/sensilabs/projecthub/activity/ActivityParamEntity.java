@@ -1,10 +1,15 @@
 package com.sensilabs.projecthub.activity;
 
-import com.sensilabs.projecthub.activity.ActivityEntity;
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.UUID;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "activity_param")
@@ -14,14 +19,13 @@ import java.util.UUID;
 @Getter
 @Builder
 public class ActivityParamEntity {
-    @Id
-    @Column(name = "activity_param_id")
-    private UUID id;
-
-    @ManyToOne
-    @JoinColumn(name = "activity_id", referencedColumnName = "id")
-    private ActivityEntity activity;
-
-    private String paramName;
-    private String paramValue;
+	@Id
+	@Column(name = "id")
+	private String id;
+	@ManyToOne
+	private ActivityEntity activity;
+	@Column(name = "name")
+	private String paramName;
+	@Column(name = "value")
+	private String paramValue;
 }

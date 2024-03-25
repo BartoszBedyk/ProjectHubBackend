@@ -1,15 +1,23 @@
 package com.sensilabs.projecthub.activity;
 
-import com.sensilabs.projecthub.activity.model.ActivityParam;
-import com.sensilabs.projecthub.activity.model.ActivityType;
-
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+
+import com.sensilabs.projecthub.activity.model.ActivityType;
 
 @NoArgsConstructor
 @AllArgsConstructor

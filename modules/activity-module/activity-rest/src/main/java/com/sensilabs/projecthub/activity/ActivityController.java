@@ -17,7 +17,7 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @PostMapping
-    public Activity saveActivity(@RequestBody CreateUserForm activity) {return activityService.save(activity);}
+//    @PostMapping
+//    public Activity saveActivity(@RequestBody CreateUserForm activity) {return activityService.save(activity);}
 
 }
