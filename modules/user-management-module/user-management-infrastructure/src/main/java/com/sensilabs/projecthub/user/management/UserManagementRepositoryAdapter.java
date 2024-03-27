@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class PostgresUserManagementRepository implements UserManagementRepository {
+public class UserManagementRepositoryAdapter implements UserManagementRepository {
 
     private final JpaUserManagementRepository userManagementRepository;
 
     @Autowired
-    public PostgresUserManagementRepository(JpaUserManagementRepository userManagementRepository) {
+    public UserManagementRepositoryAdapter(JpaUserManagementRepository userManagementRepository) {
         this.userManagementRepository = userManagementRepository;
     }
 
@@ -27,6 +27,11 @@ public class PostgresUserManagementRepository implements UserManagementRepositor
     public Optional<User> get(String id) {
         Optional<UserEntity> userEntity = userManagementRepository.findById(id);
         return userEntity.map(UserMapper::toUser);
+    }
+
+    @Override
+    public Optional<User> getNotDeleted(String id) {
+        return userManagementRepository.findByIdAndDeletedOnIsNull(id).map(UserMapper::toUser);
     }
 
     @Override

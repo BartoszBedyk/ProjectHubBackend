@@ -10,6 +10,7 @@ public interface UserManagementRepository {
 
     SearchResponse<User> search(SearchForm form);
     Optional<User> get(String id);
+    Optional<User> getNotDeleted(String id);
     User save(User user);
     User block(String id);
     User unBlock(String id);

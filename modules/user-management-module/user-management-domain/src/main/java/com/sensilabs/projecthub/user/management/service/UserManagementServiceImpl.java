@@ -26,6 +26,10 @@ public class UserManagementServiceImpl implements UserManagementService {
 		return null;
 	}
 
+	private User getOrThrow(String id) {
+		return userManagementRepository.getNotDeleted(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found!"));
+	}
+
 	@Override
 	public User get(String id) {
 		return getOrThrow(id);
@@ -45,7 +49,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 	@Override
 	public User update(EditUserForm userRequest) {
-		User user = getOrThrow(id);
+		User user = getOrThrow(userRequest.getId());
 		user.setFirstName(userRequest.getFirstName());
 		user.setLastName(userRequest.getLastName());
 		return userManagementRepository.save(user);
@@ -67,10 +71,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 	@Override
 	public void delete(String id) {
-		userManagementRepository.delete(id);
-	}
-
-	private User getOrThrow(String id) {
-		return userManagementRepository.get(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found!"));
+		User user = getOrThrow(id);
+		user.setDeletedOn(Instant.now());
+		userManagementRepository.save(user);
 	}
 }

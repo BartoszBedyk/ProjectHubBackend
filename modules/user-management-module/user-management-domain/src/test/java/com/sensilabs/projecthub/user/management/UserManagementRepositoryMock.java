@@ -22,6 +22,15 @@ public class UserManagementRepositoryMock implements UserManagementRepository {
     }
 
     @Override
+    public Optional<User> getNotDeleted(String id) {
+        Optional<User> user= Optional.ofNullable(mockDB.get(id));
+        if(user.isPresent() && user.get().getDeletedOn() == null) {
+            return user;
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public User save(User user) {
         mockDB.put(user.getId(), user);
         return user;

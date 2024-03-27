@@ -18,6 +18,7 @@ public class User {
     private String firstName;
     private String lastName;
     private Instant createdOn;
+    private Instant deletedOn;
     private boolean isBlocked;
 
     // TODO reszta atrybutów

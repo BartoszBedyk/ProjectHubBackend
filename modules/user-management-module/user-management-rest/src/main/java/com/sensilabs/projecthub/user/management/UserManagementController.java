@@ -24,10 +24,10 @@ public class UserManagementController {
         return null;
     }
 
-    @GetMapping("{/id}")
-    public Optional<User> get(@PathVariable("id") String id) {
-        return userManagementService.get(id);
-    }
+//    @GetMapping("/{id}")
+//    public Optional<User> get(@PathVariable("id") String id) {
+//        return userManagementService.get(id);
+//    }
 
     @PostMapping
     public User save(@RequestBody CreateUserForm createUserForm) {
@@ -41,7 +41,7 @@ public class UserManagementController {
 
     // TODO blocked i unBlocked
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/" + "{id}")
     public void delete(@PathVariable("id") String id) {
         userManagementService.delete(id);
     }

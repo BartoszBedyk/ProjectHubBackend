@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "mt_user")
+@Table(name = "user")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,6 +26,9 @@ public class UserEntity {
     @Column(name = "created_on")
     private Instant createdOn;
 
+    @Column(name = "deleted_on")
+    private Instant deletedOn;
+
     @Column(name = "is_blocked")
     private boolean isBlocked;
 
@@ -34,6 +37,7 @@ public class UserEntity {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.createdOn = user.getCreatedOn();
+        this.deletedOn = user.getDeletedOn();
         this.isBlocked = user.isBlocked();
     }
 }

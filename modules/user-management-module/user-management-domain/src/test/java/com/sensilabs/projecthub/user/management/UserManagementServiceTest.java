@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.util.Optional;
 
 public class UserManagementServiceTest {
 
@@ -20,10 +19,9 @@ public class UserManagementServiceTest {
     void getTest() {
         User userSaved = service.save(new CreateUserForm("Kacper", "Koncki"));
         User userFound = service.get(userSaved.getId());
-        Assertions.assertTrue(userFound.isPresent());
-        Assertions.assertEquals(userFound.get().getFirstName(), "Kacper");
-        Assertions.assertEquals(userFound.get().getLastName(), "Koncki");
-
+        Assertions.assertEquals(userSaved.getId(), userFound.getId());
+        Assertions.assertEquals(userFound.getFirstName(), "Kacper");
+        Assertions.assertEquals(userFound.getLastName(), "Koncki");
     }
 
     @Test
@@ -40,10 +38,14 @@ public class UserManagementServiceTest {
 
     @Test
     void updateTest() {
+        Instant currentDate = Instant.now();
         User userSaved = service.save(new CreateUserForm("Kacper", "Koncki"));
         userSaved = service.update(new EditUserForm(userSaved.getId(), "Andrzej", "Kowalski"));
+        Instant dateAfterUpdate = Instant.now();
         Assertions.assertEquals(userSaved.getFirstName(), "Andrzej");
         Assertions.assertEquals(userSaved.getLastName(), "Kowalski");
+        Assertions.assertTrue(currentDate.isBefore(userSaved.getCreatedOn()));
+        Assertions.assertTrue(dateAfterUpdate.isAfter(userSaved.getCreatedOn()));
     }
 
     @Test
@@ -65,7 +67,6 @@ public class UserManagementServiceTest {
     void deleteTest() {
         User user = service.save(new CreateUserForm("Kacper", "Koncki"));
         service.delete(user.getId());
-        User userDeleted = service.get(user.getId());
-        Assertions.assertTrue(userDeleted);
+        Assertions.assertThrows(RuntimeException.class, () -> service.get(user.getId()));
     }
 }

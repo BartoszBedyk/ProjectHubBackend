@@ -8,6 +8,7 @@ public class UserMapper {
                 .firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName())
                 .createdOn(userEntity.getCreatedOn())
+                .deletedOn(userEntity.getDeletedOn())
                 .isBlocked(userEntity.isBlocked())
                 .build();
     }
