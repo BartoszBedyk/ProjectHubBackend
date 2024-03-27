@@ -12,7 +12,5 @@ public interface UserManagementRepository {
     Optional<User> get(String id);
     Optional<User> getNotDeleted(String id);
     User save(User user);
-    User block(String id);
-    User unBlock(String id);
     void delete(String id);
 }

@@ -41,16 +41,6 @@ public class UserManagementRepositoryAdapter implements UserManagementRepository
     }
 
     @Override
-    public User block(String id) {
-        return null;
-    }
-
-    @Override
-    public User unBlock(String id) {
-        return null;
-    }
-
-    @Override
     public void delete(String id) {
         userManagementRepository.deleteById(id);
     }

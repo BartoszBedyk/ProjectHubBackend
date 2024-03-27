@@ -37,26 +37,6 @@ public class UserManagementRepositoryMock implements UserManagementRepository {
     }
 
     @Override
-    public User block(String id) {
-        User user = mockDB.get(id);
-        if (user != null) {
-            user.setBlocked(true);
-            mockDB.put(id, user);
-        }
-        return user;
-    }
-
-    @Override
-    public User unBlock(String id) {
-        User user = mockDB.get(id);
-        if (user != null) {
-            user.setBlocked(false);
-            mockDB.put(id, user);
-        }
-        return user;
-    }
-
-    @Override
     public void delete(String id) {
         mockDB.remove(id);
     }
