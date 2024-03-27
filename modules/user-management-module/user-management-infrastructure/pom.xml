@@ -10,4 +10,17 @@
     </parent>
     <artifactId>user-management-infrastructure</artifactId>
     <version>${revision}</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>user-management-domain</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>infrastructure</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -2,6 +2,7 @@ package com.sensilabs.projecthub.user.management;
 
 import lombok.*;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,7 +17,8 @@ public class User {
     private String id;
     private String firstName;
     private String lastName;
-    private Date createdOn;
+    private Instant createdOn;
+    private Instant deletedOn;
     private boolean isBlocked;
 
     // TODO reszta atrybutów
