@@ -6,12 +6,10 @@ import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 
-import java.util.Optional;
-
 public interface UserManagementService {
 
         SearchResponse<User> search(SearchForm form);
-        Optional<User> get(String id);
+        User get(String id);
         User save(CreateUserForm userRequest);
         User update(EditUserForm userRequest);
 
