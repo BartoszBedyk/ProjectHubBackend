@@ -11,19 +11,34 @@
     <artifactId>application</artifactId>
     <version>${revision}</version>
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>com.sensilabs.projecthub</groupId>-->
+<!--            <artifactId>user-management-domain</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.sensilabs.projecthub</groupId>-->
+<!--            <artifactId>user-management-infrastructure</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.sensilabs.projecthub</groupId>-->
+<!--            <artifactId>user-management-rest</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
-            <artifactId>notification-domain</artifactId>
+            <artifactId>activity-domain</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
-            <artifactId>notification-infrastructure</artifactId>
+            <artifactId>activity-infrastructure</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
-            <artifactId>notification-rest</artifactId>
+            <artifactId>activity-rest</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>
