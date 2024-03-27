@@ -11,3 +11,5 @@ services:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=admin
       - POSTGRES_DB=project_hub_db
+      - POSTGRES_DB=project_hub_db
+
