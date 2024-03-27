@@ -29,6 +29,7 @@
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>activity-domain</artifactId>
+<<<<<<< HEAD
             <version>${revision}</version>
         </dependency>
         <dependency>
@@ -59,16 +60,26 @@
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>notification-domain</artifactId>
+=======
+>>>>>>> 0b32a9234b7cd6d6d6afb4e1f2aec4c1577129a2
             <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
+<<<<<<< HEAD
             <artifactId>notification-infrastructure</artifactId>
+=======
+            <artifactId>activity-infrastructure</artifactId>
+>>>>>>> 0b32a9234b7cd6d6d6afb4e1f2aec4c1577129a2
             <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
+<<<<<<< HEAD
             <artifactId>notification-rest</artifactId>
+=======
+            <artifactId>activity-rest</artifactId>
+>>>>>>> 0b32a9234b7cd6d6d6afb4e1f2aec4c1577129a2
             <version>${revision}</version>
         </dependency>
     </dependencies>

@@ -10,4 +10,8 @@ services:
     environment:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=admin
+<<<<<<< HEAD
       - POSTGRES_DB=project_hub_db
+=======
+      - POSTGRES_DB=project_hub_db
+>>>>>>> 0b32a9234b7cd6d6d6afb4e1f2aec4c1577129a2

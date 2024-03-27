@@ -10,12 +10,5 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     hibernate:
-<<<<<<< HEAD
-      ddl-auto: validate
-    show-sql: true
-  liquibase:
-    change-log: classpath:/db/db.changelog-master.yaml
-=======
       ddl-auto: update
     show-sql: true
->>>>>>> 0b32a9234b7cd6d6d6afb4e1f2aec4c1577129a2
