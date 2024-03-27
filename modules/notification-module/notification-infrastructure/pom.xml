@@ -32,13 +32,13 @@
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>notification-domain</artifactId>
-            <version>${revision</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>notification-domain</artifactId>
-            <version>${revision</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
