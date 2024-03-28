@@ -18,6 +18,7 @@ public class User {
     private String firstName;
     private String lastName;
     private Instant createdOn;
+    private String createdById;
     private Instant deletedOn;
     private boolean isBlocked;
 

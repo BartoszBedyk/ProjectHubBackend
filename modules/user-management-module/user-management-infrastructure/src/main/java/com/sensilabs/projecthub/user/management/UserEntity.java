@@ -26,6 +26,9 @@ public class UserEntity {
     @Column(name = "created_on")
     private Instant createdOn;
 
+    @Column(name = "created_by_id")
+    private String createdById;
+
     @Column(name = "deleted_on")
     private Instant deletedOn;
 
