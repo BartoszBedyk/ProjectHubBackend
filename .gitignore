@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Liquibase ###
-.DS_Store
+**/.DS_Store
