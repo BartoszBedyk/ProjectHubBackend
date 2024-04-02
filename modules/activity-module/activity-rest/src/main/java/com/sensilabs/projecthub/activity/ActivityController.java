@@ -16,32 +16,28 @@ public class ActivityController {
     public ActivityController(ActivityService activityService) {
         this.activityService = activityService;
     }
-
-    @PostMapping
-    public Activity saveActivity(@RequestBody CreateUserForm activity) {return activityService.save(activity, activity.getUserId());}
-
-    @PostMapping("/createUser")
+    @PostMapping("/create-user")
     public Activity saveCreateUser(@RequestBody CreateUserForm activity) {return activityService.save(activity, activity.getUserId());}
 
-    @PostMapping("/deleteUser")
+    @PostMapping("/delete-user")
     public Activity saveDeleteUser(@RequestBody DeleteUserForm activity) {return activityService.save(activity, activity.getUserId());}
 
-    @PostMapping("/documentDownload")
+    @PostMapping("/document-download")
     public Activity saveDocumentDownload(@RequestBody DocumentDownloadForm activity) {return activityService.save(activity, activity.getUserId());}
 
-    @PostMapping("/documentOpen")
+    @PostMapping("/document-open")
     public Activity saveDocumentOpen(@RequestBody DocumentOpenForm activity) {return activityService.save(activity, activity.getUserId());}
 
-    @PostMapping("/keyOpen")
+    @PostMapping("/key-open")
     public Activity saveKeyOpen(@RequestBody KeyOpenForm activity) {return activityService.save(activity, activity.getUserId());}
 
-    @PostMapping("/logInFailed")
+    @PostMapping("/log-in-failed")
     public Activity saveLogInFailed(@RequestBody LogInFailedUserForm activity) {return activityService.save(activity, activity.getUserId());}
 
-    @PostMapping("/logInSuccess")
+    @PostMapping("/log-in-success")
     public Activity saveLogInSuccess(@RequestBody LogInSuccessUserForm activity) {return activityService.save(activity, activity.getUserId());}
 
-    @PostMapping("/logOut")
+    @PostMapping("/log-out")
     public Activity saveLogOut(@RequestBody LogOutUserForm activity) {return activityService.save(activity, activity.getUserId());}
 
 }
