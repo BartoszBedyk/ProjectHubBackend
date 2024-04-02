@@ -16,7 +16,5 @@ public class EditUserForm {
     private String id;
     private String firstName;
     private String lastName;
-    private Date createdOn;
-
     // TODO dodać resztę atrybutów
 }

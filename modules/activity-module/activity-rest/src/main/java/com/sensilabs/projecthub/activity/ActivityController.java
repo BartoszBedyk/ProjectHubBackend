@@ -18,7 +18,7 @@ public class ActivityController {
     }
 
     @PostMapping
-    public Activity save(@RequestBody CreateUserForm activity) {return activityService.save(activity, activity.getUserId());}
+    public Activity saveActivity(@RequestBody CreateUserForm activity) {return activityService.save(activity, activity.getUserId());}
 
     @PostMapping("/createUser")
     public Activity saveCreateUser(@RequestBody CreateUserForm activity) {return activityService.save(activity, activity.getUserId());}
