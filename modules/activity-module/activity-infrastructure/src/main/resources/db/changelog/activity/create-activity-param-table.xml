@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Kamil Smolarek" id="create-activity-param-table">
+        <createTable tableName="activity_param">
+            <column name="id" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activity_id" type="varchar(255)">
+                <constraints nullable="false" foreignKeyName="fk_activity_id" referencedColumnNames="id" referencedTableName="activity"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

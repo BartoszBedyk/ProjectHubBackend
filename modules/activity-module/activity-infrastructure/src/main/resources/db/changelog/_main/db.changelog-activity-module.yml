@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file:
+        classpath:db/changelog/activity/create-activity-table.xml
+  - include:
+      file:
+        classpath:db/changelog/activity/create-activity-param-table.xml
