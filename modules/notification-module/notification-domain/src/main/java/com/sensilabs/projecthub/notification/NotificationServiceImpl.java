@@ -29,7 +29,7 @@ public class NotificationServiceImpl implements NotificationService {
 
                 .channel(notificationForm.getChannel())
                 .createdOn(Instant.now())
-                .createdBy(createdById)
+                .createdById(createdById)
                 .build();
         return notificationRepository.save(notification);
     }

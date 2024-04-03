@@ -31,7 +31,7 @@ public class NotificationEntity {
     @Column(name = "created_on")
     private String createdOn;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by_id")
     private String createdBy;
 
     @Enumerated(EnumType.STRING)
