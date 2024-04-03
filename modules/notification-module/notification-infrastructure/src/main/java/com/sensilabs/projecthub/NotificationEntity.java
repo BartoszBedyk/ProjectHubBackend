@@ -1,12 +1,9 @@
 package com.sensilabs.projecthub;
 
 import com.sensilabs.projecthub.notification.forms.NotificationChannel;
-import com.sensilabs.projecthub.notification.model.NotificationParam;
 import com.sensilabs.projecthub.notification.model.NotificationType;
-import jakarta.annotation.Priority;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.List;
 
@@ -31,8 +28,8 @@ public class NotificationEntity {
     @Column(name = "created_on")
     private String createdOn;
 
-    @Column(name = "created_by")
-    private String createdBy;
+    @Column(name = "created_by_id")
+    private String createdById;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "channel")

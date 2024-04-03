@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 public class NotificationServiceTest {
     NotificationRepository notificationRepository = new NotificationRepositoryMock();
@@ -23,7 +22,7 @@ public class NotificationServiceTest {
         Notification notification = notificationService.save(new ResetPasswordMailFrom("Adam","Kowalczyk","AK@sensilabs.com"), "Admin");
         Thread.sleep(2);
         Instant afterDate = Instant.now();
-        Assertions.assertEquals(notification.getCreatedBy(), "Admin");
+        Assertions.assertEquals(notification.getCreatedById(), "Admin");
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
 
@@ -41,7 +40,7 @@ public class NotificationServiceTest {
         Notification notification = notificationService.save(new ResetPasswordSmsForm("Dawid","Bekas","093321341"), "Admin");
         Thread.sleep(2);
         Instant afterDate = Instant.now();
-        Assertions.assertEquals(notification.getCreatedBy(), "Admin");
+        Assertions.assertEquals(notification.getCreatedById(), "Admin");
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
         Assertions.assertEquals(params.get(0).getValue(), "Dawid");
@@ -58,7 +57,7 @@ public class NotificationServiceTest {
         Notification notification = notificationService.save(new AccountCreatedMailForm("Anna","Witaj","a.witak@softhard.pl"), "Admin");
         Thread.sleep(2);
         Instant afterDate = Instant.now();
-        Assertions.assertEquals(notification.getCreatedBy(), "Admin");
+        Assertions.assertEquals(notification.getCreatedById(), "Admin");
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
         Assertions.assertEquals(params.get(0).getValue(), "Anna");
@@ -75,7 +74,7 @@ public class NotificationServiceTest {
         Notification notification = notificationService.save(new AccountCreatedSmsForm("Mirosława","Bogusz","019234902"), "Admin");
         Thread.sleep(2);
         Instant afterDate = Instant.now();
-        Assertions.assertEquals(notification.getCreatedBy(), "Admin");
+        Assertions.assertEquals(notification.getCreatedById(), "Admin");
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
         Assertions.assertEquals(params.get(0).getValue(), "Mirosława");
