@@ -1,0 +1,15 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Dodanie klucza obcego w tabeli notification_param -->
+    <changeSet id="add-foreign-key-notification_param" author="Bartosz Bedyk">
+        <addForeignKeyConstraint baseTableName="notification_param"
+                                 baseColumnNames="notification_id"
+                                 constraintName="fk_notification_param_notification"
+                                 referencedTableName="notification"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>

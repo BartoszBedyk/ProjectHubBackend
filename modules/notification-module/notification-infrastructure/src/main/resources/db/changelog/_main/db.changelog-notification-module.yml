@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file:
+        classpath:db/changelog/project/create-notification-param-table.xml
+  - include:
+      file:
+        classpath:db/changelog/project/create-notification-table.xml
+  - include:
+      file:
+        classpath:db/changelog/project/notification-param-table-relation.xml
+
