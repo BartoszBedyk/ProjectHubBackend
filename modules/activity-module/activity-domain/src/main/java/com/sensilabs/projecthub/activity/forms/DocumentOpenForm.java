@@ -1,6 +1,5 @@
 package com.sensilabs.projecthub.activity.forms;
 
-import com.sensilabs.projecthub.activity.model.ActivityParam;
 import com.sensilabs.projecthub.activity.model.ActivityType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,30 +8,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class DocumentOpenForm implements ActivityForm{
+public class DocumentOpenForm implements ActivityForm {
 
-    @NotNull(message = "userId cannot be null")
-    @Size(min = 36, max = 36, message = "userId must have 36 characters")
+    @NotNull(message = "User ID cannot be null.")
+    @Size(min = 36, max = 36, message = "User ID must have 36 characters.")
     private String userId;
-    @NotNull(message = "documentId cannot be null")
-    @Size(min = 36, max = 36, message = "documentId must have 36 characters")
+    @NotNull(message = "Document ID cannot be null.")
+    @Size(min = 36, max = 36, message = "Document ID must have 36 characters.")
     private String documentId;
 
-    private enum Fields{
+    private enum Fields {
         USER_ID,
         DOCUMENT_ID,
     }
+
     @Override
-    public ActivityType getType() { return ActivityType.DOCUMENT_OPEN ;}
+    public ActivityType getType() {
+        return ActivityType.DOCUMENT_OPEN;
+    }
 
     @Override
     public Map<String, String> getParams() {

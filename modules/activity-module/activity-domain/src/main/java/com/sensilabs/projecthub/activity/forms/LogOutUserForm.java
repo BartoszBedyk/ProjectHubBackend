@@ -1,6 +1,5 @@
 package com.sensilabs.projecthub.activity.forms;
 
-import com.sensilabs.projecthub.activity.model.ActivityParam;
 import com.sensilabs.projecthub.activity.model.ActivityType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,34 +10,35 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class LogOutUserForm implements ActivityForm{
+public class LogOutUserForm implements ActivityForm {
 
-    @NotNull(message = "userId cannot be null")
-    @Size(min = 36, max = 36, message = "userId must have 36 characters")
+    @NotNull(message = "User ID cannot be null.")
+    @Size(min = 36, max = 36, message = "User ID must have 36 characters.")
     private String userId;
-    @NotBlank(message = "firstName cannot be blank")
-    @Length(min = 1, max = 30, message = "firstName must be between 1 and 30 characters")
+    @NotBlank(message = "First name cannot be blank.")
+    @Length(min = 1, max = 30, message = "First name must be between 1 and 30 characters.")
     private String firstName;
-    @NotBlank(message = "lastName cannot be blank")
-    @Length(min = 1, max = 50)
+    @NotBlank(message = "Last name cannot be blank.")
+    @Length(min = 1, max = 50, message = "Last name must be between 1 and 30 characters.")
     private String lastName;
 
-    private enum Fields{
+    private enum Fields {
         USER_ID,
         FIRST_NAME,
         LAST_NAME
     }
+
     @Override
-    public ActivityType getType() { return ActivityType.USER_LOG_OUT ;}
+    public ActivityType getType() {
+        return ActivityType.USER_LOG_OUT;
+    }
 
     @Override
     public Map<String, String> getParams() {
