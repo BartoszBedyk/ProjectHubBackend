@@ -1,6 +1,5 @@
 package com.sensilabs.projecthub.activity.model;
 
-
 import lombok.*;
 
 @Getter
@@ -10,8 +9,7 @@ import lombok.*;
 @Builder
 public class ActivityParam {
 
+    private String id;
     private String name;
     private String value;
-    private ActivityType type;
-
 }

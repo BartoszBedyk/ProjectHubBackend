@@ -2,13 +2,17 @@ package com.sensilabs.projecthub.activity.forms;
 
 import com.sensilabs.projecthub.activity.model.ActivityParam;
 import com.sensilabs.projecthub.activity.model.ActivityType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +20,11 @@ import java.util.List;
 @Setter
 public class DocumentOpenForm implements ActivityForm{
 
+    @NotNull(message = "userId cannot be null")
+    @Size(min = 36, max = 36, message = "userId must have 36 characters")
     private String userId;
+    @NotNull(message = "documentId cannot be null")
+    @Size(min = 36, max = 36, message = "documentId must have 36 characters")
     private String documentId;
 
     private enum Fields{
@@ -27,10 +35,10 @@ public class DocumentOpenForm implements ActivityForm{
     public ActivityType getType() { return ActivityType.DOCUMENT_OPEN ;}
 
     @Override
-    public List<ActivityParam> getParams() {
-        List<ActivityParam> params = new ArrayList<>();
-        params.add(new ActivityParam(Fields.USER_ID.name(), userId, ActivityType.DOCUMENT_OPEN));
-        params.add(new ActivityParam(Fields.DOCUMENT_ID.name(), documentId, ActivityType.DOCUMENT_OPEN));
+    public Map<String, String> getParams() {
+        Map<String, String> params = new HashMap<>();
+        params.put(Fields.USER_ID.name(), userId);
+        params.put(Fields.DOCUMENT_ID.name(), documentId);
         return params;
     }
 }
