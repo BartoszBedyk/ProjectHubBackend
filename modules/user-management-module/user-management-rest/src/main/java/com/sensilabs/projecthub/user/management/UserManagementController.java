@@ -7,8 +7,6 @@ import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.service.UserManagementService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/user-management/test")
 public class UserManagementController {

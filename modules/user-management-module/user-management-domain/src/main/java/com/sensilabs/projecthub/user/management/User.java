@@ -3,8 +3,6 @@ package com.sensilabs.projecthub.user.management;
 import lombok.*;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.UUID;
 
 
 @Getter

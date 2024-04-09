@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,5 +12,4 @@ import java.util.Date;
 public class CreateUserForm {
     private String firstName;
     private String lastName;
-    // TODO dodać resztę atrybutów
 }

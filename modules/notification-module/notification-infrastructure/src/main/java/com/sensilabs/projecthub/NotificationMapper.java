@@ -16,7 +16,7 @@ public class NotificationMapper {
                 .id(notification.getId())
                 .channel(notification.getChannel())
                 .type(notification.getType())
-                .createdBy(notification.getCreatedById())
+                .createdById(notification.getCreatedById())
                 .createdOn(notification.getCreatedOn().toString())
                 .params(notificationParamEntities)
                 .build();

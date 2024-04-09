@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.UUID;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,5 +13,4 @@ public class EditUserForm {
     private String id;
     private String firstName;
     private String lastName;
-    // TODO dodać resztę atrybutów
 }
