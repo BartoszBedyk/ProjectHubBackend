@@ -26,21 +26,21 @@
             <artifactId>user-management-rest</artifactId>
             <version>${revision}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.sensilabs.projecthub</groupId>-->
-<!--            <artifactId>activity-domain</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.sensilabs.projecthub</groupId>-->
-<!--            <artifactId>activity-infrastructure</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.sensilabs.projecthub</groupId>-->
-<!--            <artifactId>activity-rest</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>activity-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>activity-infrastructure</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>activity-rest</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>project-domain</artifactId>
@@ -56,20 +56,25 @@
             <artifactId>project-rest</artifactId>
             <version>${revision}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.sensilabs.projecthub</groupId>-->
-<!--            <artifactId>notification-domain</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.sensilabs.projecthub</groupId>-->
-<!--            <artifactId>notification-infrastructure</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.sensilabs.projecthub</groupId>-->
-<!--            <artifactId>notification-rest</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>notification-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>notification-infrastructure</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>notification-rest</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>rest</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

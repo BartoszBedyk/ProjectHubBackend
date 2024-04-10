@@ -7,6 +7,7 @@ public class UserMapper {
                 .id(userEntity.getId())
                 .firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName())
+                .email(userEntity.getEmail())
                 .createdOn(userEntity.getCreatedOn())
                 .createdById(userEntity.getCreatedById())
                 .deletedOn(userEntity.getDeletedOn())

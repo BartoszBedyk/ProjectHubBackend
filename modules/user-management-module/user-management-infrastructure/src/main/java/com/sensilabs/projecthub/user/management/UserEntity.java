@@ -1,12 +1,15 @@
 package com.sensilabs.projecthub.user.management;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.time.Instant;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "public")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,7 +17,7 @@ import java.time.Instant;
 @Builder
 public class UserEntity {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     private String id;
 
     @Column(name = "first_name")
@@ -22,6 +25,9 @@ public class UserEntity {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "created_on")
     private Instant createdOn;
@@ -39,6 +45,7 @@ public class UserEntity {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
+        this.email = user.getEmail();
         this.createdOn = user.getCreatedOn();
         this.deletedOn = user.getDeletedOn();
         this.isBlocked = user.isBlocked();

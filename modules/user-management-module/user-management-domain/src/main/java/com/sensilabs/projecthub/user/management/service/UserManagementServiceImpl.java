@@ -1,16 +1,15 @@
 package com.sensilabs.projecthub.user.management.service;
 
-import java.time.Instant;
-import java.util.UUID;
-
-import org.springframework.stereotype.Service;
-
 import com.sensilabs.projecthub.commons.SearchForm;
 import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.UUID;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -41,9 +40,11 @@ public class UserManagementServiceImpl implements UserManagementService {
 				.id(UUID.randomUUID().toString())
 				.firstName(userRequest.getFirstName())
 				.lastName(userRequest.getLastName())
+				.email(userRequest.getEmail())
 				.createdOn(Instant.now())
 				.isBlocked(false)
 				.build();
+
 		return userManagementRepository.save(user);
 	}
 
@@ -52,6 +53,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 		User user = getOrThrow(userRequest.getId());
 		user.setFirstName(userRequest.getFirstName());
 		user.setLastName(userRequest.getLastName());
+		user.setEmail(userRequest.getEmail());
+
 		return userManagementRepository.save(user);
 	}
 
