@@ -9,8 +9,8 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.Series.SERVER_ERROR;
 
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
@@ -22,14 +22,14 @@ public class ApplicationControllerAdvice {
 
         return ApplicationErrorResponse.builder()
                 .timestamp(Instant.now())
-                .status(SERVER_ERROR.value())
+                .status(INTERNAL_SERVER_ERROR.value())
                 .errorCode(errorResponse.getErrorCode())
                 .message(errorResponse.getMessage())
                 .errors(errors)
                 .build();
     }
 
-    @ResponseStatus(code = INTERNAL_SERVER_ERROR)
+    @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public ApplicationErrorResponse handleConstraintViolationException(ConstraintViolationException exception) {
         Map<String, String> errors = new HashMap<>();
@@ -44,7 +44,7 @@ public class ApplicationControllerAdvice {
 
         return ApplicationErrorResponse.builder()
                 .timestamp(Instant.now())
-                .status(ErrorCode.VALIDATION_EXCEPTION.status)
+                .status(BAD_REQUEST.value())
                 .errorCode(ErrorCode.VALIDATION_EXCEPTION)
                 .message(ErrorCode.VALIDATION_EXCEPTION.message)
                 .errors(errors)

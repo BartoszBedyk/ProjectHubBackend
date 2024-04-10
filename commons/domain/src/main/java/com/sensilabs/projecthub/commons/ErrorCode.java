@@ -1,14 +1,12 @@
 package com.sensilabs.projecthub.commons;
 
 public enum ErrorCode {
-    USER_NOT_FOUND("User not found", 404),
-    VALIDATION_EXCEPTION("Invalid data provided", 400);
+    USER_NOT_FOUND("User not found"),
+    VALIDATION_EXCEPTION("Invalid data provided");
 
-    ErrorCode(String message, int status) {
+    ErrorCode(String message) {
         this.message = message;
-        this.status = status;
     }
 
     final String message;
-    final int status;
 }
