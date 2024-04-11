@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/notification/test")
+@RequestMapping("/notification")
 public class NotificationController {
     private final NotificationService notificationService;
 
