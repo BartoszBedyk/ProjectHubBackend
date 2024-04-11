@@ -9,23 +9,22 @@ import java.util.stream.Collectors;
 
 public class NotificationMapper {
     public static NotificationEntity toNotificationEntity(Notification notification){
-        List<NotificationParamEntity> notificationParamEntities =
-                notification.getParams().stream().map(NotificationMapper::toNotificationParam).collect(Collectors.toList());
 
         NotificationEntity notificationEntity = NotificationEntity.builder()
                 .id(notification.getId())
                 .channel(notification.getChannel())
                 .type(notification.getType())
-                .createdBy(notification.getCreatedById())
+                .createdById(notification.getCreatedById())
                 .createdOn(notification.getCreatedOn().toString())
-                .params(notificationParamEntities)
+                .receiver(notification.getReceiver())
                 .build();
-
         return notificationEntity;
     }
 
-    private static NotificationParamEntity toNotificationParam(NotificationParam notificationParam){
+    public static NotificationParamEntity toNotificationParam(NotificationParam notificationParam, NotificationEntity notificationEntity){
         return NotificationParamEntity.builder()
+                .id(notificationParam.getId())
+                .notification(notificationEntity)
                 .name(notificationParam.getName())
                 .value(notificationParam.getValue())
                 .build();
@@ -42,14 +41,16 @@ public class NotificationMapper {
                  .createdById(notificationEntity.getCreatedById())
                  .createdOn(Instant.parse(notificationEntity.getCreatedOn()))
                  .params(notificationParams)
+                 .receiver(notificationEntity.getReceiver())
                  .build();
         return notification;
 
     }
 
-    private static NotificationParam toNotificationParamEntity(NotificationParamEntity notificationParamEntity){
+    public static NotificationParam toNotificationParamEntity(NotificationParamEntity notificationParamEntity){
         return NotificationParam.builder()
                 .name(notificationParamEntity.getName())
+                .id(notificationParamEntity.getId())
                 .value(notificationParamEntity.getValue())
                 .build();
     }

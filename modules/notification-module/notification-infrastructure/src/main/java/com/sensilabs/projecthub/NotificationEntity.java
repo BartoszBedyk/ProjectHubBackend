@@ -35,6 +35,9 @@ public class NotificationEntity {
     @Column(name = "channel")
     private NotificationChannel channel;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "notification")
+    @Column(name = "receiver")
+    private String receiver;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "notification", fetch = FetchType.EAGER)
     private List<NotificationParamEntity> params;
 }

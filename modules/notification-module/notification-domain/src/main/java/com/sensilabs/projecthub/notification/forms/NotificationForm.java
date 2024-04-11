@@ -1,11 +1,8 @@
 package com.sensilabs.projecthub.notification.forms;
 
-import com.sensilabs.projecthub.notification.model.NotificationParam;
 import com.sensilabs.projecthub.notification.model.NotificationType;
 
-import java.time.Instant;
-import java.util.List;
-
+import java.util.Map;
 
 
 public interface NotificationForm {
@@ -13,7 +10,7 @@ public interface NotificationForm {
 
     NotificationType getType();
     NotificationChannel getChannel();
-    List<NotificationParam> getParams();
+    Map<String, String> getParams();
 
     String getReceiver();
     //Priority getPriority();

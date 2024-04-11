@@ -17,8 +17,10 @@ public class NotificationParamEntity {
 
     @ManyToOne
     private NotificationEntity notification;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "value")
     private String value;
 }
