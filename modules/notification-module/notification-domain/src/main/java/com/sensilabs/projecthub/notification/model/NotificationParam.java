@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class NotificationParam {
+    private String id;
     private String name;
     private String value;
-    //private Priority priority;
 }

@@ -4,11 +4,11 @@
 
         <changeSet id="create-notification-param-table" author="Bartosz Bedyk">
             <createTable tableName="notification_param">
-                <column name="notification_id" type="varchar(255)">
-                    <constraints nullable="false"/>
-                </column>
                 <column name="id" type="varchar(255)">
                     <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="notification_id" type="varchar(255)">
+                    <constraints  nullable="false"/>
                 </column>
                 <column name="name" type="varchar(255)">
                     <constraints nullable="false"/>
