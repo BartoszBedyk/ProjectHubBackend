@@ -29,6 +29,20 @@ public class ApplicationControllerAdvice {
                 .build();
     }
 
+    @ResponseStatus(code = INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ApplicationErrorResponse handleException(Exception exception) {
+        Map<String, String> errors = new HashMap<>();
+
+        return ApplicationErrorResponse.builder()
+                .timestamp(Instant.now())
+                .status(INTERNAL_SERVER_ERROR.value())
+                .errorCode(ErrorCode.UNKNOWN_ERROR)
+                .message(exception.getMessage())
+                .errors(errors)
+                .build();
+    }
+
     @ResponseStatus(code = BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public ApplicationErrorResponse handleConstraintViolationException(ConstraintViolationException exception) {
