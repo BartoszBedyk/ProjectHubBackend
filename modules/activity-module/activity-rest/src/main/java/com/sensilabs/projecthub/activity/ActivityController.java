@@ -2,6 +2,8 @@ package com.sensilabs.projecthub.activity;
 
 import com.sensilabs.projecthub.activity.forms.*;
 import com.sensilabs.projecthub.activity.model.Activity;
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,8 @@ public class ActivityController {
 
     @PostMapping("/log-out")
     public Activity saveLogOut(@RequestBody LogOutUserForm activity) {return activityService.save(activity, activity.getUserId());}
+
+    @PostMapping("/search")
+    public SearchResponse<Activity> searchActivities(@RequestBody SearchForm searchForm) {return activityService.search(searchForm);}
 
 }

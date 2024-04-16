@@ -1,10 +1,13 @@
 package com.sensilabs.projecthub.activity;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import com.sensilabs.projecthub.activity.model.Activity;
 import com.sensilabs.projecthub.activity.model.ActivityParam;
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import org.springframework.stereotype.Service;
 
 import com.sensilabs.projecthub.activity.forms.ActivityForm;
@@ -34,5 +37,10 @@ public class ActivityServiceImpl implements ActivityService {
                 .build();
 
         return activityRepository.save(activity);
+    }
+
+    @Override
+    public SearchResponse<Activity> search(SearchForm searchForm) {
+        return activityRepository.search(searchForm);
     }
 }

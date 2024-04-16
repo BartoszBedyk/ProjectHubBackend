@@ -1,7 +1,6 @@
 package com.sensilabs.projecthub.activity.model;
 
 import lombok.*;
-
 import java.time.Instant;
 import java.util.List;
 
