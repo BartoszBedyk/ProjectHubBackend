@@ -26,10 +26,10 @@ public class LogOutUserForm implements ActivityForm {
     @Length(min = 1, max = 30, message = "First name must be between 1 and 30 characters.")
     private String firstName;
     @NotBlank(message = "Last name cannot be blank.")
-    @Length(min = 1, max = 50, message = "Last name must be between 1 and 30 characters.")
+    @Length(min = 1, max = 50, message = "Last name must be between 1 and 50 characters.")
     private String lastName;
 
-    private enum Fields {
+    private enum Fields{
         USER_ID,
         FIRST_NAME,
         LAST_NAME

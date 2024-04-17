@@ -1,8 +1,11 @@
 package com.sensilabs.projecthub.activity;
 
 import com.sensilabs.projecthub.activity.model.Activity;
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ActivityRepositoryMock implements ActivityRepository{
@@ -12,6 +15,11 @@ public class ActivityRepositoryMock implements ActivityRepository{
     public Activity save(Activity activity) {
         mockDB.put(activity.getId(), activity);
         return activity;
+    }
+
+    @Override
+    public SearchResponse<Activity> search(SearchForm searchForm) {
+        return null;
     }
 }
 

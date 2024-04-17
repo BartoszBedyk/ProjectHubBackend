@@ -24,7 +24,7 @@ public class DocumentDownloadForm implements ActivityForm {
     private String documentId;
 
 
-    private enum Fields {
+    private enum Fields{
         USER_ID,
         DOCUMENT_ID,
     }
