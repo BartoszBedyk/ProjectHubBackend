@@ -5,6 +5,7 @@ import com.sensilabs.projecthub.notification.model.Notification;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class NotificationRepositoryMock implements NotificationRepository {
 
@@ -17,5 +18,10 @@ public class NotificationRepositoryMock implements NotificationRepository {
     public Notification save(Notification notification) {
         mockDB.put(notification.getId(), notification);
         return notification;
+    }
+
+    @Override
+    public Optional<Notification> findById(String id) {
+        return Optional.empty();
     }
 }

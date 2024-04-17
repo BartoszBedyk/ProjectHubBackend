@@ -6,9 +6,7 @@ import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.Instant;
 import java.util.UUID;

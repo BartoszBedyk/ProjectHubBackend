@@ -71,5 +71,10 @@
             <artifactId>notification-rest</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>rest</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

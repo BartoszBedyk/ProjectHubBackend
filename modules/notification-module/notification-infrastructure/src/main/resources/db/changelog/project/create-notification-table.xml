@@ -18,6 +18,9 @@
             <column name="channel" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="receiver" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
