@@ -43,6 +43,6 @@ public class ActivityController {
     public Activity saveLogOut(@RequestBody LogOutUserForm activity) {return activityService.save(activity, activity.getUserId());}
 
     @PostMapping("/search")
-    public SearchResponse<Activity> searchActivities(@RequestBody SearchForm searchForm) {return activityService.search(searchForm);}
+    public SearchResponse<Activity> search(@RequestBody SearchForm searchForm) {return activityService.search(searchForm);}
 
 }

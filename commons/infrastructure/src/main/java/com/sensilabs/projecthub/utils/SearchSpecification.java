@@ -1,9 +1,6 @@
 package com.sensilabs.projecthub.utils;
 
-import com.sensilabs.projecthub.commons.SearchForm;
-import com.sensilabs.projecthub.commons.SearchFormCriteria;
-import com.sensilabs.projecthub.commons.SearchSort;
-import com.sensilabs.projecthub.commons.SearchSortOrder;
+import com.sensilabs.projecthub.commons.*;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -52,7 +49,7 @@ public class SearchSpecification {
             case LSE:
                 return cb.lessThanOrEqualTo(fieldPath.as(Comparable.class), (Comparable) convertToType(criteria.getValue(), fieldPath.getJavaType()));
             default:
-                throw new IllegalArgumentException("Unsupported operator: " + criteria.getOperator());
+                throw new ApplicationException(ErrorCode.UNSUPPORTED_OPERATOR, "Unsupported operator: " + criteria.getOperator());
         }
     }
 
