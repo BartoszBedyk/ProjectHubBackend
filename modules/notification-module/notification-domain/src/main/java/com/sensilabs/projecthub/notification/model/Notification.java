@@ -19,9 +19,8 @@ import java.util.List;
 @Validated
 public class Notification {
 
-
-
     private String id;
+
     private NotificationType type;
 
     private List<NotificationParam> params;

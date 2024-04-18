@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+    <style>
+
+    </style>
+</head>
+<body style="background-color: #fafafa">
+<div style="background-color: #f4f3ee; color:#1c1c1c; font-family:Lucida Sans Unicode,serif; border: solid 1px #ffffff; padding-left: 5%; padding-right: 5%; padding-top: 2%; padding-bottom: 2%">
+
+
+
+    <h1 style="background-color: #f4f3ee;">Account created</h1>
+    <h2>Your ProjectHub account has been successfully created.</h2>
+    <br>
+        <p> Hi, <span th:text="${firstName}"> </span><span> </span> <span th:text="${lastName}"></span></p>
+        <div style="text-align: left; padding-right: 5%"> Your Project Hub account has been successfully created using the email address:</div>
+        <b><p th:utext="${email}" style="text-decoration: none; color: #1c1c1c ">userEmail@gmail.com</p></b>
+
+        <div class="formatting">  Remember not to share your website login details with anyone. Stay safe using our services.
+            We hope you enjoy using our software.
+        </div>
+    <div style="height: 10%; width: 100%; line-height: 10px; padding-top: 5%">
+        <p>Regards, ProjectHub team.</p>
+        <br><br>
+        <hr>
+        <div th:fragment="footer" style="color: #3f3e3e" font >
+            <p>Request created at: <span th:text="${time}"></span></p>
+            <p>Request send at: <span th:text="${sendTime}"></span></p>
+            <p>Copyright 2024</p>
+        </div>
+    </div>
+
+</div>
+<div style="padding-top: 2%; padding-bottom: 1%; text-align: center; color: #8f8c8c; font-family: Helvetica; line-height: 1px; font-weight: 100">
+    <p> projecthub.sl.noreply@gmail.com</p>
+    <p> ProjectHub Solutions </p>
+    <p> Płock 09-400 </p>
+
+
+</div>
+</body>
+</html>
