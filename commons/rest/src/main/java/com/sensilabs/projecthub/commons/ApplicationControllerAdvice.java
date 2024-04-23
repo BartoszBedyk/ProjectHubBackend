@@ -17,17 +17,28 @@ public class ApplicationControllerAdvice {
 
     @ResponseStatus(code = INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ApplicationException.class)
-    public ApplicationErrorResponse handleApplicationException(ApplicationErrorResponse errorResponse) {
+    public ApplicationErrorResponse handleApplicationException(ApplicationException exception) {
         Map<String, String> errors = new HashMap<>();
-
+        String description = exception.getDescription();
+        if(description == null)
+        {
+            return ApplicationErrorResponse.builder()
+                    .timestamp(Instant.now())
+                    .status(INTERNAL_SERVER_ERROR.value())
+                    .errorCode(exception.getCode())
+                    .message(exception.getMessage())
+                    .errors(errors)
+                    .build();
+        }
         return ApplicationErrorResponse.builder()
                 .timestamp(Instant.now())
                 .status(INTERNAL_SERVER_ERROR.value())
-                .errorCode(errorResponse.getErrorCode())
-                .message(errorResponse.getMessage())
+                .errorCode(exception.getCode())
+                .message(exception.getDescription())
                 .errors(errors)
                 .build();
     }
+
 
     @ResponseStatus(code = INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)

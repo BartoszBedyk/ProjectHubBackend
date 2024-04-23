@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.login.pass.auth.service;
 
+import com.sensilabs.projecthub.commons.ApplicationException;
+import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.login.pass.auth.AuthPassUser;
 import com.sensilabs.projecthub.login.pass.auth.PasswordEncoder;
 import com.sensilabs.projecthub.login.pass.auth.ResetPasswordRequest;
@@ -34,14 +36,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     private AuthPassUser getByEmailOrThrowAuthPassUser(String email) {
-        return authorizationRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User with email " + email + " not found")); // TODO custom UserNotFoundException?
+        return authorizationRepository.findByEmail(email).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND));
     }
 
     private AuthPassUser getByIdOrThrowAuthPassUser(String id) {
-        return authorizationRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found")); // TODO UserNotFoundException
+        return authorizationRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND));
     }
     private ResetPasswordRequest getOrThrowResetPasswordRequest(String id) {
-        return authorizationRepository.findByRequestId(id).orElseThrow(() -> new RuntimeException("Request with id " + id + " not found")); // TODO custom exception?
+        return authorizationRepository.findByRequestId(id).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND));
     }
 
     @Override
@@ -53,7 +55,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 return user;
             }
 
-        throw new RuntimeException("Login failed"); // TODO custom exception?
+        throw new ApplicationException(ErrorCode.WRONG_PASSWORD);
     }
 
     @Override
@@ -91,7 +93,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public void checkResetPasswordToken(String token) {
         ResetPasswordRequest request = getOrThrowResetPasswordRequest(token);
         if (!request.getExpiredOn().isAfter(Instant.now())) {
-            throw new RuntimeException("Link expired"); // TODO exception
+            throw new ApplicationException(ErrorCode.LINK_EXPIRED);
         }
     }
 
@@ -114,7 +116,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             user.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
             authorizationRepository.saveAuthPassUser(user);
         } else {
-            throw new RuntimeException(); // TODO handle exception
+            throw new ApplicationException(ErrorCode.WRONG_PASSWORD);
         }
     }
 }
