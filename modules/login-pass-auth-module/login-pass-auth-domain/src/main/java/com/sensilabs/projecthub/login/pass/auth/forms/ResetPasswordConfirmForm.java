@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldsMatch(first = "password", second = "passwordRepeated", message = "Passwords must match")
 public class ResetPasswordConfirmForm {
 
     @NotBlank(message = "Password must not be blank")
@@ -19,7 +20,6 @@ public class ResetPasswordConfirmForm {
 
     @NotBlank(message = "Password must not be blank")
     @Size(min = 8, message = "Password must be at least 8 characters long")
-    @FieldsMatch(first = "password", second = "passwordRepeated", message = "Passwords must match")
     String passwordRepeated;
 
     @NotNull(message = "ID must not be null")

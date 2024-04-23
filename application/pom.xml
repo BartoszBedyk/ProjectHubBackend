@@ -73,6 +73,21 @@
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>login-pass-auth-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>login-pass-auth-infrastructure</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+        <groupId>com.sensilabs.projecthub</groupId>
+        <artifactId>login-pass-auth-rest</artifactId>
+        <version>${revision}</version>
+    </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>rest</artifactId>
             <version>${revision}</version>
         </dependency>

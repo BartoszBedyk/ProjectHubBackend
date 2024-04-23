@@ -45,10 +45,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public AuthPassUser login(@Valid LoginForm logInRequest) {
-            AuthPassUser user = getByEmailOrThrowAuthPassUser(logInRequest.getEmail());
+    public AuthPassUser login(LoginForm loginRequest) {
+            AuthPassUser user = getByEmailOrThrowAuthPassUser(loginRequest.getEmail());
 
-            if (passwordEncoder.match(logInRequest.getPassword(), user.getPassword())) {
+            if (passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
                 tokenProvider.generateToken(user.getId());
                 return user;
             }
@@ -57,7 +57,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void createUser(@Valid CreateUserWithPasswordForm createUserRequest) {
+    public void createUser(CreateUserWithPasswordForm createUserRequest) {
 
         User user = userManagementService.save(createUserRequest);
 
@@ -74,7 +74,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
 
     @Override
-    public void resetPassword(@Valid ResetPasswordForm resetPasswordRequest) {
+    public void resetPassword(ResetPasswordForm resetPasswordRequest) {
         Instant time = Instant.now();
         AuthPassUser user = getByEmailOrThrowAuthPassUser(resetPasswordRequest.getEmail());
         ResetPasswordRequest request = ResetPasswordRequest.builder()
@@ -96,7 +96,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void resetPasswordConfirm(@Valid ResetPasswordConfirmForm resetPasswordConfirmForm) {
+    public void resetPasswordConfirm(ResetPasswordConfirmForm resetPasswordConfirmForm) {
         ResetPasswordRequest request = getOrThrowResetPasswordRequest(resetPasswordConfirmForm.getRequestId());
         AuthPassUser user = getByIdOrThrowAuthPassUser(request.getUserId());
 
@@ -107,7 +107,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void changePassword(@Valid ChangePasswordForm changePasswordForm) {
+    public void changePassword(ChangePasswordForm changePasswordForm) {
         AuthPassUser user = getByEmailOrThrowAuthPassUser(changePasswordForm.getEmail());
 
         if (passwordEncoder.match(changePasswordForm.getOldPassword(), user.getPassword())) {
