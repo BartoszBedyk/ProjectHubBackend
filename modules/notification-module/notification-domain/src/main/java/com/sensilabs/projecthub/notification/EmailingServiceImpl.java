@@ -1,27 +1,15 @@
 package com.sensilabs.projecthub.notification;
 
-import com.sensilabs.projecthub.notification.EmailingService;
-import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service

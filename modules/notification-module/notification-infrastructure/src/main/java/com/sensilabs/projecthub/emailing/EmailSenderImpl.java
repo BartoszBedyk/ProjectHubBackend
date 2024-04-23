@@ -1,7 +1,5 @@
-package com.sensilabs.projecthub.notification;
+package com.sensilabs.projecthub.emailing;
 
-import com.sensilabs.projecthub.notification.model.Notification;
-import com.sensilabs.projecthub.notification.model.NotificationParam;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +13,7 @@ import org.thymeleaf.context.Context;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import static com.sensilabs.projecthub.notification.model.NotificationType.PASSWORD_RESET;
-import static org.apache.tomcat.jni.SSL.getTime;
 
 @RequiredArgsConstructor
 @Component

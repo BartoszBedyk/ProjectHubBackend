@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum NotificationType {
-    ACCOUNT_CREATE("Account create", "createAccountTemplate"),
-    PASSWORD_RESET("Reset password", "resetPasswordTemplate");
+    ACCOUNT_CREATE("Account create", "create-account-template"),
+    PASSWORD_RESET("Reset password", "reset-password-template");
     //ITD
 
     final String subject;

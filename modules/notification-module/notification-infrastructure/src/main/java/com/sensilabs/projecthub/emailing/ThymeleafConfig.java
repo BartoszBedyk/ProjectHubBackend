@@ -1,4 +1,4 @@
-package com.sensilabs.projecthub.notification.configurations.mail;
+package com.sensilabs.projecthub.emailing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class ThymeleafConfig implements WebMvcConfigurer {
     public ClassLoaderTemplateResolver templateResolver() {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
 
-        resolver.setPrefix("/templates/");
+        resolver.setPrefix("/com/sensilabs/projecthub/emailing/templates/");
         resolver.setCacheable(false);
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
