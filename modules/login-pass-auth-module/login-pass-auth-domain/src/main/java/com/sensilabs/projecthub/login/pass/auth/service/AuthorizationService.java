@@ -8,12 +8,10 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface AuthorizationService {
 
-    // LoginResponse(token)
     AuthPassUser login(@Valid LoginForm logInRequest);
 
     void createUser(@Valid CreateUserWithPasswordForm createUserRequest);
 
-    // Tworzy record w db (id requestu, data stworzenia, data waznosci, id user(z auth service))
     void resetPassword(@Valid ResetPasswordForm resetPasswordRequest);
 
     void checkResetPasswordToken(String requestId);

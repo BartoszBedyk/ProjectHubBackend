@@ -12,8 +12,6 @@ public interface AuthorizationRepository {
 
     Optional<ResetPasswordRequest> findByRequestId(String id);
 
-//    Optional<ResetPasswordRequest> findRequestByUserId(String id);
-
     void saveAuthPassUser(AuthPassUser user);
 
     void saveResetPasswordRequest(ResetPasswordRequest request);
