@@ -3,7 +3,6 @@ package com.sensilabs.projecthub.emailing;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -14,7 +13,7 @@ public class ThymeleafConfig implements WebMvcConfigurer {
     public ClassLoaderTemplateResolver templateResolver() {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
 
-        resolver.setPrefix("/com/sensilabs/projecthub/emailing/templates/");
+        resolver.setPrefix("/templates/");
         resolver.setCacheable(false);
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);

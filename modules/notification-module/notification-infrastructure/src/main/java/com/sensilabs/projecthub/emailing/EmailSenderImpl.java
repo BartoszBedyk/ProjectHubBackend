@@ -41,7 +41,7 @@ public class EmailSenderImpl implements EmailSender{
         templateContext.put("toMail", sendTo);
         templateContext.put("sendTime", getTime());
         params.forEach((name, value) -> templateContext.put(name, value));
-        params.forEach((name, value) -> System.out.println(name + value));
+        //params.forEach((name, value) -> System.out.println(name + value));
 
         context.setVariables(templateContext);
 

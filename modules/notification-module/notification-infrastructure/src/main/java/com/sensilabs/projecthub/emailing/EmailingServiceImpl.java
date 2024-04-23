@@ -1,5 +1,7 @@
-package com.sensilabs.projecthub.notification;
+package com.sensilabs.projecthub.emailing;
 
+
+import com.sensilabs.projecthub.notification.EmailingService;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
 import lombok.RequiredArgsConstructor;
