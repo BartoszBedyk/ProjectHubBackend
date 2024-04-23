@@ -10,4 +10,10 @@
     </parent>
     <artifactId>login-pass-auth-module</artifactId>
     <version>${revision}</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>login-pass-auth-domain</module>
+        <module>login-pass-auth-infrastructure</module>
+        <module>login-pass-auth-rest</module>
+    </modules>
 </project>

@@ -18,3 +18,4 @@ public class ApplicationException extends RuntimeException {
         this.code = code;
     }
 }
+

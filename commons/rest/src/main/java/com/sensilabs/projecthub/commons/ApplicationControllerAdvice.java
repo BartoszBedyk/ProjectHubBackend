@@ -40,6 +40,7 @@ public class ApplicationControllerAdvice {
                 .build();
     }
 
+
     @ResponseStatus(code = INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ApplicationErrorResponse handleException(Exception exception) {

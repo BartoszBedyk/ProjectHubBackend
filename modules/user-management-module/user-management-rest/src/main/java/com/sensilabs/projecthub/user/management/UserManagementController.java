@@ -37,8 +37,6 @@ public class UserManagementController {
         return userManagementService.update(editUserForm);
     }
 
-    // TODO blocked i unBlocked
-
     @PutMapping("/block/{id}")
     public User block(@PathVariable("id") String id) {
         return userManagementService.block(id);
