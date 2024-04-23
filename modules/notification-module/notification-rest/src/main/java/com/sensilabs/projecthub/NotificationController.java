@@ -2,7 +2,7 @@ package com.sensilabs.projecthub;
 
 
 import com.sensilabs.projecthub.notification.NotificationService;
-import com.sensilabs.projecthub.notification.configurations.mail.EmailingService;
+import com.sensilabs.projecthub.notification.EmailingService;
 import com.sensilabs.projecthub.notification.forms.AccountCreatedMailForm;
 import com.sensilabs.projecthub.notification.forms.AccountCreatedSmsForm;
 import com.sensilabs.projecthub.notification.forms.ResetPasswordMailFrom;
@@ -10,7 +10,6 @@ import com.sensilabs.projecthub.notification.forms.ResetPasswordSmsForm;
 import com.sensilabs.projecthub.notification.model.Notification;
 
 import jakarta.mail.MessagingException;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -32,7 +31,7 @@ public class NotificationController {
     public Notification save(@RequestBody AccountCreatedMailForm form) throws MessagingException {
         String std = UUID.randomUUID().toString();
         Notification notification = notificationService.save(form, std);
-        emailingService.sendMailFixed(notification);
+        emailingService.send(notification);
         return notification;
     }
 
@@ -40,7 +39,7 @@ public class NotificationController {
     public Notification save(@RequestBody AccountCreatedSmsForm form) throws MessagingException {
         String std = UUID.randomUUID().toString();
         Notification notification = notificationService.save(form, std);
-        emailingService.sendMailFixed(notification);
+        emailingService.send(notification);
         return notification;
     }
 
@@ -48,7 +47,7 @@ public class NotificationController {
     public Notification save(@RequestBody ResetPasswordMailFrom form) throws MessagingException {
         String std = UUID.randomUUID().toString();
         Notification notification = notificationService.save(form, std);
-        emailingService.sendMailFixed(notification);
+        emailingService.send(notification);
         return notification;
     }
 
@@ -56,7 +55,7 @@ public class NotificationController {
     public Notification save(@RequestBody ResetPasswordSmsForm form) throws MessagingException {
         String std = UUID.randomUUID().toString();
         Notification notification = notificationService.save(form, std);
-        emailingService.sendMailFixed(notification);
+        emailingService.send(notification);
         return notification;
     }
 

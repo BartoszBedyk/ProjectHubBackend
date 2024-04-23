@@ -38,6 +38,12 @@ public class NotificationEntity {
     @Column(name = "receiver")
     private String receiver;
 
+    @Column(name = "send")
+    private Boolean send;
+
+    @Column(name = "last_attempt_on")
+    private String lastAttemptOn;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "notification", fetch = FetchType.EAGER)
     private List<NotificationParamEntity> params;
 }

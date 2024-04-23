@@ -33,5 +33,9 @@ public class Notification {
 
     private NotificationChannel channel;
 
+    private Instant lastAttemptOn;
+
+    private Boolean send;
+
 
 }

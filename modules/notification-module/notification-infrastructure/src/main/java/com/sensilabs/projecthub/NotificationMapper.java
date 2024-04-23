@@ -17,6 +17,7 @@ public class NotificationMapper {
                 .createdById(notification.getCreatedById())
                 .createdOn(notification.getCreatedOn().toString())
                 .receiver(notification.getReceiver())
+                .send(false)
                 .build();
         return notificationEntity;
     }
@@ -42,6 +43,7 @@ public class NotificationMapper {
                  .createdOn(Instant.parse(notificationEntity.getCreatedOn()))
                  .params(notificationParams)
                  .receiver(notificationEntity.getReceiver())
+                 .send(false)
                  .build();
         return notification;
 

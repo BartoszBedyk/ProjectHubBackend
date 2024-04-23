@@ -1,7 +1,6 @@
 package com.sensilabs.projecthub.notification;
 
 
-import com.sensilabs.projecthub.notification.configurations.mail.EmailingService;
 import com.sensilabs.projecthub.notification.forms.NotificationForm;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,6 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .createdOn(Instant.now())
                 .createdById(createdById)
                 .receiver(notificationForm.getReceiver())
+                .send(false)
                 .params(notificationForm.getParams()
                         .entrySet()
                         .stream()
@@ -47,5 +48,4 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.findById(id);
     }
 
-    //public List<NotificationParam> mapParam()
 }

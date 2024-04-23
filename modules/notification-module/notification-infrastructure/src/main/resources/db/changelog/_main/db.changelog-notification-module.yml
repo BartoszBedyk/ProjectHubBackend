@@ -8,4 +8,7 @@ databaseChangeLog:
   - include:
       file:
         classpath:db/changelog/project/notification-param-table-relation.xml
+  - include:
+      file:
+        classpath:db/changelog/project/create-notification-alter-table.xml
 
