@@ -26,11 +26,6 @@ public class NotificationServiceTest {
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
 
-        System.out.println(params.get(0).getValue());
-        System.out.println(params.get(0).getName());
-        System.out.println(params.get(1).getValue());
-        System.out.println(params.get(1).getName());
-
 
         Assertions.assertEquals(params.get(0).getValue(), "Adam");
         Assertions.assertEquals(params.get(1).getValue(), "Kowalczyk");

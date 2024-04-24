@@ -1,8 +1,8 @@
 package com.sensilabs.projecthub.notification;
 
-import com.sensilabs.projecthub.notification.forms.NotificationForm;
 import com.sensilabs.projecthub.notification.model.Notification;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -23,5 +23,9 @@ public class NotificationRepositoryMock implements NotificationRepository {
     @Override
     public Optional<Notification> findById(String id) {
         return Optional.empty();
+    }
+
+    @Override
+    public void updateAfterAttempt(String UUID, Integer numberOfAttempts, Instant lastAttemptOn) {
     }
 }

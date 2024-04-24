@@ -32,6 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .createdById(createdById)
                 .receiver(notificationForm.getReceiver())
                 .send(false)
+                .numberOfAttempts(0)
                 .params(notificationForm.getParams()
                         .entrySet()
                         .stream()
@@ -47,5 +48,7 @@ public class NotificationServiceImpl implements NotificationService {
     public Optional<Notification> findById(String id) {
         return notificationRepository.findById(id);
     }
+
+
 
 }

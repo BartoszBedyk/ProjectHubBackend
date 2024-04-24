@@ -11,4 +11,7 @@ databaseChangeLog:
   - include:
       file:
         classpath:db/changelog/project/create-notification-alter-table.xml
+  - include:
+      file:
+        classpath:db/changelog/project/create-notification-alter-table-v2.xml
 

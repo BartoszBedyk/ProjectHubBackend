@@ -37,5 +37,15 @@ public class Notification {
 
     private Boolean send;
 
+    private Integer numberOfAttempts;
 
+
+    public void  increaseAttempts(){
+        this.lastAttemptOn = Instant.now();
+        this.numberOfAttempts += 1;
+    }
+
+    public void finalizeSent() {
+        this.send = true;
+    }
 }
