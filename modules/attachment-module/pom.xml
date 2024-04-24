@@ -5,20 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.sensilabs.projecthub</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>modules</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>modules</artifactId>
+    <artifactId>attachment-module</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>activity-module</module>
-        <module>attachment-module</module>
-        <module>login-pass-auth-module</module>
-        <module>notification-module</module>
-        <module>project-module</module>
-        <module>user-management-module</module>
-        <module>user-verification-module</module>
+        <module>attachment-domain</module>
+        <module>attachment-infrastructure</module>
+        <module>attachment-rest</module>
     </modules>
-
 </project>
