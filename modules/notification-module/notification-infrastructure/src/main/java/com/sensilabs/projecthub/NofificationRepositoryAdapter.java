@@ -5,6 +5,7 @@ import com.sensilabs.projecthub.notification.model.Notification;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,7 +42,6 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
     @Override
     public Optional<Notification> findById(String id) {
         return notificationRepositoryJpa.findById(id).map(NotificationMapper::toNotification);
-
 
     }
 
