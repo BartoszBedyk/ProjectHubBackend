@@ -1,8 +1,9 @@
 package com.sensilabs.projecthub;
 
-import org.springframework.web.multipart.MultipartFile;
+import java.io.InputStream;
 
 public interface AttachmentService {
-    Attachment save(MultipartFile file, String createdById);
-    Attachment getById(String id);
+	Attachment save(InputStream inputStream, String originalFilename, String createdById);
+
+	Attachment getById(String id);
 }
