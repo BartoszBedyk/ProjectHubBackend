@@ -24,7 +24,7 @@ public class KeyOpenForm implements ActivityForm {
     @Size(min = 36, max = 36, message = "Key ID must have 36 characters.")
     private String keyId;
 
-    private enum Fields {
+    private enum Fields{
         USER_ID,
         KEY_ID
     }

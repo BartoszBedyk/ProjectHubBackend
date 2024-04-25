@@ -22,7 +22,7 @@ public class CreateUserForm {
     @Length(min = 2, message = "Last name must be at least 2 characters long")
     private String lastName;
 
-    @NotBlank(message = "Email name must not be blank")
+    @NotBlank(message = "Email must not be blank")
     @Email(message = "Email is invalid")
     private String email;
 }

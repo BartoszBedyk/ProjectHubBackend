@@ -1,14 +1,14 @@
 package com.sensilabs.projecthub.user.management.service;
 
+import com.sensilabs.projecthub.commons.ApplicationException;
+import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.commons.SearchForm;
 import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -28,7 +28,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 	}
 
 	private User getOrThrow(String id) {
-		return userManagementRepository.getNotDeleted(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found!"));
+		return userManagementRepository.getNotDeleted(id).orElseThrow(() -> new ApplicationException(ErrorCode.USER_NOT_FOUND));
 	}
 
 	@Override

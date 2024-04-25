@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.Length;
 public class EditUserForm {
 
     @NotNull(message = "ID must not be null")
-    @Size(min = 36, max = 36, message = "\nID must be 36 characters long")
+    @Size(min = 36, max = 36, message = "ID must be 36 characters long")
     private String id;
 
     @NotBlank(message = "First name must not be blank")
@@ -28,7 +28,7 @@ public class EditUserForm {
     @Length(min = 2, message = "Last name must be at least 2 characters long")
     private String lastName;
 
-    @NotBlank(message = "Email name must not be blank")
+    @NotBlank(message = "Email must not be blank")
     @Email(message = "Email is invalid")
     private String email;
 }
