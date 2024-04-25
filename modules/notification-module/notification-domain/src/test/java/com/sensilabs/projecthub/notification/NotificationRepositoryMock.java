@@ -27,7 +27,7 @@ public class NotificationRepositoryMock implements NotificationRepository {
     }
 
     @Override
-    public List<Notification> getNotSent() {
+    public List<Notification> findNotSent() {
         return null;
     }
 

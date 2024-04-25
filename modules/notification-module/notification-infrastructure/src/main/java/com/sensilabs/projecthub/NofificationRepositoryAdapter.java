@@ -45,5 +45,11 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
 
     }
 
+    @Override
+    public List<Notification> findNotSent() {
+        return notificationRepositoryJpa.findAllBySent(false).stream().map(NotificationMapper::toNotification).toList();
+
+    }
+
 
 }

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface NotificationRepositoryJpa extends JpaRepository<NotificationEntity, String> {
 
-
+List<NotificationEntity> findAllBySent(boolean sent);
 }
