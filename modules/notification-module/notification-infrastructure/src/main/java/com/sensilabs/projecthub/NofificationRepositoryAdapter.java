@@ -45,14 +45,5 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
 
     }
 
-    @Override
-    public void updateAfterAttempt(String UUID, Integer numberOfAttempts, Instant lastAttemptOn) {
-        Notification notification;
-        notification = findById(UUID).get();
-        notification.setNumberOfAttempts(numberOfAttempts);
-        notification.setLastAttemptOn(lastAttemptOn);
-        save(notification);
 
-
-    }
 }

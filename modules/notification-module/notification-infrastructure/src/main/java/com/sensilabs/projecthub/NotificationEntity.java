@@ -39,8 +39,8 @@ public class NotificationEntity {
     @Column(name = "receiver")
     private String receiver;
 
-    @Column(name = "send")
-    private Boolean send;
+    @Column(name = "sent")
+    private Boolean sent;
 
     @Column(name = "last_attempt_on")
     private Instant lastAttemptOn;

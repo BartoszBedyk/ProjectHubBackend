@@ -5,7 +5,7 @@
     <changeSet id="create-notification-alter-table" author="Bartosz Bedyk">
 
         <addColumn tableName="notification">
-            <column name="send" type="boolean"/>
+            <column name="sent" type="boolean"/>
         </addColumn>
 
         <addColumn tableName="notification">

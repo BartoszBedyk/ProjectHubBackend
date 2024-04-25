@@ -9,5 +9,5 @@ public interface NotificationRepository {
     Notification save(Notification notification);
     Optional<Notification> findById(String id);
 
-    void updateAfterAttempt(String UUID, Integer numberOfAttempts, Instant lastAttemptOn);
+
 }

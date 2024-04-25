@@ -25,7 +25,5 @@ public class NotificationRepositoryMock implements NotificationRepository {
         return Optional.empty();
     }
 
-    @Override
-    public void updateAfterAttempt(String UUID, Integer numberOfAttempts, Instant lastAttemptOn) {
-    }
+
 }

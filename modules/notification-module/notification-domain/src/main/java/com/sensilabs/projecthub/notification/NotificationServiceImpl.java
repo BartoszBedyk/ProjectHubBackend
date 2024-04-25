@@ -7,8 +7,6 @@ import com.sensilabs.projecthub.notification.model.NotificationParam;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,7 +29,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .createdOn(Instant.now())
                 .createdById(createdById)
                 .receiver(notificationForm.getReceiver())
-                .send(false)
+                .sent(false)
                 .numberOfAttempts(0)
                 .params(notificationForm.getParams()
                         .entrySet()

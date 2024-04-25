@@ -17,7 +17,7 @@ public class NotificationMapper {
                 .createdById(notification.getCreatedById())
                 .createdOn(notification.getCreatedOn().toString())
                 .receiver(notification.getReceiver())
-                .send(notification.getSend())
+                .sent(notification.getSent())
                 .numberOfAttempts(notification.getNumberOfAttempts())
                 .lastAttemptOn(notification.getLastAttemptOn())
                 .build();
@@ -49,7 +49,7 @@ public class NotificationMapper {
                  .createdOn(Instant.parse(notificationEntity.getCreatedOn()))
                  .params(notificationParams)
                  .receiver(notificationEntity.getReceiver())
-                 .send(notificationEntity.getSend())
+                 .sent(notificationEntity.getSent())
                  .numberOfAttempts(notificationEntity.getNumberOfAttempts())
                  .build();
         return notification;

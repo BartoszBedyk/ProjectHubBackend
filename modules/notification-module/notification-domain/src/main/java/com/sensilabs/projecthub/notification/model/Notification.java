@@ -1,9 +1,6 @@
 package com.sensilabs.projecthub.notification.model;
 
 import com.sensilabs.projecthub.notification.forms.NotificationChannel;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
@@ -35,7 +32,7 @@ public class Notification {
 
     private Instant lastAttemptOn;
 
-    private Boolean send;
+    private Boolean sent;
 
     private Integer numberOfAttempts;
 
@@ -46,6 +43,6 @@ public class Notification {
     }
 
     public void finalizeSent() {
-        this.send = true;
+        this.sent = true;
     }
 }
