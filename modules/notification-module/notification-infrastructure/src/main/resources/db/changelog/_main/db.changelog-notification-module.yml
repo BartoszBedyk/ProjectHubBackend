@@ -10,8 +10,8 @@ databaseChangeLog:
         classpath:db/changelog/project/notification-param-table-relation.xml
   - include:
       file:
-        classpath:db/changelog/project/create-notification-alter-table.xml
+        classpath:db/changelog/project/notification-alter-table.xml
   - include:
       file:
-        classpath:db/changelog/project/create-notification-alter-table-v2.xml
+        classpath:db/changelog/project/notification-alter-table-v2.xml
 
