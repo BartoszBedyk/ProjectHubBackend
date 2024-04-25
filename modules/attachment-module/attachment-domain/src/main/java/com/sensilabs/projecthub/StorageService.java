@@ -1,9 +1,9 @@
 package com.sensilabs.projecthub;
 
-import org.springframework.web.multipart.MultipartFile;
-
+import java.io.InputStream;
 
 public interface StorageService {
-    String save(MultipartFile file);
-    byte[] get(String path);
+	String save(InputStream file);
+
+	byte[] get(String path);
 }
