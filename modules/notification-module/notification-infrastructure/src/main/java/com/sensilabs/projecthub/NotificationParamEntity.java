@@ -23,4 +23,5 @@ public class NotificationParamEntity {
 
     @Column(name = "value")
     private String value;
+
 }

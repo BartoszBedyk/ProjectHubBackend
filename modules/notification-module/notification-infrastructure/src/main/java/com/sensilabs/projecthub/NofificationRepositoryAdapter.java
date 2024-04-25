@@ -2,9 +2,10 @@ package com.sensilabs.projecthub;
 
 import com.sensilabs.projecthub.notification.NotificationRepository;
 import com.sensilabs.projecthub.notification.model.Notification;
-import com.sensilabs.projecthub.notification.model.NotificationParam;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +30,9 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
         NotificationEntity notificationEntity = NotificationMapper.toNotificationEntity(notification);
         notificationRepositoryJpa.save(notificationEntity);
         List<NotificationParamEntity> notificationParamEntities =
-                notification.getParams().stream().map(notificationParam->toNotificationParam(notificationParam, notificationEntity)).collect(Collectors.toList());
+                notification.getParams().stream()
+                        .map(notificationParam -> toNotificationParam(notificationParam, notificationEntity))
+                        .collect(Collectors.toList());
         notificationParamRepositoryJpa.saveAll(notificationParamEntities);
         notificationEntity.setParams(notificationParamEntities);
         return NotificationMapper.toNotification(notificationEntity);
@@ -38,6 +41,9 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
 
     @Override
     public Optional<Notification> findById(String id) {
-        return Optional.ofNullable(NotificationMapper.toNotification(notificationRepositoryJpa.findById(id).get()));
+        return notificationRepositoryJpa.findById(id).map(NotificationMapper::toNotification);
+
     }
+
+
 }
