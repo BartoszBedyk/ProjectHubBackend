@@ -7,6 +7,7 @@ import com.sensilabs.projecthub.notification.model.NotificationParam;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +48,10 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.findById(id);
     }
 
+    @Override
+    public List<Notification> getNotSent(){
+        return notificationRepository.findNotSent();
+    }
 
 
 }

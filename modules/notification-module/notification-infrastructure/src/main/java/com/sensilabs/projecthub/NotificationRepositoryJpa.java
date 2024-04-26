@@ -1,6 +1,7 @@
 package com.sensilabs.projecthub;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.Instant;
 import java.util.List;
@@ -8,5 +9,6 @@ import java.util.Optional;
 
 public interface NotificationRepositoryJpa extends JpaRepository<NotificationEntity, String> {
 
-List<NotificationEntity> findAllBySent(boolean sent);
+   @Query("SELECT n FROM notification n WHERE n.sent = ?1 AND n.lastAttemptOn < ?2 AND n.numberOfAttempts <=5")
+List<NotificationEntity> findAllBySentAndLastAttemptOn(boolean sent, Instant lastAttemptOn);
 }

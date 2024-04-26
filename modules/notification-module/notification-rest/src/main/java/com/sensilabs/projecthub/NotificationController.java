@@ -13,6 +13,7 @@ import jakarta.mail.MessagingException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -66,7 +67,10 @@ public class NotificationController {
         return notificationService.findById(id);
     }
 
-
+    @GetMapping("/getAll")
+    public List<Notification> getNotSent(){
+        return notificationService.getNotSent();
+    }
 
 
 }

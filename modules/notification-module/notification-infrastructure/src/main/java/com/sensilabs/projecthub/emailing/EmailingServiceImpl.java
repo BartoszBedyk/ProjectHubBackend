@@ -33,6 +33,12 @@ public class EmailingServiceImpl implements EmailingService {
         notificationRepository.save(notification);
     }
 
+    @Override
+    public List<Notification> findNotSent() {
+       return notificationRepository.findNotSent();
+    }
+
+
     public static Map<String, String> toMap(List<NotificationParam> list) {
         Map<String, String> paramsMap = new HashMap<>();
         for (NotificationParam param : list) {

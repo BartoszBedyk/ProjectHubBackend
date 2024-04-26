@@ -1,33 +1,42 @@
-package com.sensilabs.projecthub.emailing;
+package com.sensilabs.projecthub.notification;
 
 import com.sensilabs.projecthub.notification.EmailingService;
 import com.sensilabs.projecthub.notification.NotificationRepository;
+import com.sensilabs.projecthub.notification.model.Notification;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import java.util.List;
+import java.util.function.Consumer;
+
 @EnableScheduling
 @Configuration
-public class ScheludedTask {
+public class MailScheluder {
 
     private final NotificationRepository notificationRepository;
     private final EmailingService emailingService;
 
-    public ScheludedTask(NotificationRepository notificationRepository, EmailingService emailingService) {
+    public MailScheluder(NotificationRepository notificationRepository, EmailingService emailingService) {
         this.notificationRepository = notificationRepository;
         this.emailingService = emailingService;
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 180000)
     public void schelduledMailing() throws InterruptedException{
-        if(notificationRepository.findNotSent().isEmpty()){
+
+        List<Notification> notSent= notificationRepository.findNotSent();
+        if(notSent.isEmpty()){
             System.out.println("No emails to send.");
         }
         else {
-            try{
-                notificationRepository.findNotSent().forEach(emailingService::send);
-            }
-            catch(Exception e){
-                System.out.println("No emails to send on the queue.");
+            for(Notification notification : notSent ) {
+                try{
+                    emailingService.send(notification);
+                }
+                catch(Exception e){
+                    System.out.println("Unable to send mail to" + notification.getReceiver());
+                }
             }
         }
     }
