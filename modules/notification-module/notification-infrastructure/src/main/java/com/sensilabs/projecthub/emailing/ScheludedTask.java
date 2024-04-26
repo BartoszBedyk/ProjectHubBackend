@@ -1,4 +1,4 @@
-package com.sensilabs.projecthub;
+package com.sensilabs.projecthub.emailing;
 
 import com.sensilabs.projecthub.notification.EmailingService;
 import com.sensilabs.projecthub.notification.NotificationRepository;
