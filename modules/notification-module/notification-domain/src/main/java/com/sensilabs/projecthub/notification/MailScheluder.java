@@ -1,14 +1,12 @@
 package com.sensilabs.projecthub.notification;
 
-import com.sensilabs.projecthub.notification.EmailingService;
-import com.sensilabs.projecthub.notification.NotificationRepository;
 import com.sensilabs.projecthub.notification.model.Notification;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.function.Consumer;
 
 @EnableScheduling
 @Configuration
@@ -24,8 +22,8 @@ public class MailScheluder {
 
     @Scheduled(fixedDelay = 180000)
     public void schelduledMailing() throws InterruptedException{
-
-        List<Notification> notSent= notificationRepository.findNotSent();
+        Instant time = Instant.now();
+        List<Notification> notSent= notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(false,time,5 );
         if(notSent.isEmpty()){
             System.out.println("No emails to send.");
         }

@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface EmailingService {
     public void send(Notification notification) throws MailException;
-    public List<Notification> findNotSent();
+    public List<Notification> findAllBySentAndLastAttemptOn();
 
 
 }

@@ -49,8 +49,9 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> getNotSent(){
-        return notificationRepository.findNotSent();
+    public List<Notification> findAllBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts){
+
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts);
     }
 
 

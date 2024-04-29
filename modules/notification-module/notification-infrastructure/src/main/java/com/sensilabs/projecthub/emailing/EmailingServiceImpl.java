@@ -8,6 +8,7 @@ import com.sensilabs.projecthub.notification.model.NotificationParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +35,9 @@ public class EmailingServiceImpl implements EmailingService {
     }
 
     @Override
-    public List<Notification> findNotSent() {
-       return notificationRepository.findNotSent();
+    public List<Notification> findAllBySentAndLastAttemptOn() {
+        Instant time = Instant.now();
+       return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(false, time, 5);
     }
 
 

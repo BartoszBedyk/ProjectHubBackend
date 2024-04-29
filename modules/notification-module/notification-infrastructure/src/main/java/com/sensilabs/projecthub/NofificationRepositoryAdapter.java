@@ -46,9 +46,9 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
     }
 
     @Override
-    public List<Notification> findNotSent() {
-        Instant now = Instant.now();
-        return notificationRepositoryJpa.findAllBySentAndLastAttemptOn(false, now).stream().map(NotificationMapper::toNotification).toList();
+    public List<Notification> findAllBySentAndLastAttemptedAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
+
+        return notificationRepositoryJpa.findAllBySentAndLastAttemptOnAndNumberOfAttempts(sent, time, numberOfAttempts).stream().map(NotificationMapper::toNotification).toList();
 
     }
 

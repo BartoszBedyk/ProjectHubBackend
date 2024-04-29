@@ -27,7 +27,7 @@ public class NotificationRepositoryMock implements NotificationRepository {
     }
 
     @Override
-    public List<Notification> findNotSent() {
+    public List<Notification> findAllBySentAndLastAttemptedAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
         return null;
     }
 

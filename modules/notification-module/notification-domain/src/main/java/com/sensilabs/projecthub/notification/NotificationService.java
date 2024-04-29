@@ -15,7 +15,7 @@ public interface NotificationService {
 
     Notification save(@Valid NotificationForm notificationForm, String createdById);
     Optional<Notification> findById(String id);
-    List<Notification> getNotSent();
+    List<Notification> findAllBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts);
 
 
 
