@@ -2,8 +2,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="DamianS Szymański" id="create-project-table">
-        <createTable tableName="project">
+    <changeSet author="Kamil Smolarek" id="create-technology-table">
+        <createTable tableName="technology">
             <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -13,11 +13,9 @@
             <column name="description" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="created_on" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_by_id" type="varchar(255)">
-                <constraints nullable="false"/>
+            <column name="project_id" type="varchar(255)">
+                <constraints nullable="false" foreignKeyName="fk_project_id" referencedColumnNames="id"
+                             referencedTableName="project"/>
             </column>
         </createTable>
     </changeSet>
