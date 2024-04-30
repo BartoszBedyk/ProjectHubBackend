@@ -14,10 +14,10 @@ public class ProjectServiceTest {
     void createProjectTest() throws InterruptedException {
         Instant beforeDate = Instant.now();
         Thread.sleep(2);
-        CreateProjectForm createProjectForm = new CreateProjectForm("testUser", "Project", "Description",
+        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
                 List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
                         new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
-        Project project = projectService.save(createProjectForm, createProjectForm.getUserId());
+        Project project = projectService.save(createProjectForm, "testUser");
         Thread.sleep(2);
         Instant afterDate = Instant.now();
         Assertions.assertEquals(project.getCreatedById(), "testUser");
@@ -37,10 +37,10 @@ public class ProjectServiceTest {
 
     @Test
     void updateProjectTest() {
-        CreateProjectForm createProjectForm = new CreateProjectForm("testUser", "Project", "Description",
+        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
                 List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
                         new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
-        Project project = projectService.save(createProjectForm, createProjectForm.getUserId());
+        Project project = projectService.save(createProjectForm, "testUser");
         UpdateProjectForm updateProjectForm = new UpdateProjectForm(project.getId(), "Project2", "Description2",
                 List.of(new Technology(UUID.randomUUID().toString(), "C++", "C++ Desc"),
                         new Technology(UUID.randomUUID().toString(), "PHP", "PHP Desc")));
@@ -64,10 +64,10 @@ public class ProjectServiceTest {
     void getTest() throws InterruptedException {
         Instant beforeDate = Instant.now();
         Thread.sleep(2);
-        CreateProjectForm createProjectForm = new CreateProjectForm("testUser", "Project", "Description",
+        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
                 List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
                         new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
-        Project project = projectService.save(createProjectForm, createProjectForm.getUserId());
+        Project project = projectService.save(createProjectForm, "testUser");
         Thread.sleep(2);
         Instant afterDate = Instant.now();
 

@@ -15,7 +15,7 @@ public class ProjectController {
 
     @PostMapping("/create")
     public Project create(@RequestBody CreateProjectForm form) {
-        return projectService.save(form, form.getUserId());
+        return projectService.save(form, "mockUser");
     }
 
     @PutMapping("/update")

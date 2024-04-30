@@ -25,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project save(CreateProjectForm createProjectForm, String id) {
+    public Project save(CreateProjectForm createProjectForm, String createdById) {
         List<Technology> technologies = createProjectForm.getTechnologyList().stream()
                 .map(tech -> new Technology(UUID.randomUUID().toString(), tech.getName(), tech.getDescription()))
                 .collect(Collectors.toList());
@@ -35,7 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .name(createProjectForm.getName())
                 .description(createProjectForm.getDescription())
                 .createdOn(Instant.now())
-                .createdById(id)
+                .createdById(createdById)
                 .technologies(technologies)
                 .build();
         return projectRepository.save(project);

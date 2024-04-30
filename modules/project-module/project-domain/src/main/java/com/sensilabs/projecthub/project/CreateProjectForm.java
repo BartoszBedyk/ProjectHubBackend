@@ -18,13 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateProjectForm {
-    @NotNull(message = "User ID cannot be null.")
-    @Size(min = 36, max = 36, message = "User ID must have 36 characters.")
-    private String userId;
     @NotBlank(message = "Name cannot be blank.")
     @Length(min = 1, max = 30, message = "Name must be between 1 and 30 characters.")
     private String name;
-    @NotBlank(message = "Description cannot be blank.")
     @Length(min = 1, max = 200, message = "Description must be between 1 and 200 characters.")
     private String description;
     @NotEmpty(message = "Technology list cannot be empty")

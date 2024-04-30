@@ -4,7 +4,7 @@ import com.sensilabs.projecthub.commons.SearchForm;
 import com.sensilabs.projecthub.commons.SearchResponse;
 
 public interface ProjectService {
-    Project save(CreateProjectForm createProjectForm, String id);
+    Project save(CreateProjectForm createProjectForm, String createdById);
 
     Project getById(String id);
 

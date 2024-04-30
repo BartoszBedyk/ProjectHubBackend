@@ -24,7 +24,6 @@ public class UpdateProjectForm {
     @NotBlank(message = "Name cannot be blank.")
     @Length(min = 1, max = 30, message = "Name must be between 1 and 30 characters.")
     private String name;
-    @NotBlank(message = "Description cannot be blank.")
     @Length(min = 1, max = 200, message = "Description must be between 1 and 200 characters.")
     private String description;
     @NotEmpty(message = "Technology list cannot be empty")
