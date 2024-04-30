@@ -8,7 +8,8 @@ public enum ErrorCode {
     UNKNOWN_ERROR("Something went wrong"),
     UNSUPPORTED_OPERATOR("Unsupported operator"),
     ATTATCHMENT_NOT_FOUND("Attachment not found"),
-    FILE_NOT_FOUND("File not found");
+    FILE_NOT_FOUND("File not found"),
+    PROJECT_NOT_FOUND("Project not found");
 
     ErrorCode(String message) {
         this.message = message;
