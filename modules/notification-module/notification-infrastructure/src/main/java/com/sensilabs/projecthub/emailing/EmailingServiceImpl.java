@@ -3,6 +3,7 @@ package com.sensilabs.projecthub.emailing;
 
 import com.sensilabs.projecthub.notification.EmailingService;
 import com.sensilabs.projecthub.notification.NotificationRepository;
+import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +33,6 @@ public class EmailingServiceImpl implements EmailingService {
             System.out.println("Email sending failed.");
         }
         notificationRepository.save(notification);
-    }
-
-    @Override
-    public List<Notification> findAllBySentAndLastAttemptOn() {
-        Instant time = Instant.now();
-       return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(false, time, 5);
     }
 
 

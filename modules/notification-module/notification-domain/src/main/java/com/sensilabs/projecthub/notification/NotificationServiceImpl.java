@@ -1,6 +1,7 @@
 package com.sensilabs.projecthub.notification;
 
 
+import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.forms.NotificationForm;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
@@ -49,9 +50,14 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> findAllBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts){
+    public List<Notification> findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts){
 
-        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts);
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.EMAIL);
+    }
+
+    @Override
+    public List<Notification> findAllSMSBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.SMS);
     }
 
 

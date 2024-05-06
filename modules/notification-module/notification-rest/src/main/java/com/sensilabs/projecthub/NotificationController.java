@@ -12,6 +12,7 @@ import com.sensilabs.projecthub.notification.model.Notification;
 import jakarta.mail.MessagingException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,7 +69,7 @@ public class NotificationController {
 
     @GetMapping("/getAll")
     public List<Notification> getNotSent(){
-        return null; //notificationService.findAllBySentAndLastAttemptOnAndNumberOfAttempts();
+        return notificationService.findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(false, Instant.now(), 5);
     }
 
 

@@ -1,11 +1,11 @@
 package com.sensilabs.projecthub;
 
 import com.sensilabs.projecthub.notification.NotificationRepository;
+import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.model.Notification;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +18,7 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
 
     private final NotificationRepositoryJpa notificationRepositoryJpa;
     private final NotificationParamRepositoryJpa notificationParamRepositoryJpa;
+
 
     public NofificationRepositoryAdapter(NotificationRepositoryJpa notificationRepositoryJpa, NotificationParamRepositoryJpa notificationParamRepositoryJpa) {
         this.notificationRepositoryJpa = notificationRepositoryJpa;
@@ -46,11 +47,13 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
     }
 
     @Override
-    public List<Notification> findAllBySentAndLastAttemptedAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
+    public List<Notification> findAllBySentAndLastAttemptedAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts, NotificationChannel channel) {
 
-        return notificationRepositoryJpa.findAllBySentAndLastAttemptOnAndNumberOfAttempts(sent, time, numberOfAttempts).stream().map(NotificationMapper::toNotification).toList();
+        return notificationRepositoryJpa.findAllBySentAndLastAttemptOnAndNumberOfAttemptsQuery(sent, time, numberOfAttempts, channel).stream().map(NotificationMapper::toNotification).toList();
 
     }
+
+
 
 
 }
