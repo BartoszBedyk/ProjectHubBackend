@@ -26,11 +26,14 @@ public class NotificationServiceTest {
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
 
+        Assertions.assertEquals(getParam(params, "LAST_NAME"), "Kowalczyk");
+        Assertions.assertEquals(getParam(params, "FIRST_NAME"), "Adam");
 
-        Assertions.assertEquals(params.get(0).getValue(), "Adam");
-        Assertions.assertEquals(params.get(1).getValue(), "Kowalczyk");
         Assertions.assertEquals(notification.getType(), NotificationType.PASSWORD_RESET);
         Assertions.assertEquals(notification.getChannel(), NotificationChannel.EMAIL);
+        Assertions.assertEquals(notification.getNumberOfAttempts(), 0);
+        Assertions.assertNull(notification.getLastAttemptOn());
+        Assertions.assertEquals(notification.getSent(), false);
 
     }
 
@@ -44,10 +47,13 @@ public class NotificationServiceTest {
         Assertions.assertEquals(notification.getCreatedById(), "Admin");
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
-        Assertions.assertEquals(params.get(0).getValue(), "Dawid");
-        Assertions.assertEquals(params.get(1).getValue(), "Bekas");
+        Assertions.assertEquals(getParam(params, "LAST_NAME"), "Bekas");
+        Assertions.assertEquals(getParam(params, "FIRST_NAME"), "Dawid");
         Assertions.assertEquals(notification.getType(), NotificationType.PASSWORD_RESET);
         Assertions.assertEquals(notification.getChannel(), NotificationChannel.SMS);
+        Assertions.assertEquals(notification.getNumberOfAttempts(), 0);
+        Assertions.assertNull(notification.getLastAttemptOn());
+        Assertions.assertEquals(notification.getSent(), false);
 
 
     }
@@ -61,10 +67,13 @@ public class NotificationServiceTest {
         Assertions.assertEquals(notification.getCreatedById(), "Admin");
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
-        Assertions.assertEquals(params.get(0).getValue(), "Anna");
-        Assertions.assertEquals(params.get(1).getValue(), "Witaj");
+        Assertions.assertEquals(getParam(params, "LAST_NAME"), "Witaj");
+        Assertions.assertEquals(getParam(params, "FIRST_NAME"), "Anna");
         Assertions.assertEquals(notification.getType(), NotificationType.ACCOUNT_CREATE);
         Assertions.assertEquals(notification.getChannel(), NotificationChannel.EMAIL);
+        Assertions.assertEquals(notification.getNumberOfAttempts(), 0);
+        Assertions.assertNull(notification.getLastAttemptOn());
+        Assertions.assertEquals(notification.getSent(), false);
 
 
     }
@@ -78,11 +87,16 @@ public class NotificationServiceTest {
         Assertions.assertEquals(notification.getCreatedById(), "Admin");
         Assertions.assertTrue(notification.getCreatedOn().isAfter(beforeDate) && notification.getCreatedOn().isBefore(afterDate));
         List<NotificationParam> params = notification.getParams();
-        Assertions.assertEquals(params.get(0).getValue(), "Mirosława");
-        Assertions.assertEquals(params.get(1).getValue(), "Bogusz");
+        Assertions.assertEquals(getParam(params, "LAST_NAME"), "Bogusz");
+        Assertions.assertEquals(getParam(params, "FIRST_NAME"), "Mirosława");
         Assertions.assertEquals(notification.getType(), NotificationType.ACCOUNT_CREATE);
         Assertions.assertEquals(notification.getChannel(), NotificationChannel.SMS);
+        Assertions.assertEquals(notification.getNumberOfAttempts(), 0);
+        Assertions.assertNull(notification.getLastAttemptOn());
+        Assertions.assertEquals(notification.getSent(), false);
+    }
 
-
+    private String getParam(List<NotificationParam> params, String paramName) {
+        return params.stream().filter(param -> param.getName().equals(paramName)).findFirst().get().getValue();
     }
 }

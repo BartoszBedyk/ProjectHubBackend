@@ -29,3 +29,8 @@ spring:
         mime:
           charset: UTF
     protocol: smtp
+
+app:
+  notification:
+    nextMailAttemptDelayInSeconds: 30
+    numberOfAttempts: 5

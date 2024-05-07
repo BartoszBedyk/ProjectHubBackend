@@ -46,7 +46,6 @@ public class EmailSenderImpl implements EmailSender{
 
         String processedString = templateEngine.process(templateId, context);
         mimeMessageHelper.setText(processedString, true);
-
         mailSender.send(mimeMessage);
 
     }

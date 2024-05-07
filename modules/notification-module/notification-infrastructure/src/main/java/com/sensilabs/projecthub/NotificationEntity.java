@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Entity(name = "notification")
 @Table(name = "notification")
 public class NotificationEntity {
 

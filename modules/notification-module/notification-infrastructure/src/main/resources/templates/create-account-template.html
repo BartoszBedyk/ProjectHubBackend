@@ -61,10 +61,10 @@
     <h1>Account created</h1>
     <h2>Your ProjectHub account has been successfully created.</h2>
     <br>
-    <p> Hi, <span th:text="${firstName}"> </span><span> </span> <span th:text="${lastName}"></span></p>
+    <p> Hi, <span th:text="${FIRST_NAME}"> </span><span> </span> <span th:text="${LAST_NAME}"></span></p>
     <div class="textbody"> Your Project Hub account has been successfully created using the email address:
     </div>
-    <b><p th:utext="${email}" class="noLink">userEmail@gmail.com</p></b>
+    <b><p th:utext="${toMail}" class="noLink">userEmail@gmail.com</p></b>
 
     <br>
 
