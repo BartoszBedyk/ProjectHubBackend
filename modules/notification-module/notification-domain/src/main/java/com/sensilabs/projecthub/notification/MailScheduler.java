@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 @EnableScheduling
@@ -17,19 +16,21 @@ public class MailScheduler {
 
     private final EmailingService emailingService;
     private final NotificationService notificationService;
+    private final NotificationProps notificationProps;
 
     @Autowired
-    public MailScheduler(EmailingService emailingService, NotificationService notificationService) {
+    public MailScheduler(EmailingService emailingService, NotificationService notificationService, NotificationProps notificationProps) {
         this.emailingService = emailingService;
         this.notificationService = notificationService;
+        this.notificationProps = notificationProps;
     }
 
     @Scheduled(fixedDelay = 1000)
     public void scheduledMailing() throws InterruptedException {
         Instant now = Instant.now();
-        Instant time = now.minus(30, ChronoUnit.SECONDS);
+        Instant time = now.minus(notificationProps.nextMailAttemptDelayInSeconds(), ChronoUnit.SECONDS);
 
-        List<Notification> notSent = notificationService.findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(false, time, 5);
+        List<Notification> notSent = notificationService.findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(false, time, notificationProps.numberOfAttempts());
         if (notSent.isEmpty()) {
             System.out.println("No emails to send.");
         } else {
