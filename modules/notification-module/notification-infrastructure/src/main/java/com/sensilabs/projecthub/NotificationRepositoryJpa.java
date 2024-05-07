@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface NotificationRepositoryJpa extends JpaRepository<NotificationEntity, String> {
 
-   @Query("SELECT n FROM notification n WHERE n.sent = ?1 AND n.numberOfAttempts <= ?3 AND n.lastAttemptOn < ?2 OR n.lastAttemptOn is null")
+   @Query("SELECT n FROM notification n WHERE n.sent = ?1 AND n.channel = ?4 AND n.numberOfAttempts <= ?3 AND (n.lastAttemptOn <= ?2 OR n.lastAttemptOn is null)")
 List<NotificationEntity> findAllBySentAndLastAttemptOnAndNumberOfAttemptsQuery(boolean sent, Instant lastAttemptOn, int numberOfAttempts, NotificationChannel channel);
 }
