@@ -12,10 +12,10 @@ public class SecurityProps {
     }
 
     public String getSecretKey() {
-        return env.getRequiredProperty("app.security.jwt.secret");
+        return env.getRequiredProperty("spring.security.jwt.secret");
     }
 
     public long getTokenExpiration() {
-        return Long.parseLong(env.getRequiredProperty("app.security.jwt.token-expiration-time-in-minutes"));
+        return Long.parseLong(env.getRequiredProperty("spring.security.jwt.token-expiration-time-in-minutes"));
     }
 }

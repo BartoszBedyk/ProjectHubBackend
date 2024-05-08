@@ -29,14 +29,14 @@ spring:
         mime:
           charset: UTF
     protocol: smtp
-
-app:
   security:
     jwt:
       secret: 5pAq6zRyX8bC3dV2wS7gN1mK9jF0hL4tUoP6iBvE3nG8xZaQrY7cW2fA
       token-expiration-time-in-minutes: 1000
-  login-auth-pass:
-    reset-password-token-expiration-time-in-minutes: 15
+
+app:
   notification:
     nextMailAttemptDelayInSeconds: 30
     numberOfAttempts: 5
+  login-auth-pass:
+    reset-password-token-expiration-time-in-minutes: 15
