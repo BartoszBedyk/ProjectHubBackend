@@ -5,8 +5,7 @@ import com.sensilabs.projecthub.notification.model.NotificationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
@@ -16,6 +15,8 @@ import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
 public class ResetPasswordSmsForm implements NotificationForm{
 
     @NotNull(message = "First name cannot be null.")

@@ -5,6 +5,7 @@ import com.sensilabs.projecthub.notification.model.NotificationType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Entity(name = "notification")
 @Table(name = "notification")
 public class NotificationEntity {
 
@@ -37,6 +38,15 @@ public class NotificationEntity {
 
     @Column(name = "receiver")
     private String receiver;
+
+    @Column(name = "sent")
+    private Boolean sent;
+
+    @Column(name = "last_attempt_on")
+    private Instant lastAttemptOn;
+
+    @Column(name = "number_of_attempts")
+    private Integer numberOfAttempts;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "notification", fetch = FetchType.EAGER)
     private List<NotificationParamEntity> params;

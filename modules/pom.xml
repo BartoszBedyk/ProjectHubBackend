@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>activity-module</module>
+        <module>attachment-module</module>
         <module>login-pass-auth-module</module>
         <module>notification-module</module>
         <module>project-module</module>

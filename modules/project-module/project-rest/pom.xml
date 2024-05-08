@@ -10,4 +10,17 @@
     </parent>
     <artifactId>project-rest</artifactId>
     <version>${revision}</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>rest</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>project-domain</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>

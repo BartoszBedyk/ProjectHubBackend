@@ -23,11 +23,6 @@
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
-            <artifactId>rest</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>notification-domain</artifactId>
             <version>${revision}</version>
             <scope>compile</scope>
@@ -38,6 +33,10 @@
             <artifactId>notification-domain</artifactId>
             <version>1.0.1</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>jakarta.mail</artifactId>
         </dependency>
 
     </dependencies>

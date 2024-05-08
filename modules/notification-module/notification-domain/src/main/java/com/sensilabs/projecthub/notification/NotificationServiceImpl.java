@@ -1,6 +1,7 @@
 package com.sensilabs.projecthub.notification;
 
 
+import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.forms.NotificationForm;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
@@ -26,17 +27,21 @@ public class NotificationServiceImpl implements NotificationService {
         Notification notification = Notification.builder()
                 .id(UUID.randomUUID().toString())
                 .type(notificationForm.getType())
+                .channel(notificationForm.getChannel())
+                .createdOn(Instant.now())
+                .createdById(createdById)
+                .receiver(notificationForm.getReceiver())
+                .sent(false)
+                .numberOfAttempts(0)
                 .params(notificationForm.getParams()
                         .entrySet()
                         .stream()
                         .map(param -> new NotificationParam(UUID.randomUUID().toString(), param.getKey(), param.getValue()))
                         .toList())
-                .channel(notificationForm.getChannel())
-                .createdOn(Instant.now())
-                .createdById(createdById)
-                .receiver(notificationForm.getReceiver())
                 .build();
+        
         return notificationRepository.save(notification);
+
     }
 
     @Override
@@ -44,5 +49,16 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.findById(id);
     }
 
-    //public List<NotificationParam> mapParam()
+    @Override
+    public List<Notification> findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts){
+
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.EMAIL);
+    }
+
+    @Override
+    public List<Notification> findAllSMSBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.SMS);
+    }
+
+
 }

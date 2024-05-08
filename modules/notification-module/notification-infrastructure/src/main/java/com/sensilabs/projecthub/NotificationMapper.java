@@ -17,6 +17,9 @@ public class NotificationMapper {
                 .createdById(notification.getCreatedById())
                 .createdOn(notification.getCreatedOn().toString())
                 .receiver(notification.getReceiver())
+                .sent(notification.getSent())
+                .numberOfAttempts(notification.getNumberOfAttempts())
+                .lastAttemptOn(notification.getLastAttemptOn())
                 .build();
         return notificationEntity;
     }
@@ -31,8 +34,12 @@ public class NotificationMapper {
     }
 
     public static Notification toNotification(NotificationEntity notificationEntity){
+
         List<NotificationParam> notificationParams =
-                notificationEntity.getParams().stream().map(NotificationMapper::toNotificationParamEntity).collect(Collectors.toList());
+                notificationEntity.getParams().stream().map(NotificationMapper::toNotificationParamEntity)
+                        .collect(Collectors.toList());
+
+
 
          Notification notification = Notification.builder()
                  .id(notificationEntity.getId())
@@ -42,6 +49,8 @@ public class NotificationMapper {
                  .createdOn(Instant.parse(notificationEntity.getCreatedOn()))
                  .params(notificationParams)
                  .receiver(notificationEntity.getReceiver())
+                 .sent(notificationEntity.getSent())
+                 .numberOfAttempts(notificationEntity.getNumberOfAttempts())
                  .build();
         return notification;
 
