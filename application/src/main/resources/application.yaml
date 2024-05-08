@@ -34,3 +34,5 @@ app:
   notification:
     nextMailAttemptDelayInSeconds: 30
     numberOfAttempts: 5
+    numberOfMailingThreads: 100
+    numberOfMailsPerPage: 100

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -31,11 +32,13 @@ public class MailScheduler {
 
     @Scheduled(fixedDelay = 1000)
     public void scheduledMailing() throws InterruptedException {
-        final ExecutorService executorService = Executors.newFixedThreadPool(100);
+        final ExecutorService executorService = Executors.newFixedThreadPool(notificationProps.numberOfMailingThreads());
         Instant now = Instant.now();
         Instant time = now.minus(notificationProps.nextMailAttemptDelayInSeconds(), ChronoUnit.SECONDS);
+        List<Notification> notSent;
+         notSent= notificationService.findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(false, time, notificationProps.numberOfAttempts());
 
-        List<Notification> notSent = notificationService.findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(false, time, notificationProps.numberOfAttempts());
+
         if (notSent.isEmpty()) {
             System.out.println("No emails to send.");
         } else {

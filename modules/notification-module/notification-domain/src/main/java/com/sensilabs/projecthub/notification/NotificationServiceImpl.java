@@ -51,7 +51,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<Notification> findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts){
-
         return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.EMAIL);
     }
 

@@ -1,8 +1,11 @@
 package com.sensilabs.projecthub;
 
+import com.sensilabs.projecthub.notification.NotificationProps;
 import com.sensilabs.projecthub.notification.NotificationRepository;
 import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.model.Notification;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -18,11 +21,13 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
 
     private final NotificationRepositoryJpa notificationRepositoryJpa;
     private final NotificationParamRepositoryJpa notificationParamRepositoryJpa;
+    private final NotificationProps notificationProps;
 
 
-    public NofificationRepositoryAdapter(NotificationRepositoryJpa notificationRepositoryJpa, NotificationParamRepositoryJpa notificationParamRepositoryJpa) {
+    public NofificationRepositoryAdapter(NotificationRepositoryJpa notificationRepositoryJpa, NotificationParamRepositoryJpa notificationParamRepositoryJpa, NotificationProps notificationProps) {
         this.notificationRepositoryJpa = notificationRepositoryJpa;
         this.notificationParamRepositoryJpa = notificationParamRepositoryJpa;
+        this.notificationProps = notificationProps;
     }
 
     @Override
@@ -48,8 +53,8 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
 
     @Override
     public List<Notification> findAllBySentAndLastAttemptedAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts, NotificationChannel channel) {
-
-        return notificationRepositoryJpa.findAllBySentAndLastAttemptOnAndNumberOfAttemptsQuery(sent, time, numberOfAttempts, channel).stream().map(NotificationMapper::toNotification).toList();
+        Pageable pageable = PageRequest.of(0, notificationProps.numberOfMailsPerPage());
+        return notificationRepositoryJpa.findAllBySentAndLastAttemptOnAndNumberOfAttemptsQuery(sent, time, numberOfAttempts, channel, pageable).stream().map(NotificationMapper::toNotification).toList();
 
     }
 
