@@ -1,13 +1,20 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
+import com.sensilabs.projecthub.security.JwtUtil;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TokenProviderAdapter implements TokenProvider{
+public class TokenProviderAdapter implements TokenProvider {
 
-    // TODO correct implementation
+    private final JwtUtil jwtUtil;
+
+
+    public TokenProviderAdapter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
     @Override
     public String generateToken(String userId) {
-        return "token";
+        return jwtUtil.generateToken(userId);
     }
 }

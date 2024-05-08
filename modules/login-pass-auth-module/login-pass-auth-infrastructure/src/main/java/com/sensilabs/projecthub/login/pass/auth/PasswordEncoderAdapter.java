@@ -1,22 +1,24 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.awt.*;
-import java.util.Objects;
 
 @Component
 public class PasswordEncoderAdapter implements PasswordEncoder {
 
-    // TODO correct implementation
-    @Override
-    public String encode(String rawText) {
-        return rawText;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public PasswordEncoderAdapter(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    // TODO correct implementation
+    @Override
+    public String encode(String rawText) {
+        return bCryptPasswordEncoder.encode(rawText);
+    }
+
     @Override
     public boolean match(String rawText, String encoded) {
-        return Objects.equals(rawText, encoded);
+        return bCryptPasswordEncoder.matches(rawText, encoded);
     }
 }

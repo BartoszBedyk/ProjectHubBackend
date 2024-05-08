@@ -25,7 +25,9 @@ public class AuthorizationServiceTest {
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
     UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
 
-    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService);
+    AuthPassUserProps props = new AuthPassUserPropsMock();
+
+    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
@@ -51,11 +53,11 @@ public class AuthorizationServiceTest {
     }
     @Test
     void successfulLogInTest() {
-        AuthPassUser loggedInUser = service.login(new LoginForm("test@test.pl", "password123"));
+        LoginResponse response = service.login(new LoginForm("test@test.pl", "password123"));
 
-        assertNotNull(loggedInUser);
-        assertEquals("test@test.pl", loggedInUser.getEmail());
-        assertEquals("password123", loggedInUser.getPassword());
+        assertNotNull(response);
+        assertNotNull(response.getToken());
+        assertEquals("Bearer", response.getType());
     }
 
     @Test

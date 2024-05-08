@@ -2,15 +2,11 @@ package com.sensilabs.projecthub.login.pass.auth.service;
 
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
-import com.sensilabs.projecthub.login.pass.auth.AuthPassUser;
-import com.sensilabs.projecthub.login.pass.auth.PasswordEncoder;
-import com.sensilabs.projecthub.login.pass.auth.ResetPasswordRequest;
-import com.sensilabs.projecthub.login.pass.auth.TokenProvider;
+import com.sensilabs.projecthub.login.pass.auth.*;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.repository.AuthorizationRepository;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.service.UserManagementService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -28,11 +24,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final UserManagementService userManagementService;
 
-    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService) {
+    private final AuthPassUserProps props;
+
+    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService, AuthPassUserProps props) {
         this.authorizationRepository = authorizationRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
         this.userManagementService = userManagementService;
+        this.props = props;
     }
 
     private AuthPassUser getByEmailOrThrowAuthPassUser(String email) {
@@ -47,13 +46,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public AuthPassUser login(LoginForm loginRequest) {
-            AuthPassUser user = getByEmailOrThrowAuthPassUser(loginRequest.getEmail());
+    public LoginResponse login(LoginForm loginRequest) {
+        AuthPassUser user = getByEmailOrThrowAuthPassUser(loginRequest.getEmail());
 
-            if (passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
-                tokenProvider.generateToken(user.getId());
-                return user;
-            }
+        if (passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
+            String token = tokenProvider.generateToken(user.getId());
+
+            return new LoginResponse(token);
+        }
 
         throw new ApplicationException(ErrorCode.WRONG_PASSWORD);
     }
@@ -82,7 +82,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         ResetPasswordRequest request = ResetPasswordRequest.builder()
                 .id(UUID.randomUUID().toString())
                 .createdOn(time)
-                .expiredOn(time.plus(15, ChronoUnit.MINUTES))
+                .expiredOn(time.plus(props.getResetPasswordTokenExpiration(), ChronoUnit.MINUTES))
                 .userId(user.getId())
                 .build();
 

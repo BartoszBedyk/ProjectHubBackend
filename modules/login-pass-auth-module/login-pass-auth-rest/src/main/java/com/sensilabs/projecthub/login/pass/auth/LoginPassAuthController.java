@@ -4,8 +4,10 @@ import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.service.AuthorizationService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("/login-pass-auth/test")
+@RequestMapping("/auth")
 public class LoginPassAuthController {
 
     private final AuthorizationService authorizationService;
@@ -15,7 +17,7 @@ public class LoginPassAuthController {
     }
 
     @PostMapping("/login")
-    public AuthPassUser login(@RequestBody LoginForm form) {
+    public LoginResponse login(@RequestBody LoginForm form) {
         return authorizationService.login(form);
     }
 
