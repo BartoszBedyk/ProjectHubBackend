@@ -9,7 +9,8 @@ public enum ErrorCode {
     UNSUPPORTED_OPERATOR("Unsupported operator"),
     ATTATCHMENT_NOT_FOUND("Attachment not found"),
     FILE_NOT_FOUND("File not found"),
-    PROJECT_NOT_FOUND("Project not found");
+    PROJECT_NOT_FOUND("Project not found"),
+    PROJECT_MEMBER_NOT_FOUND("Project member not found");
 
     ErrorCode(String message) {
         this.message = message;
