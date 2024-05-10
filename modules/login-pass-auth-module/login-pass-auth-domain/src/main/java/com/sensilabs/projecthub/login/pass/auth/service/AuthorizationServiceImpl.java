@@ -133,6 +133,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @EventListener(ContextRefreshedEvent.class)
     public void createSysAdminOnStartup() {
+
+        if (authorizationRepository.findByEmail(props.getSysAdminEmail()).isPresent()) {
+            log.info("Method createSysAdminOnStartup, SysAdmin already exists");
+            return;
+        }
+
         User user = userManagementService.saveSysAdminOnStartup(new CreateUserForm(props.getSysAdminFirstName(), props.getSysAdminLastName(), props.getSysAdminEmail()));
 
         AuthPassUser userAuth = AuthPassUser.builder()
