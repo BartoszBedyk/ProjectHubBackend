@@ -1,6 +1,6 @@
 package com.sensilabs.projecthub.login.pass.auth.service;
 
-import com.sensilabs.projecthub.login.pass.auth.AuthPassUser;
+import com.sensilabs.projecthub.login.pass.auth.LoginResponse;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface AuthorizationService {
 
-    AuthPassUser login(@Valid LoginForm logInRequest);
+    LoginResponse login(@Valid LoginForm logInRequest);
 
     void createUser(@Valid CreateUserWithPasswordForm createUserRequest);
 
