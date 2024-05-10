@@ -1,5 +1,10 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
 public interface AuthPassUserProps {
-    long getResetPasswordTokenExpiration();
+    long getResetPasswordTokenExpirationInMinutes();
+    String getSysAdminFirstName();
+    String getSysAdminLastName();
+    String getSysAdminEmail();
+    String getSysAdminPassword();
+
 }

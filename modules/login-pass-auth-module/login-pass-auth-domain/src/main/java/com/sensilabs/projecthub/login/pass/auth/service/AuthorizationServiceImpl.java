@@ -2,11 +2,16 @@ package com.sensilabs.projecthub.login.pass.auth.service;
 
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
+import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.login.pass.auth.*;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.repository.AuthorizationRepository;
 import com.sensilabs.projecthub.user.management.User;
+import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.service.UserManagementService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,6 +19,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final AuthorizationRepository authorizationRepository;
@@ -26,12 +32,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final AuthPassUserProps props;
 
-    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService, AuthPassUserProps props) {
+    private final LoggedUser loggedUser;
+
+    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService, AuthPassUserProps props, LoggedUser loggedUser) {
         this.authorizationRepository = authorizationRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
         this.userManagementService = userManagementService;
         this.props = props;
+        this.loggedUser = loggedUser;
     }
 
     private AuthPassUser getByEmailOrThrowAuthPassUser(String email) {
@@ -55,7 +64,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             return new LoginResponse(token);
         }
 
-        throw new ApplicationException(ErrorCode.WRONG_PASSWORD);
+        throw new ApplicationException(ErrorCode.WRONG_LOGIN_OR_PASSWORD);
     }
 
     @Override
@@ -82,11 +91,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         ResetPasswordRequest request = ResetPasswordRequest.builder()
                 .id(UUID.randomUUID().toString())
                 .createdOn(time)
-                .expiredOn(time.plus(props.getResetPasswordTokenExpiration(), ChronoUnit.MINUTES))
+                .expiredOn(time.plus(props.getResetPasswordTokenExpirationInMinutes(), ChronoUnit.MINUTES))
                 .userId(user.getId())
                 .build();
 
         authorizationRepository.saveResetPasswordRequest(request);
+
     }
 
     @Override
@@ -115,8 +125,22 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (passwordEncoder.match(changePasswordForm.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
             authorizationRepository.saveAuthPassUser(user);
+            log.info("Method changePassword(), LoggedUser {}", loggedUser.getUserId());
         } else {
-            throw new ApplicationException(ErrorCode.WRONG_PASSWORD);
+            throw new ApplicationException(ErrorCode.WRONG_LOGIN_OR_PASSWORD);
         }
+    }
+
+    @EventListener(ContextRefreshedEvent.class)
+    public void createSysAdminOnStartup() {
+        User user = userManagementService.saveSysAdminOnStartup(new CreateUserForm(props.getSysAdminFirstName(), props.getSysAdminLastName(), props.getSysAdminEmail()));
+
+        AuthPassUser userAuth = AuthPassUser.builder()
+                .id(user.getId())
+                .email(props.getSysAdminEmail())
+                .password(passwordEncoder.encode(props.getSysAdminPassword()))
+                .build();
+
+        authorizationRepository.saveAuthPassUser(userAuth);
     }
 }

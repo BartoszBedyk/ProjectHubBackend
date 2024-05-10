@@ -1,26 +1,28 @@
 package com.sensilabs.projecthub.user.management.service;
 
-import com.sensilabs.projecthub.commons.ApplicationException;
-import com.sensilabs.projecthub.commons.ErrorCode;
-import com.sensilabs.projecthub.commons.SearchForm;
-import com.sensilabs.projecthub.commons.SearchResponse;
+import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class UserManagementServiceImpl implements UserManagementService {
 
 	private final UserManagementRepository userManagementRepository;
 
-	public UserManagementServiceImpl(UserManagementRepository userManagementRepository) {
+	private final LoggedUser loggedUser;
+
+	public UserManagementServiceImpl(UserManagementRepository userManagementRepository, LoggedUser loggedUser) {
 		this.userManagementRepository = userManagementRepository;
-	}
+        this.loggedUser = loggedUser;
+    }
 
 	@Override
 	public SearchResponse<User> search(SearchForm form) {
@@ -33,6 +35,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 	@Override
 	public User get(String id) {
+		log.info("Method get(), LoggedUser {}", loggedUser.getUserId());
 		return getOrThrow(id);
 	}
 
@@ -44,6 +47,22 @@ public class UserManagementServiceImpl implements UserManagementService {
 				.lastName(userRequest.getLastName())
 				.email(userRequest.getEmail())
 				.createdOn(Instant.now())
+				.createdById(loggedUser.getUserId())
+				.isBlocked(false)
+				.build();
+
+		return userManagementRepository.save(user);
+	}
+
+	@Override
+	public User saveSysAdminOnStartup(CreateUserForm userRequest) {
+		User user = User.builder()
+				.id(UUID.randomUUID().toString())
+				.firstName(userRequest.getFirstName())
+				.lastName(userRequest.getLastName())
+				.email(userRequest.getEmail())
+				.createdOn(Instant.now())
+				.createdById("SYSTEM")
 				.isBlocked(false)
 				.build();
 

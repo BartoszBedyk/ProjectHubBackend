@@ -1,10 +1,11 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
-import com.sensilabs.projecthub.login.pass.auth.forms.*;
+import com.sensilabs.projecthub.login.pass.auth.forms.CreateUserWithPasswordForm;
+import com.sensilabs.projecthub.login.pass.auth.forms.LoginForm;
+import com.sensilabs.projecthub.login.pass.auth.forms.ResetPasswordConfirmForm;
+import com.sensilabs.projecthub.login.pass.auth.forms.ResetPasswordForm;
 import com.sensilabs.projecthub.login.pass.auth.service.AuthorizationService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -34,10 +35,5 @@ public class LoginPassAuthController {
     @PutMapping("/reset-password")
     public void resetPasswordConfirm(@RequestBody ResetPasswordConfirmForm form) {
         authorizationService.resetPasswordConfirm(form);
-    }
-
-    @PutMapping("/change-password")
-    public void changePassword(@RequestBody ChangePasswordForm form) {
-        authorizationService.changePassword(form);
     }
 }

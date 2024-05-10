@@ -1,7 +1,8 @@
-package com.sensilabs.projecthub.login.pass.auth;
+package com.sensilabs.projecthub.login.pass.auth.security;
 
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
+import com.sensilabs.projecthub.security.JwtAuthUser;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
 import org.springframework.security.core.userdetails.UserDetails;

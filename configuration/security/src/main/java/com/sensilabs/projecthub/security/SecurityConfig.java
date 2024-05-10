@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.security;
 
+import com.sensilabs.projecthub.commons.LoggedUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,9 +21,17 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
-    public SecurityConfig(UserDetailsService customUserDetailsService, JwtAuthorizationFilter jwtAuthorizationFilter) {
+    private final SecurityProps props;
+
+    public SecurityConfig(UserDetailsService customUserDetailsService, JwtAuthorizationFilter jwtAuthorizationFilter, SecurityProps props) {
         this.userDetailsService = customUserDetailsService;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+        this.props = props;
+    }
+
+    @Bean
+    public LoggedUser loggedUser() {
+        return new LoggedUserImpl();
     }
 
     @Bean
@@ -37,7 +46,7 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeHttpRequest) -> authorizeHttpRequest
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(props.getSecurityFilterPath()).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

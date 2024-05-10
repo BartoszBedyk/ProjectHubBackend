@@ -1,5 +1,6 @@
-package com.sensilabs.projecthub.login.pass.auth;
+package com.sensilabs.projecthub.login.pass.auth.security;
 
+import com.sensilabs.projecthub.login.pass.auth.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 

@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
+import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.repository.AuthorizationRepository;
 import com.sensilabs.projecthub.login.pass.auth.service.AuthorizationService;
@@ -22,12 +23,14 @@ public class AuthorizationServiceTest {
     PasswordEncoder encoder = new PasswordEncoderMock();
     TokenProvider provider = new TokenProviderMock();
 
+    LoggedUser loggedUser = new LoggedUserMock();
+
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, loggedUser);
 
     AuthPassUserProps props = new AuthPassUserPropsMock();
 
-    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props);
+    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props, loggedUser);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();

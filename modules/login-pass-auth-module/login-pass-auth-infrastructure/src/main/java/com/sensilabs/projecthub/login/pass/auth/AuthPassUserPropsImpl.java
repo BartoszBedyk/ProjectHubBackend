@@ -12,7 +12,27 @@ public class AuthPassUserPropsImpl implements AuthPassUserProps {
     }
 
     @Override
-    public long getResetPasswordTokenExpiration() {
-        return Long.parseLong(env.getRequiredProperty("app.login-auth-pass.reset-password-token-expiration-time-in-minutes"));
+    public long getResetPasswordTokenExpirationInMinutes() {
+        return Long.parseLong(env.getRequiredProperty("app.loginPassAuth.resetPasswordTokenExpirationTimeInMinutes"));
+    }
+
+    @Override
+    public String getSysAdminFirstName() {
+        return env.getRequiredProperty("app.loginPassAuth.sysAdminFirstName");
+    }
+
+    @Override
+    public String getSysAdminLastName() {
+        return env.getRequiredProperty("app.loginPassAuth.sysAdminLastName");
+    }
+
+    @Override
+    public String getSysAdminEmail() {
+        return env.getRequiredProperty("app.loginPassAuth.sysAdminEmail");
+    }
+
+    @Override
+    public String getSysAdminPassword() {
+        return env.getRequiredProperty("app.loginPassAuth.sysAdminPassword");
     }
 }

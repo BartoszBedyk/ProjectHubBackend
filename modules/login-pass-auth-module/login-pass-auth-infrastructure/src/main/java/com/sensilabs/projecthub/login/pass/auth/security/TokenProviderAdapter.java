@@ -1,5 +1,6 @@
-package com.sensilabs.projecthub.login.pass.auth;
+package com.sensilabs.projecthub.login.pass.auth.security;
 
+import com.sensilabs.projecthub.login.pass.auth.TokenProvider;
 import com.sensilabs.projecthub.security.JwtUtil;
 import org.springframework.stereotype.Component;
 

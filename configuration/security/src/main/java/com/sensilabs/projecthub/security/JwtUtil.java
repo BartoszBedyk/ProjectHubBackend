@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 public class JwtUtil {
@@ -48,13 +49,13 @@ public class JwtUtil {
         return parseJwtClaims(token);
     }
 
-    public String resolveToken(HttpServletRequest request) {
+    public Optional<String> resolveToken(HttpServletRequest request) {
 
         String bearerToken = request.getHeader(TOKEN_HEADER);
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
-            return bearerToken.substring(TOKEN_PREFIX.length());
+            return Optional.of(bearerToken.substring(TOKEN_PREFIX.length()));
         }
-        return null;
+        return Optional.empty();
     }
 
     public boolean validateClaims(Claims claims) throws AuthenticationException {

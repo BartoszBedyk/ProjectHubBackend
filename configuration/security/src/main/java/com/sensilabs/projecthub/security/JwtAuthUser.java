@@ -1,4 +1,4 @@
-package com.sensilabs.projecthub.login.pass.auth;
+package com.sensilabs.projecthub.security;
 
 import lombok.Builder;
 import lombok.Data;

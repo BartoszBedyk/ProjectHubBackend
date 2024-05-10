@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.user.management;
 
+import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
@@ -16,8 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserManagementServiceTest {
 
+    LoggedUser loggedUser = new LoggedUserMock();
+
     UserManagementRepository repository = new UserManagementRepositoryMock();
-    UserManagementService service = new UserManagementServiceImpl(repository);
+    UserManagementService service = new UserManagementServiceImpl(repository, loggedUser);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
@@ -70,12 +73,6 @@ public class UserManagementServiceTest {
         assertTrue(currentDate.isBefore(userSaved.getCreatedOn()));
         assertTrue(dateAfterUpdate.isAfter(userSaved.getCreatedOn()));
     }
-
-//    @Test
-//    void updateValidationTest() {
-//        User userSaved = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"));
-//        assertThrows(ConstraintViolationException.class, () -> service.update(new EditUserForm(userSaved.getId(), "K", "T", "email")));
-//    }
 
     @Test
     void validateEditUserForm() {

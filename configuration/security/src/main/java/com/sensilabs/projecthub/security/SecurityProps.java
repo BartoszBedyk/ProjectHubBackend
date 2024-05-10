@@ -16,6 +16,10 @@ public class SecurityProps {
     }
 
     public long getTokenExpiration() {
-        return Long.parseLong(env.getRequiredProperty("spring.security.jwt.token-expiration-time-in-minutes"));
+        return Long.parseLong(env.getRequiredProperty("spring.security.jwt.tokenExpirationTimeInMinutes"));
+    }
+
+    public String getSecurityFilterPath() {
+        return env.getRequiredProperty("spring.security.jwt.securityFilterPath");
     }
 }
