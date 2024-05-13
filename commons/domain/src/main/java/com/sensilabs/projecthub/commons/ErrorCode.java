@@ -12,7 +12,8 @@ public enum ErrorCode {
     FILE_NOT_FOUND("File not found"),
     PROJECT_NOT_FOUND("Project not found"),
     ENCRYPTION_FAILED("Encryption failed"),
-    DECRYPTION_FAILED("Decryption failed");
+    DECRYPTION_FAILED("Decryption failed"),
+    FILE_STREAM_PROCESSING_FAILED("File stream processing failed");
 
     ErrorCode(String message) {
         this.message = message;

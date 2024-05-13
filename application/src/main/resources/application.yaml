@@ -48,3 +48,4 @@ app:
   cipher:
     secret: XwI7VCDgyojWjS3VNr5ntpx5Ma7XWdb5
     algorithm: AES
+    bufferSize: 1024
