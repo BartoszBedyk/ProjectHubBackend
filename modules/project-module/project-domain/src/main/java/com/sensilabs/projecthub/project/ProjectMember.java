@@ -16,4 +16,5 @@ public class ProjectMember {
     private String createdById;
     private Instant createdOn;
     private Role role;
+    private String projectId;
 }

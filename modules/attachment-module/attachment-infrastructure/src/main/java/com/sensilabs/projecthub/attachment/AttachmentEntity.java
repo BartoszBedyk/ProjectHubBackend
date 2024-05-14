@@ -1,4 +1,4 @@
-package com.sensilabs.projecthub;
+package com.sensilabs.projecthub.attachment;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

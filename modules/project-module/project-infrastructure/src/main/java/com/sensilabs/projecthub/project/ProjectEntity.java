@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -27,4 +28,6 @@ public class ProjectEntity {
     private String createdById;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project", fetch = FetchType.EAGER)
     private List<TechnologyEntity> technologies;
+    @OneToMany(mappedBy = "project",fetch = FetchType.LAZY)
+    private List<ProjectMemberEntity> members; 
 }

@@ -7,6 +7,8 @@ import com.sensilabs.projecthub.commons.SearchResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,7 +20,6 @@ public class ProjectMemberServiceImpl implements ProjectMemberService{
         this.projectMemberRepository = projectMemberRepository;
     }
 
-
     @Override
     public ProjectMember save(CreateProjectMemberForm createProjectMemberForm, String createdById) {
         ProjectMember projectMember = ProjectMember.builder()
@@ -28,6 +29,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService{
                 .id(UUID.randomUUID().toString())
                 .createdById(createdById)
                 .createdOn(Instant.now())
+                .projectId(createProjectMemberForm.getProjectId())
                 .build();
         return projectMemberRepository.save(projectMember);
     }
@@ -42,11 +44,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService{
     @Override
     public void remove(String memberId) {
         ProjectMember existingMember = getOrThrow(memberId);
-        if (existingMember != null) {
-            projectMemberRepository.delete(existingMember);
-        } else {
-            throw new IllegalArgumentException("Członek projektu o podanym identyfikatorze nie istnieje.");
-        }
+        projectMemberRepository.delete(existingMember);
     }
 
     @Override

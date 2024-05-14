@@ -1,4 +1,4 @@
-package com.sensilabs.projecthub;
+package com.sensilabs.projecthub.attachment;
 
 import java.io.InputStream;
 import java.nio.file.Path;

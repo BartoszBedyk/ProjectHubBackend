@@ -2,6 +2,7 @@ package com.sensilabs.projecthub.project;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,7 @@ public class CreateProjectMemberForm {
     private String lastName;
     @NotNull(message = "Role cannot be null.")
     private Role role;
+    @NotNull(message = "ID cannot be null.")
+    @Size(min = 36, max = 36, message = "ID must have 36 characters.")
+    private String projectId;
 }
