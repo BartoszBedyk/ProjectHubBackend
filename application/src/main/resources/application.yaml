@@ -11,7 +11,7 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
   liquibase:
     change-log: classpath:/db/db.changelog-master.yaml
   mail:
@@ -29,3 +29,23 @@ spring:
         mime:
           charset: UTF
     protocol: smtp
+  security:
+    jwt:
+      secret: 5pAq6zRyX8bC3dV2wS7gN1mK9jF0hL4tUoP6iBvE3nG8xZaQrY7cW2fA
+      tokenExpirationTimeInMinutes: 1000
+      securityFilterPath: /auth/**
+
+app:
+  notification:
+    nextMailAttemptDelayInSeconds: 30
+    numberOfAttempts: 5
+  loginPassAuth:
+    resetPasswordTokenExpirationTimeInMinutes: 15
+    sysAdminFirstName: admin
+    sysAdminLastName: admin
+    sysAdminEmail: admin@test.pl
+    sysAdminPassword: password123
+  cipher:
+    secret: XwI7VCDgyojWjS3VNr5ntpx5Ma7XWdb5
+    algorithm: AES
+    bufferSize: 1024

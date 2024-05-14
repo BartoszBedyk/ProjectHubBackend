@@ -1,12 +1,14 @@
 package com.sensilabs.projecthub.notification;
 
 
+import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.forms.NotificationForm;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +49,16 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.findById(id);
     }
 
+    @Override
+    public List<Notification> findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts){
+
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.EMAIL);
+    }
+
+    @Override
+    public List<Notification> findAllSMSBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.SMS);
+    }
 
 
 }

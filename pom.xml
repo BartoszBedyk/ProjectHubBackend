@@ -25,6 +25,11 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.28</lombok.version>
+        <spring.boot.starter.mail.verison>3.1.5</spring.boot.starter.mail.verison>
+        <thymeleaf.spring6>3.1.2.RELEASE</thymeleaf.spring6>
+        <spring-boot-starter-security.version>3.2.4</spring-boot-starter-security.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <jaxb-api.version>2.3.0</jaxb-api.version>
     </properties>
     <dependencies>
         <dependency>

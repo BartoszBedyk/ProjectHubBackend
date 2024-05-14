@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
+import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.repository.AuthorizationRepository;
 import com.sensilabs.projecthub.login.pass.auth.service.AuthorizationService;
@@ -22,10 +23,14 @@ public class AuthorizationServiceTest {
     PasswordEncoder encoder = new PasswordEncoderMock();
     TokenProvider provider = new TokenProviderMock();
 
-    UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
+    LoggedUser loggedUser = new LoggedUserMock();
 
-    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService);
+    UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, loggedUser);
+
+    AuthPassUserProps props = new AuthPassUserPropsMock();
+
+    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props, loggedUser);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
@@ -51,11 +56,11 @@ public class AuthorizationServiceTest {
     }
     @Test
     void successfulLogInTest() {
-        AuthPassUser loggedInUser = service.login(new LoginForm("test@test.pl", "password123"));
+        LoginResponse response = service.login(new LoginForm("test@test.pl", "password123"));
 
-        assertNotNull(loggedInUser);
-        assertEquals("test@test.pl", loggedInUser.getEmail());
-        assertEquals("password123", loggedInUser.getPassword());
+        assertNotNull(response);
+        assertNotNull(response.getToken());
+        assertEquals("Bearer", response.getType());
     }
 
     @Test

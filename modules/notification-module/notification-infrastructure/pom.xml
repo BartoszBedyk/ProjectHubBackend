@@ -30,10 +30,6 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>notification-domain</artifactId>
             <version>${revision}</version>
@@ -47,7 +43,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-            <version>3.1.5</version>
+            <version>${spring.boot.starter.mail.verison}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -57,7 +53,7 @@
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring6</artifactId>
-            <version>3.1.2.RELEASE</version>
+            <version>${thymeleaf.spring6}</version>
         </dependency>
 
 
