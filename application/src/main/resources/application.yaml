@@ -44,4 +44,8 @@ app:
     sysAdminFirstName: admin
     sysAdminLastName: admin
     sysAdminEmail: admin@test.pl
-    sysAdminPassword: admin
+    sysAdminPassword: password123
+  cipher:
+    secret: XwI7VCDgyojWjS3VNr5ntpx5Ma7XWdb5
+    algorithm: AES
+    bufferSize: 1024
