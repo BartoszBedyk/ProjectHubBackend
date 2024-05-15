@@ -11,14 +11,13 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
   liquibase:
     change-log: classpath:/db/db.changelog-master.yaml
   mail:
     host: smtp.gmail.com
     port: 587
     username: projecthub.sl.noreply@gmail.com
-    password: zmblladkexcstsjt
     default-encoding: UTF-8
     properties:
       mail:
@@ -26,13 +25,16 @@ spring:
           auth: true
           starttls:
             enable: true
+            required: true
         mime:
           charset: UTF
     protocol: smtp
 
+gmail:
+  api:
+    key: AIzaSyDrnmHJhIH6BrqPega6evohV1CZYqhdNjE
 app:
   notification:
     nextMailAttemptDelayInSeconds: 30
     numberOfAttempts: 5
-    numberOfMailingThreads: 100
-    numberOfMailsPerPage: 100
+    numberOfThreadsAndMailPerThread: 10

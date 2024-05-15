@@ -1,26 +1,27 @@
 package com.sensilabs.projecthub.notification;
 
 import com.sensilabs.projecthub.notification.model.Notification;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.data.domain.PageRequest;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.*;
 
 @EnableScheduling
 @Configuration
+@Slf4j
 public class MailScheduler {
 
     private final EmailingService emailingService;
     private final NotificationService notificationService;
     private final NotificationProps notificationProps;
+    private final ExecutorService executorService;
 
 
     @Autowired
@@ -28,50 +29,46 @@ public class MailScheduler {
         this.emailingService = emailingService;
         this.notificationService = notificationService;
         this.notificationProps = notificationProps;
+        this.executorService = Executors.newFixedThreadPool(notificationProps.numberOfThreadsAndMailPerThread());
     }
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 2000)
     public void scheduledMailing() throws InterruptedException {
-        final ExecutorService executorService = Executors.newFixedThreadPool(notificationProps.numberOfMailingThreads());
+
         Instant now = Instant.now();
         Instant time = now.minus(notificationProps.nextMailAttemptDelayInSeconds(), ChronoUnit.SECONDS);
         List<Notification> notSent;
-         notSent= notificationService.findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(false, time, notificationProps.numberOfAttempts());
-
+        notSent = notificationService.findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(false, time, notificationProps.numberOfAttempts());
+        System.out.println("NotSent size: " + notSent.size());
 
         if (notSent.isEmpty()) {
-            System.out.println("No emails to send.");
+           log.info("No notifications found. Process skipped");
         } else {
+            log.info("Notifications found. Processed: " + notSent.size());
+            List<Future> toSend = new ArrayList<>();
             for (Notification notification : notSent) {
                 try {
-                    executorService.submit(new MailSender(notification));
+                    toSend.add(executorService.submit(() -> emailingService.send(notification)));
                 } catch (RejectedExecutionException e) {
-                    System.err.println("Task submission was rejected: " + e.getMessage());
-
-                }finally {
-                    executorService.shutdown();
+                    System.err.println("Task was rejected " + e.getMessage());
                 }
             }
+            toSend.forEach(item -> {
+                try {
+                    item.get();
+                } catch (InterruptedException e) {
+                    Thread.interrupted();
+                    throw new RuntimeException(e);
+                } catch (ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            log.info("Notifications sent: " + toSend.size());
         }
     }
-
-    public class MailSender implements Runnable {
-
-        private final Notification notification;
-
-        public MailSender(Notification notification) {
-            this.notification = notification;
-        }
-        @Override
-        public void run() {
-            try {
-                emailingService.send(notification);
-            } catch (Exception e) {
-                System.out.println("Unable to send mail to " + notification.getReceiver());
-            }
-
-        }
-    }
-
-
 }
+
+
+
+
+

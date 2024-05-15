@@ -27,6 +27,10 @@
         <lombok.version>1.18.28</lombok.version>
         <spring.boot.starter.mail.verison>3.1.5</spring.boot.starter.mail.verison>
         <thymeleaf.spring6>3.1.2.RELEASE</thymeleaf.spring6>
+        <google.api.client>2.0.0</google.api.client>
+        <google.oauth.client>1.34.1</google.oauth.client>
+        <google.api.services.gmail>v1-rev20220404-2.0.0</google.api.services.gmail>
+        <google.http.client.jackson2>1.41.1</google.http.client.jackson2>
     </properties>
     <dependencies>
         <dependency>

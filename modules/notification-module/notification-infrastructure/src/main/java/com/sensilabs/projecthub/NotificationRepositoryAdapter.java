@@ -17,14 +17,14 @@ import static com.sensilabs.projecthub.NotificationMapper.toNotificationParam;
 
 @Component
 
-public class NofificationRepositoryAdapter implements NotificationRepository {
+public class NotificationRepositoryAdapter implements NotificationRepository {
 
     private final NotificationRepositoryJpa notificationRepositoryJpa;
     private final NotificationParamRepositoryJpa notificationParamRepositoryJpa;
     private final NotificationProps notificationProps;
 
 
-    public NofificationRepositoryAdapter(NotificationRepositoryJpa notificationRepositoryJpa, NotificationParamRepositoryJpa notificationParamRepositoryJpa, NotificationProps notificationProps) {
+    public NotificationRepositoryAdapter(NotificationRepositoryJpa notificationRepositoryJpa, NotificationParamRepositoryJpa notificationParamRepositoryJpa, NotificationProps notificationProps) {
         this.notificationRepositoryJpa = notificationRepositoryJpa;
         this.notificationParamRepositoryJpa = notificationParamRepositoryJpa;
         this.notificationProps = notificationProps;
@@ -53,7 +53,7 @@ public class NofificationRepositoryAdapter implements NotificationRepository {
 
     @Override
     public List<Notification> findAllBySentAndLastAttemptedAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts, NotificationChannel channel) {
-        Pageable pageable = PageRequest.of(0, notificationProps.numberOfMailsPerPage());
+        Pageable pageable = PageRequest.of(0, notificationProps.numberOfThreadsAndMailPerThread());
         return notificationRepositoryJpa.findAllBySentAndLastAttemptOnAndNumberOfAttemptsQuery(sent, time, numberOfAttempts, channel, pageable).stream().map(NotificationMapper::toNotification).toList();
 
     }
