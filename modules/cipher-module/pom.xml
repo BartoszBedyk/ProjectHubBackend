@@ -5,13 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.sensilabs.projecthub</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>modules</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>configuration</artifactId>
-    <version>${revision}</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>security</module>
-    </modules>
+    <artifactId>cipher-module</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
 </project>

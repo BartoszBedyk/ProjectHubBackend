@@ -18,6 +18,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: projecthub.sl.noreply@gmail.com
+    password: zmblladkexcstsjt
     default-encoding: UTF-8
     properties:
       mail:
@@ -29,6 +30,11 @@ spring:
         mime:
           charset: UTF
     protocol: smtp
+  security:
+    jwt:
+      secret: 5pAq6zRyX8bC3dV2wS7gN1mK9jF0hL4tUoP6iBvE3nG8xZaQrY7cW2fA
+      tokenExpirationTimeInMinutes: 1000
+      securityFilterPath: /auth/**
 
 gmail:
   api:
@@ -38,3 +44,14 @@ app:
     nextMailAttemptDelayInSeconds: 30
     numberOfAttempts: 5
     numberOfThreadsAndMailPerThread: 10
+  loginPassAuth:
+    resetPasswordTokenExpirationTimeInMinutes: 15
+    sysAdminFirstName: admin
+    sysAdminLastName: admin
+    sysAdminEmail: admin@test.pl
+    sysAdminPassword: password123
+  cipher:
+    secret: XwI7VCDgyojWjS3VNr5ntpx5Ma7XWdb5
+    algorithm: AES
+    bufferSize: 1024
+
