@@ -27,6 +27,6 @@ public class ProjectMemberEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
-    @ManyToOne
-    private ProjectEntity project;
+    @Column(name = "project_id")
+    private String projectId;
 }

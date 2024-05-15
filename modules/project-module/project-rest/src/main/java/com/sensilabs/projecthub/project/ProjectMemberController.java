@@ -29,7 +29,7 @@ public class ProjectMemberController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void get(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") String id) {
         projectMemberService.remove(id);
     }
 

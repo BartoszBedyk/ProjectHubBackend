@@ -1,9 +1,7 @@
 package com.sensilabs.projecthub.project;
 
-import java.util.List;
-
 public class ProjectMemberMapper {
-    public static ProjectMemberEntity toProjectMemberEntity(ProjectMember projectMember, ProjectEntity projectEntity) {
+    public static ProjectMemberEntity toProjectMemberEntity(ProjectMember projectMember) {
         return ProjectMemberEntity.builder()
                 .id(projectMember.getId())
                 .role(projectMember.getRole())
@@ -11,7 +9,7 @@ public class ProjectMemberMapper {
                 .lastName(projectMember.getLastName())
                 .createdById(projectMember.getCreatedById())
                 .createdOn(projectMember.getCreatedOn())
-                .project(projectEntity)
+                .projectId(projectMember.getProjectId())
                 .build();
     }
 
@@ -23,7 +21,7 @@ public class ProjectMemberMapper {
                 .lastName(projectMemberEntity.getLastName())
                 .createdById(projectMemberEntity.getCreatedById())
                 .createdOn(projectMemberEntity.getCreatedOn())
-                .projectId(projectMemberEntity.getProject().getId())
+                .projectId(projectMemberEntity.getProjectId())
                 .build();
     }
 }

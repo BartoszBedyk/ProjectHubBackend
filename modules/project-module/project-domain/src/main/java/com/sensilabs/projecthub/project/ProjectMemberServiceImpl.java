@@ -15,23 +15,29 @@ import java.util.UUID;
 public class ProjectMemberServiceImpl implements ProjectMemberService{
 
     private final ProjectMemberRepository projectMemberRepository;
+    private final ProjectRepository projectRepository;
 
-    public ProjectMemberServiceImpl(ProjectMemberRepository projectMemberRepository) {
+    public ProjectMemberServiceImpl(ProjectMemberRepository projectMemberRepository, ProjectRepository projectRepository) {
         this.projectMemberRepository = projectMemberRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
     public ProjectMember save(CreateProjectMemberForm createProjectMemberForm, String createdById) {
-        ProjectMember projectMember = ProjectMember.builder()
-                .role(createProjectMemberForm.getRole())
-                .firstName(createProjectMemberForm.getFirstName())
-                .lastName(createProjectMemberForm.getLastName())
-                .id(UUID.randomUUID().toString())
-                .createdById(createdById)
-                .createdOn(Instant.now())
-                .projectId(createProjectMemberForm.getProjectId())
-                .build();
-        return projectMemberRepository.save(projectMember);
+        if(projectRepository.findById(createProjectMemberForm.getProjectId()).isPresent()) {
+            ProjectMember projectMember = ProjectMember.builder()
+                    .role(createProjectMemberForm.getRole())
+                    .firstName(createProjectMemberForm.getFirstName())
+                    .lastName(createProjectMemberForm.getLastName())
+                    .id(UUID.randomUUID().toString())
+                    .createdById(createdById)
+                    .createdOn(Instant.now())
+                    .projectId(createProjectMemberForm.getProjectId())
+                    .build();
+            return projectMemberRepository.save(projectMember);
+        }
+       else
+           throw new ApplicationException(ErrorCode.PROJECT_NOT_FOUND);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ProjectMemberServiceTest {
     ProjectMemberRepository projectMemberRepository = new ProjectMemberRepositoryMock();
     ProjectRepository projectRepository = new ProjectRepositoryMock();
     ProjectService projectService = new ProjectServiceImpl(projectRepository);
-    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository);
+    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository);
 
     @Test
     void saveMemberTest() throws InterruptedException {
