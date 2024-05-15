@@ -3,6 +3,8 @@ package com.sensilabs.projecthub.notification;
 import com.sensilabs.projecthub.notification.model.Notification;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,6 +18,7 @@ import java.util.concurrent.*;
 @EnableScheduling
 @Configuration
 @Slf4j
+@ConditionalOnProperty(value = "mail.enabled", havingValue = "true")
 public class MailScheduler {
 
     private final EmailingService emailingService;
@@ -31,8 +34,8 @@ public class MailScheduler {
         this.notificationProps = notificationProps;
         this.executorService = Executors.newFixedThreadPool(notificationProps.numberOfThreadsAndMailPerThread());
     }
-
-    @Scheduled(fixedDelay = 2000)
+    @Value("${mail.enabled}")
+    @Scheduled(fixedDelayString = "${app.notification.schedulerDelayInMilliseconds}")
     public void scheduledMailing() throws InterruptedException {
 
         Instant now = Instant.now();

@@ -15,6 +15,7 @@ spring:
   liquibase:
     change-log: classpath:/db/db.changelog-master.yaml
   mail:
+    enabled: false
     host: smtp.gmail.com
     port: 587
     username: projecthub.sl.noreply@gmail.com
@@ -44,6 +45,7 @@ app:
     nextMailAttemptDelayInSeconds: 30
     numberOfAttempts: 5
     numberOfThreadsAndMailPerThread: 10
+    schedulerDelayInMilliseconds: 20000
   loginPassAuth:
     resetPasswordTokenExpirationTimeInMinutes: 15
     sysAdminFirstName: admin
@@ -54,4 +56,3 @@ app:
     secret: XwI7VCDgyojWjS3VNr5ntpx5Ma7XWdb5
     algorithm: AES
     bufferSize: 1024
-
