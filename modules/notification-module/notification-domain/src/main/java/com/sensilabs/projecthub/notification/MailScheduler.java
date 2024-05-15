@@ -18,7 +18,7 @@ import java.util.concurrent.*;
 @EnableScheduling
 @Configuration
 @Slf4j
-@ConditionalOnProperty(value = "mail.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "app.notification.mail.enabled", havingValue = "true")
 public class MailScheduler {
 
     private final EmailingService emailingService;

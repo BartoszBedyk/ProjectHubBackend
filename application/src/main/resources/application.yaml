@@ -41,6 +41,8 @@ gmail:
     key: AIzaSyDrnmHJhIH6BrqPega6evohV1CZYqhdNjE
 app:
   notification:
+    mail:
+      enabled: false
     nextMailAttemptDelayInSeconds: 30
     numberOfAttempts: 5
     numberOfThreadsAndMailPerThread: 10
@@ -55,5 +57,3 @@ app:
     secret: XwI7VCDgyojWjS3VNr5ntpx5Ma7XWdb5
     algorithm: AES
     bufferSize: 1024
-mail:
-  enabled: false
