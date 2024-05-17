@@ -39,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .map(param -> new NotificationParam(UUID.randomUUID().toString(), param.getKey(), param.getValue()))
                         .toList())
                 .build();
-        
+
         return notificationRepository.save(notification);
 
     }
@@ -50,13 +50,13 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts){
-        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.EMAIL);
+    public List<Notification> findAllMailBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time, numberOfAttempts, NotificationChannel.EMAIL);
     }
 
     @Override
     public List<Notification> findAllSMSBySentAndLastAttemptOnAndNumberOfAttempts(boolean sent, Instant time, int numberOfAttempts) {
-        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time,numberOfAttempts, NotificationChannel.SMS);
+        return notificationRepository.findAllBySentAndLastAttemptedAndNumberOfAttempts(sent, time, numberOfAttempts, NotificationChannel.SMS);
     }
 
 

@@ -1,0 +1,7 @@
+package com.sensilabs.projecthub.resources;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ResourceRepositoryJpa extends JpaRepository<ResourceEntity, String> {
+}
