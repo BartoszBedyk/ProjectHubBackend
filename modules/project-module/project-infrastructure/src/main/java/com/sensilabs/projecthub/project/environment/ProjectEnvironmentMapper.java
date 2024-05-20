@@ -10,6 +10,8 @@ public class ProjectEnvironmentMapper {
                 .projectId(projectEnvironment.getProjectId())
                 .createdOn(projectEnvironment.getCreatedOn())
                 .updatedOn(projectEnvironment.getUpdatedOn())
+                .deletedOn(projectEnvironment.getDeletedOn())
+                .deletedById(projectEnvironment.getDeletedById())
                 .createdById(projectEnvironment.getCreatedById())
                 .build();
     }
@@ -22,6 +24,8 @@ public class ProjectEnvironmentMapper {
                 .projectId(projectEnvironmentEntity.getProjectId())
                 .createdOn(projectEnvironmentEntity.getCreatedOn())
                 .updatedOn(projectEnvironmentEntity.getUpdatedOn())
+                .deletedOn(projectEnvironmentEntity.getDeletedOn())
+                .deletedById(projectEnvironmentEntity.getDeletedById())
                 .createdById(projectEnvironmentEntity.getCreatedById())
                 .build();
     }

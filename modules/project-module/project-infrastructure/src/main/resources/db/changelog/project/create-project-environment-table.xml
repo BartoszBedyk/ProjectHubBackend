@@ -23,6 +23,12 @@
             <column name="updated_on" type="datetime">
                 <constraints nullable="true"/>
             </column>
+            <column name="deleted_on" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deleted_by_id" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
             <column name="created_by_id" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>

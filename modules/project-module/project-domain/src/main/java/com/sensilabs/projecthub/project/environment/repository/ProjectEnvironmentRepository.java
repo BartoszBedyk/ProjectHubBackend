@@ -8,6 +8,5 @@ import java.util.Optional;
 public interface ProjectEnvironmentRepository {
     void save(ProjectEnvironment projectEnvironment);
     Optional<ProjectEnvironment> findById(String id);
-    void delete(ProjectEnvironment projectEnvironment);
     List<ProjectEnvironment> findAll(String projectId);
 }

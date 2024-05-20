@@ -38,6 +38,8 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
                     .projectId(createProjectEnvironmentForm.getProjectId())
                     .createdOn(Instant.now())
                     .updatedOn(null)
+                    .deletedOn(null)
+                    .deletedById(null)
                     .createdById(createdById)
                     .build();
             projectEnvironmentRepository.save(projectEnvironment);
@@ -62,9 +64,11 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String id, String deletedById) {
         ProjectEnvironment existingEnvironment = getOrThrow(id);
-        projectEnvironmentRepository.delete(existingEnvironment);
+        existingEnvironment.setDeletedOn(Instant.now());
+        existingEnvironment.setDeletedById(deletedById);
+        projectEnvironmentRepository.save(existingEnvironment);
     }
 
     @Override

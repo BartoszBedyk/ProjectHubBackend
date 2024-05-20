@@ -103,8 +103,9 @@ public class ProjectEnvironmentServiceTest {
         service.create(createProjectEnvironmentForm, "testId");
         Optional<ProjectEnvironment> env = projectEnvironmentRepository.findById("testId");
         if (env.isPresent()) {
-            service.delete(env.get().getId());
-            assertThrows(RuntimeException.class, () -> projectEnvironmentRepository.findById(env.get().getId()));
+            service.delete(env.get().getId(), "testDeletedById");
+            assertNotNull(env.get().getDeletedOn());
+            assertNotNull(env.get().getDeletedById());
         }
     }
 

@@ -24,11 +24,6 @@ public class ProjectEnvironmentRepositoryMock implements ProjectEnvironmentRepos
     }
 
     @Override
-    public void delete(ProjectEnvironment projectEnvironment) {
-        mockDB.remove(projectEnvironment.getId());
-    }
-
-    @Override
     public List<ProjectEnvironment> findAll(String projectId) {
         List<ProjectEnvironment> envs = new ArrayList<>();
         for (ProjectEnvironment env : mockDB.values()) {

@@ -18,5 +18,7 @@ public class ProjectEnvironment {
     private String projectId;
     private Instant createdOn;
     private Instant updatedOn;
+    private Instant deletedOn;
+    private String deletedById;
     private String createdById;
 }

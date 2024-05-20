@@ -37,6 +37,12 @@ public class ProjectEnvironmentEntity {
     @Column(name = "updated_on")
     private Instant updatedOn;
 
+    @Column(name = "deleted_on")
+    private Instant deletedOn;
+
+    @Column(name = "deleted_by_id")
+    private String deletedById;
+
     @Column(name = "created_by_id")
     private String createdById;
 }

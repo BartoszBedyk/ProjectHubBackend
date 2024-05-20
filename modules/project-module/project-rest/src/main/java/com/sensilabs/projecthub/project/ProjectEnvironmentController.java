@@ -32,7 +32,7 @@ public class ProjectEnvironmentController {
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        service.delete(id);
+        service.delete(id, loggedUser.getUserId());
     }
 
     @GetMapping("/find-all/{projectId}")

@@ -31,12 +31,6 @@ public class ProjectEnvironmentRepositoryAdapter implements ProjectEnvironmentRe
     }
 
     @Override
-    public void delete(ProjectEnvironment projectEnvironment) {
-        ProjectEnvironmentEntity projectEnvironmentEntity = ProjectEnvironmentMapper.toProjectEnvironmentEntity(projectEnvironment);
-        projectEnvironmentRepositoryJpa.delete(projectEnvironmentEntity);
-    }
-
-    @Override
     public List<ProjectEnvironment> findAll(String projectId) {
         Optional<List<ProjectEnvironmentEntity>> optionalEntityList = projectEnvironmentRepositoryJpa.findByProjectId(projectId);
         if (optionalEntityList.isPresent()) {

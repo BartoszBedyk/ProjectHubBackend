@@ -12,6 +12,6 @@ public interface ProjectEnvironmentService {
     void create(CreateProjectEnvironmentForm createProjectEnvironmentForm, String createdById);
     void createDefaultEnvironments(String projectId);
     void update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm);
-    void delete(String id);
+    void delete(String id, String deletedById);
     List<ProjectEnvironment> getAllEnvironments(String projectId);
 }
