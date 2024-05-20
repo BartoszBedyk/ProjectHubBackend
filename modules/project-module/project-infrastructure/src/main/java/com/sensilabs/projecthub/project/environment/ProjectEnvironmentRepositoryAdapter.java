@@ -29,7 +29,7 @@ public class ProjectEnvironmentRepositoryAdapter implements ProjectEnvironmentRe
     }
 
     @Override
-    public List<ProjectEnvironment> findAll(String projectId) {
+    public List<ProjectEnvironment> findAllNotDeletedEnvs(String projectId) {
         List<ProjectEnvironmentEntity> entityList = projectEnvironmentRepositoryJpa.findAllEnvsByProjectIdAndDeletedOnIsNull(projectId);
         return entityList.stream()
                 .map(ProjectEnvironmentMapper::toProjectEnvironment)

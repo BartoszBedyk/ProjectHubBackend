@@ -24,7 +24,7 @@ public class ProjectEnvironmentRepositoryMock implements ProjectEnvironmentRepos
     }
 
     @Override
-    public List<ProjectEnvironment> findAll(String projectId) {
+    public List<ProjectEnvironment> findAllNotDeletedEnvs(String projectId) {
         List<ProjectEnvironment> envs = new ArrayList<>();
         for (ProjectEnvironment env : mockDB.values()) {
             if (env.getProjectId().equals(projectId)) {

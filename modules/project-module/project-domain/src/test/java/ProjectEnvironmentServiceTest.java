@@ -42,7 +42,7 @@ public class ProjectEnvironmentServiceTest {
 
     @Test
     void createDefaultEnvironmentsTest() {
-        List<ProjectEnvironment> envs = projectEnvironmentRepository.findAll(project.getId());
+        List<ProjectEnvironment> envs = projectEnvironmentRepository.findAllNotDeletedEnvs(project.getId());
 
         assertEquals(2, envs.size());
 
