@@ -1,13 +1,11 @@
 package com.sensilabs.projecthub.project.environment;
 
-import com.sensilabs.projecthub.commons.ApplicationException;
-import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.project.environment.repository.ProjectEnvironmentRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ProjectEnvironmentRepositoryAdapter implements ProjectEnvironmentRepository {
@@ -32,17 +30,9 @@ public class ProjectEnvironmentRepositoryAdapter implements ProjectEnvironmentRe
 
     @Override
     public List<ProjectEnvironment> findAll(String projectId) {
-        Optional<List<ProjectEnvironmentEntity>> optionalEntityList = projectEnvironmentRepositoryJpa.findByProjectId(projectId);
-        if (optionalEntityList.isPresent()) {
-            List<ProjectEnvironmentEntity> entityList = optionalEntityList.get();
-            List<ProjectEnvironment> modelList = new ArrayList<>();
-            for (ProjectEnvironmentEntity entity : entityList) {
-                ProjectEnvironment model = ProjectEnvironmentMapper.toProjectEnvironment(entity);
-                modelList.add(model);
-            }
-        return modelList;
-        } else {
-            throw new ApplicationException(ErrorCode.PROJECT_NOT_FOUND);
-        }
+        List<ProjectEnvironmentEntity> entityList = projectEnvironmentRepositoryJpa.findAllEnvsByProjectIdAndDeletedOnIsNull(projectId);
+        return entityList.stream()
+                .map(ProjectEnvironmentMapper::toProjectEnvironment)
+                .collect(Collectors.toList());
     }
 }
