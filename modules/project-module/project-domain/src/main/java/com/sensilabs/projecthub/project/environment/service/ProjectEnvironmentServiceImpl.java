@@ -73,6 +73,6 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
 
     @Override
     public List<ProjectEnvironment> getAllEnvironments(String projectId) {
-        return projectEnvironmentRepository.findAllNotDeletedEnvs(projectId);
+        return projectEnvironmentRepository.findAllNotDeleted(projectId);
     }
 }

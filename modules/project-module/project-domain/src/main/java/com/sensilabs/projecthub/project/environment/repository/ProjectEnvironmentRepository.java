@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface ProjectEnvironmentRepository {
     void save(ProjectEnvironment projectEnvironment);
     Optional<ProjectEnvironment> findById(String id);
-    List<ProjectEnvironment> findAllNotDeletedEnvs(String projectId);
+    List<ProjectEnvironment> findAllNotDeleted(String projectId);
 }
