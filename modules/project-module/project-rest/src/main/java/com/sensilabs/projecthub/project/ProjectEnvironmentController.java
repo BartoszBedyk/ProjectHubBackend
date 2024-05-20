@@ -5,14 +5,12 @@ import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
 import com.sensilabs.projecthub.project.environment.forms.CreateProjectEnvironmentForm;
 import com.sensilabs.projecthub.project.environment.forms.UpdateProjectEnvironmentForm;
 import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("project-environment")
-@Slf4j
 public class ProjectEnvironmentController {
     private final ProjectEnvironmentService service;
     private final LoggedUser loggedUser;
