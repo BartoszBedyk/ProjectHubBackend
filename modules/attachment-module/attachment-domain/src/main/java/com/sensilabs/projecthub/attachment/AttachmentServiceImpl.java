@@ -41,6 +41,6 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 	@Override
 	public Attachment getById(String id) {
-		return attachmentRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.ATTATCHMENT_NOT_FOUND));
+		return attachmentRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.ATTACHMENT_NOT_FOUND));
 	}
 }
