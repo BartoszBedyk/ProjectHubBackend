@@ -8,16 +8,17 @@ import com.sensilabs.projecthub.resources.model.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.AccessDeniedException;
 import java.time.Instant;
 import java.util.UUID;
 
 public class ResourceServiceTest {
 
     ResourceRepositoryMock resourceRepository = new ResourceRepositoryMock();
-    ResourceService resourceService = new ResourceServiceImpl(resourceRepository);
+    ResourceService resourceService = new ResourceServiceImpl(resourceRepository, null);
 
     @Test
-    void createAttachmentResourceTest() throws InterruptedException {
+    void createAttachmentResourceTest() throws InterruptedException, AccessDeniedException {
 
         Instant beforeDate = Instant.now();
         Thread.sleep(10);
@@ -25,12 +26,15 @@ public class ResourceServiceTest {
         CreateAttachmentResourceForm form = new CreateAttachmentResourceForm(
                 "Zalacznik1",
                 "Opis1",
-                "zalacznik/czas/zalacznik"
+                "zalacznik/czas/zalacznik",
+                "envId",
+                "ptojectId"
+
         );
         String environmentId = UUID.randomUUID().toString();
         String projectId = UUID.randomUUID().toString();
         String createdById = UUID.randomUUID().toString();
-        Resource resource = resourceService.save(form, environmentId, projectId, createdById);
+        Resource resource = resourceService.save(form, createdById);
 
         Instant afterDate = Instant.now();
         Thread.sleep(10);
@@ -51,7 +55,7 @@ public class ResourceServiceTest {
     }
 
     @Test
-    void createLinkResourceTest() throws InterruptedException {
+    void createLinkResourceTest() throws InterruptedException, AccessDeniedException {
 
         Instant beforeDate = Instant.now();
         Thread.sleep(10);
@@ -59,12 +63,15 @@ public class ResourceServiceTest {
         CreateLinkResourceForm form = new CreateLinkResourceForm(
                 "Zalacznik2",
                 "Link do strony producenta najlepszych telefonów na świecie.",
-                "https://store.google.com/product/pixel_8?hl=pl&pli=1"
+                "https://store.google.com/product/pixel_8?hl=pl&pli=1",
+                "envId",
+                "ptojectId"
+
         );
         String environmentId = UUID.randomUUID().toString();
         String projectId = UUID.randomUUID().toString();
         String createdById = UUID.randomUUID().toString();
-        Resource resource = resourceService.save(form, environmentId, projectId, createdById);
+        Resource resource = resourceService.save(form, createdById);
 
         Instant afterDate = Instant.now();
         Thread.sleep(10);
@@ -85,7 +92,7 @@ public class ResourceServiceTest {
     }
 
     @Test
-    void createSecretResourceTest() throws InterruptedException {
+    void createSecretResourceTest() throws InterruptedException, AccessDeniedException {
 
         Instant beforeDate = Instant.now();
         Thread.sleep(10);
@@ -98,12 +105,15 @@ public class ResourceServiceTest {
         CreateSecretResourceForm form = new CreateSecretResourceForm(
                 "Zalacznik3",
                 description,
-                "Dirty Deeds Done Dirt Cheap"
+                "Dirty Deeds Done Dirt Cheap",
+                "envId",
+                "ptojectId"
+
         );
         String environmentId = UUID.randomUUID().toString();
         String projectId = UUID.randomUUID().toString();
         String createdById = UUID.randomUUID().toString();
-        Resource resource = resourceService.save(form, environmentId, projectId, createdById);
+        Resource resource = resourceService.save(form, createdById);
 
         Instant afterDate = Instant.now();
         Thread.sleep(10);
@@ -124,7 +134,7 @@ public class ResourceServiceTest {
     }
 
     @Test
-    void createTextResourceTest() throws InterruptedException {
+    void createTextResourceTest() throws InterruptedException, AccessDeniedException {
 
         Instant beforeDate = Instant.now();
         Thread.sleep(10);
@@ -144,12 +154,15 @@ public class ResourceServiceTest {
         CreateTextResourceForm form = new CreateTextResourceForm(
                 "Zalacznik4",
                 "No taka sobie książka Tolkiena polecam bardzo.",
-                text
+                text,
+                "envId",
+                "ptojectId"
+
         );
         String environmentId = UUID.randomUUID().toString();
         String projectId = UUID.randomUUID().toString();
         String createdById = UUID.randomUUID().toString();
-        Resource resource = resourceService.save(form, environmentId, projectId, createdById);
+        Resource resource = resourceService.save(form, createdById);
 
         Instant afterDate = Instant.now();
         Thread.sleep(10);
@@ -170,7 +183,7 @@ public class ResourceServiceTest {
     }
 
     @Test
-    void updateResourceTest() throws InterruptedException {
+    void updateResourceTest() throws InterruptedException, AccessDeniedException {
 
         Instant beforeDate = Instant.now();
         Thread.sleep(10);
@@ -180,12 +193,15 @@ public class ResourceServiceTest {
         CreateAttachmentResourceForm form = new CreateAttachmentResourceForm(
                 "Zalacznik1",
                 "Opis1",
-                "zalacznik/czas/zalacznik"
+                "zalacznik/czas/zalacznik",
+                "envId",
+                "ptojectId"
+
         );
         String environmentId = UUID.randomUUID().toString();
         String projectId = UUID.randomUUID().toString();
         String createdById = UUID.randomUUID().toString();
-        Resource resource = resourceService.save(form, environmentId, projectId, createdById);
+        Resource resource = resourceService.save(form, createdById);
 
         Instant afterDate = Instant.now();
         Thread.sleep(100);

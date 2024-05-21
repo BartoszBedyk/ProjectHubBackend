@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.resource;
 
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.resources.ResourceRepository;
 import com.sensilabs.projecthub.resources.forms.ResourceForm;
 import com.sensilabs.projecthub.resources.forms.UpdateResourceForm;
@@ -40,5 +42,10 @@ public class ResourceRepositoryMock implements ResourceRepository {
         resource.setLastModifiedOn(now);
         resource.setValue(resourceForm.getValue());
        return resource;
+    }
+
+    @Override
+    public SearchResponse search(SearchForm searchForm) {
+        return null;
     }
 }

@@ -11,7 +11,6 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 @Entity(name = "resource")
-@Table(name = "resource")
 
 public class ResourceEntity {
     @Id

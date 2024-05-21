@@ -1,9 +1,12 @@
 package com.sensilabs.projecthub.resources;
 
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.resources.forms.*;
 import com.sensilabs.projecthub.resources.model.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,40 +19,29 @@ public class ResourceController {
         this.resourceService = resourceService;
     }
 
-    @PostMapping("create-attachment-resource")
-    public Resource createAttachmentResource(@RequestBody CreateAttachmentResourceForm form) {
-        String environmentId = UUID.randomUUID().toString();
-        String projectId = UUID.randomUUID().toString();
+    @PostMapping("attachment")
+    public Resource createAttachmentResource(@RequestBody CreateAttachmentResourceForm form) throws AccessDeniedException {
         String createdById = UUID.randomUUID().toString();
-
-        return resourceService.save(form, environmentId, projectId, createdById);
+        return resourceService.save(form, createdById);
     }
 
-    @PostMapping("create-text-resource")
-    public Resource createTextResource(@RequestBody CreateTextResourceForm form) {
-        String environmentId = UUID.randomUUID().toString();
-        String projectId = UUID.randomUUID().toString();
+    @PostMapping("text")
+    public Resource createTextResource(@RequestBody CreateTextResourceForm form) throws AccessDeniedException {
         String createdById = UUID.randomUUID().toString();
-
-        return resourceService.save(form, environmentId, projectId, createdById);
+        return resourceService.save(form, createdById);
     }
 
-    @PostMapping("create-link-resource")
-    public Resource createLinkResource(@RequestBody CreateLinkResourceForm form) {
-        String environmentId = UUID.randomUUID().toString();
-        String projectId = UUID.randomUUID().toString();
+    @PostMapping("link")
+    public Resource createLinkResource(@RequestBody CreateLinkResourceForm form) throws AccessDeniedException {
         String createdById = UUID.randomUUID().toString();
 
-        return resourceService.save(form, environmentId, projectId, createdById);
+        return resourceService.save(form, createdById);
     }
 
-    @PostMapping("create-secret-resource")
-    public Resource createSecretResource(@RequestBody CreateSecretResourceForm form) {
-        String environmentId = UUID.randomUUID().toString();
-        String projectId = UUID.randomUUID().toString();
+    @PostMapping("secret")
+    public Resource createSecretResource(@RequestBody CreateSecretResourceForm form) throws AccessDeniedException {
         String createdById = UUID.randomUUID().toString();
-
-        return resourceService.save(form, environmentId, projectId, createdById);
+        return resourceService.save(form, createdById);
     }
 
     @GetMapping
@@ -65,6 +57,11 @@ public class ResourceController {
     @PutMapping("/update")
     public Resource updateResource(@RequestBody UpdateResourceForm form) {
         return resourceService.update(form);
+    }
+
+    @PostMapping("/search")
+    public SearchResponse<Resource> search(@RequestBody SearchForm searchForm) {
+        return resourceService.search(searchForm);
     }
 
 }

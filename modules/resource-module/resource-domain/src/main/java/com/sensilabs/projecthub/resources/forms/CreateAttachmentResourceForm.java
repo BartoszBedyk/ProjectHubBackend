@@ -29,6 +29,14 @@ public class CreateAttachmentResourceForm implements ResourceForm {
     @Size(min = 1, max = 200, message = "Length of value of the resource cannot be less than 1 and longer than 200.")
     private String value;
 
+    @NotNull(message = "Environment id cannot be null.")
+    @NotBlank(message = "Environment id cannot be blank")
+    private String environmentId;
+
+    @NotNull(message = "Project id cannot be null.")
+    @NotBlank(message = "Project id cannot be blank")
+    private String projectId;
+
     @Override
     public String getName() {
         return name;
@@ -47,6 +55,16 @@ public class CreateAttachmentResourceForm implements ResourceForm {
     @Override
     public ResourceType getType() {
         return ResourceType.ATTACHMENT;
+    }
+
+    @Override
+    public String getEnvironmentId() {
+        return environmentId;
+    }
+
+    @Override
+    public String getProjectId() {
+        return projectId;
     }
 
 

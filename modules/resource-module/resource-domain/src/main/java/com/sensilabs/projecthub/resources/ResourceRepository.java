@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.resources;
 
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.resources.forms.ResourceForm;
 import com.sensilabs.projecthub.resources.forms.UpdateResourceForm;
 import com.sensilabs.projecthub.resources.model.Resource;
@@ -12,4 +14,5 @@ public interface ResourceRepository {
     List<Resource> findAll();
     Optional<Resource> findById(String id);
     Resource update(UpdateResourceForm resourceForm);
+    SearchResponse search(SearchForm searchForm);
 }

@@ -1,13 +1,19 @@
 package com.sensilabs.projecthub.resources;
 
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.resources.forms.ResourceForm;
 import com.sensilabs.projecthub.resources.forms.UpdateResourceForm;
 import com.sensilabs.projecthub.resources.model.Resource;
+import com.sensilabs.projecthub.utils.SearchSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ResourceRepositoryAdapter implements ResourceRepository {
@@ -45,5 +51,17 @@ public class ResourceRepositoryAdapter implements ResourceRepository {
 
         resource.setLastModifiedOn(now);
         return save(resource);
+    }
+
+    @Override
+    public SearchResponse search(SearchForm searchForm) {
+        Specification<ResourceEntity> specification = SearchSpecification.buildSpecification(searchForm.getCriteria());
+        Page<ResourceEntity> resourceEntityPage = repositoryJpa.findAll(specification, SearchSpecification.getPageRequest(searchForm));
+        return SearchResponse.<Resource>builder()
+                .items(resourceEntityPage.getContent().stream()
+                        .map(ResourceMapper::toResource)
+                        .collect(Collectors.toList()))
+                .total(resourceEntityPage.getTotalElements())
+                .build();
     }
 }

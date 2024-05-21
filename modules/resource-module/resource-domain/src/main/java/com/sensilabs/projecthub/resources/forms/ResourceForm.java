@@ -7,5 +7,7 @@ public interface ResourceForm {
     String getDescription();
     String getValue();
     ResourceType getType();
+    String getEnvironmentId();
+    String getProjectId();
 
 }
