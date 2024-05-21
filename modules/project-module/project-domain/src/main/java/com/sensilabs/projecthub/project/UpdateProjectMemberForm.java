@@ -14,7 +14,10 @@ import lombok.Setter;
 public class UpdateProjectMemberForm {
     @NotNull(message = "ID cannot be null.")
     @Size(min = 36, max = 36, message = "ID must have 36 characters.")
-    private String id;
+    private String userId;
+    @NotNull(message = "ID cannot be null.")
+    @Size(min = 36, max = 36, message = "ID must have 36 characters.")
+    private String projectId;
     @NotNull(message = "Role cannot be null.")
     private Role role;
 }

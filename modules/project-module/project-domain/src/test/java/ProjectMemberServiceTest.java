@@ -55,11 +55,10 @@ public class ProjectMemberServiceTest {
                 List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
                         new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
         Project project = projectService.save(createProjectForm, "testUser");
-        CreateProjectMemberForm createProjectMemberForm = new CreateProjectMemberForm("Piotr", "Nowak", Role.OWNER,project.getId());
+        CreateProjectMemberForm createProjectMemberForm = new CreateProjectMemberForm("Piotr", "Nowak", Role.OWNER,project.getId(), "userId");
         ProjectMember projectMember = projectMemberService.save(createProjectMemberForm, "testUser");
-        String memberId = projectMember.getId();
-        projectMemberService.remove(memberId);
-        assertThrows(RuntimeException.class, () -> projectMemberService.getById(memberId));
+        projectMemberService.remove(projectMember.getUserId(), projectMember.getProjectId());
+        assertThrows(RuntimeException.class, () -> projectMemberService.getById(projectMember.getUserId(),projectMember.getProjectId()));
     }
 
 }

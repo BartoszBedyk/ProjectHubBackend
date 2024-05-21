@@ -12,10 +12,11 @@ import java.time.Instant;
 @Builder
 @Entity
 @Table(name = "project_member")
+@IdClass(ProjectMemberPrimaryKey.class)
 public class ProjectMemberEntity {
     @Id
-    @Column(name = "id")
-    private String id;
+    @Column(name = "user_id")
+    private String userId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -27,6 +28,7 @@ public class ProjectMemberEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
+    @Id
     @Column(name = "project_id")
     private String projectId;
 }

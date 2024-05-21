@@ -1,8 +1,9 @@
 package com.sensilabs.projecthub.project;
 
-import com.sensilabs.projecthub.commons.SearchForm;
-import com.sensilabs.projecthub.commons.SearchResponse;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
+import java.util.List;
 
 @RestController
 @RequestMapping("/project-member")
@@ -23,14 +24,14 @@ public class ProjectMemberController {
         return projectMemberService.update(form);
     }
 
-    @PostMapping("/search")
-    public SearchResponse<ProjectMember> search(@RequestBody SearchForm searchForm) {
-        return projectMemberService.search(searchForm);
+    @GetMapping("/search/{id}")
+    public List<ProjectDTO> searchProjects(@PathVariable("id") String userId) {
+        return projectMemberService.getProjects(userId);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") String id) {
-        projectMemberService.remove(id);
+    @DeleteMapping("/delete/{userId}/{projectId}")
+    public void delete(@PathVariable("userId") String userId, @PathVariable("projectId") String projectId) {
+        projectMemberService.remove(userId, projectId);
     }
 
 }

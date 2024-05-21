@@ -1,9 +1,9 @@
 package com.sensilabs.projecthub.project;
 
-import com.sensilabs.projecthub.commons.SearchForm;
-import com.sensilabs.projecthub.commons.SearchResponse;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 @Validated
 public interface ProjectMemberService {
@@ -11,9 +11,9 @@ public interface ProjectMemberService {
 
     ProjectMember update(@Valid UpdateProjectMemberForm updateProjectMemberForm);
 
-    void remove(String memberId);
+    void remove(String userId, String projectId);
 
-    SearchResponse<ProjectMember> search(SearchForm searchForm);
+    List<ProjectDTO> getProjects(String userId);
 
-    ProjectMember getById(String id);
+    ProjectMember getById(String userId, String projectId);
 }
