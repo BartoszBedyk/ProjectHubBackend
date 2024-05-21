@@ -1,4 +1,7 @@
 import com.sensilabs.projecthub.project.*;
+import com.sensilabs.projecthub.project.environment.repository.ProjectEnvironmentRepository;
+import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
+import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +11,9 @@ import java.util.UUID;
 
 public class ProjectServiceTest {
     ProjectRepository projectRepository = new ProjectRepositoryMock();
-    ProjectService projectService = new ProjectServiceImpl(projectRepository);
+    ProjectEnvironmentRepository projectEnvironmentRepository = new ProjectEnvironmentRepositoryMock();
+    ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService);
 
     @Test
     void createProjectTest() throws InterruptedException {

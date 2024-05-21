@@ -1,14 +1,24 @@
 package com.sensilabs.projecthub.project;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ProjectMapper {
     public static ProjectEntity toProjectEntity(Project project) {
-        return ProjectEntity.builder()
+        ProjectEntity projectEntity = ProjectEntity.builder()
                 .id(project.getId())
                 .name(project.getName())
                 .createdById(project.getCreatedById())
                 .createdOn(project.getCreatedOn())
                 .description(project.getDescription())
                 .build();
+
+        List<TechnologyEntity> technologyEntities = project.getTechnologies().stream()
+                .map(tech -> toTechnologyEntity(tech, projectEntity))
+                .collect(Collectors.toList());
+        projectEntity.setTechnologies(technologyEntities);
+
+        return projectEntity;
     }
 
     public static TechnologyEntity toTechnologyEntity(Technology technology, ProjectEntity projectEntity) {

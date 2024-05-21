@@ -3,6 +3,7 @@ import com.sensilabs.projecthub.cipher.DataEncryptionService;
 import com.sensilabs.projecthub.cipher.DataEncryptionServiceImpl;
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+@Slf4j
 public class DataEncryptionServiceTest {
 
     CipherProps props = new CipherPropsMock();
@@ -29,11 +31,16 @@ public class DataEncryptionServiceTest {
 
     @Test
     void fileEncryptionTest() throws IOException {
-        String inputFile = "input.txt";
+        String inputFile = "test1mb.txt";
         String encryptedFile = "encrypted.txt";
 
         byte[] inputBytes = readBytesFromFile(inputFile);
+
+
+        long before = System.currentTimeMillis();
         byte[] encryptedBytes = encryptData(inputBytes);
+        long after = System.currentTimeMillis();
+        log.info("Encryption time: {}", (after-before));
 
         writeBytesToFile(encryptedBytes, encryptedFile);
 

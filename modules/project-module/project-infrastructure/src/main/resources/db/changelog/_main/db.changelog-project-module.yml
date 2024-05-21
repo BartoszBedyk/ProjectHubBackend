@@ -6,4 +6,6 @@ databaseChangeLog:
   - include:
       file: classpath:db/changelog/project/create-project-member-table.xml
   - include:
+      file: classpath:db/changelog/project/create-project-environment-table.xml
+  - include:
       file: classpath:db/changelog/project/update-project-member-table.xml

@@ -21,4 +21,13 @@ public class NotificationPropsImpl implements NotificationProps {
     public int numberOfAttempts() {
         return env.getRequiredProperty("app.notification.numberOfAttempts", Integer.class);
     }
+
+    @Override
+    public int numberOfThreadsAndMailPerThread() {
+        return env.getRequiredProperty("app.notification.numberOfThreadsAndMailPerThread", Integer.class);
+    }
+
+
+
+
 }

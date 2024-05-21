@@ -4,6 +4,7 @@ import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.commons.SearchForm;
 import com.sensilabs.projecthub.commons.SearchResponse;
+import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -15,9 +16,11 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ProjectEnvironmentService projectEnvironmentService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService) {
         this.projectRepository = projectRepository;
+        this.projectEnvironmentService = projectEnvironmentService;
     }
 
     private Project getOrThrow(String id) {
@@ -38,7 +41,10 @@ public class ProjectServiceImpl implements ProjectService {
                 .createdById(createdById)
                 .technologies(technologies)
                 .build();
-        return projectRepository.save(project);
+
+        Project savedProject = projectRepository.save(project);
+        projectEnvironmentService.createDefaultEnvironments(savedProject.getId());
+        return savedProject;
     }
 
     @Override

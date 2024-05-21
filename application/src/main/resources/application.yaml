@@ -26,6 +26,7 @@ spring:
           auth: true
           starttls:
             enable: true
+            required: true
         mime:
           charset: UTF
     protocol: smtp
@@ -35,10 +36,17 @@ spring:
       tokenExpirationTimeInMinutes: 1000
       securityFilterPath: /auth/**
 
+gmail:
+  api:
+    key: AIzaSyDrnmHJhIH6BrqPega6evohV1CZYqhdNjE
 app:
   notification:
+    mail:
+      enabled: false
     nextMailAttemptDelayInSeconds: 30
     numberOfAttempts: 5
+    numberOfThreadsAndMailPerThread: 10
+    schedulerDelayInMilliseconds: 20000
   loginPassAuth:
     resetPasswordTokenExpirationTimeInMinutes: 15
     sysAdminFirstName: admin
