@@ -35,9 +35,4 @@ public class UserManagementRepositoryMock implements UserManagementRepository {
         mockDB.put(user.getId(), user);
         return user;
     }
-
-    @Override
-    public void delete(String id) {
-        mockDB.remove(id);
-    }
 }

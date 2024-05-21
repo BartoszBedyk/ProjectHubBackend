@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.user.management;
 
+import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.commons.SearchForm;
 import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
@@ -8,18 +9,20 @@ import com.sensilabs.projecthub.user.management.service.UserManagementService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user-management/test")
+@RequestMapping("/user-management")
 public class UserManagementController {
 
     private final UserManagementService userManagementService;
+    private final LoggedUser loggedUser;
 
-    public UserManagementController(UserManagementService userManagementService) {
+    public UserManagementController(UserManagementService userManagementService, LoggedUser loggedUser) {
         this.userManagementService = userManagementService;
+        this.loggedUser = loggedUser;
     }
 
-    @GetMapping
-    public SearchResponse<User> search(SearchForm form) {
-        return null;
+    @PostMapping("/search")
+    public SearchResponse<User> search(@RequestBody SearchForm form) {
+        return userManagementService.search(form);
     }
 
     @GetMapping("/{id}")
@@ -27,12 +30,12 @@ public class UserManagementController {
         return userManagementService.get(id);
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public User save(@RequestBody CreateUserForm createUserForm) {
-        return userManagementService.save(createUserForm);
+        return userManagementService.save(createUserForm, loggedUser.getUserId());
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public User update(@RequestBody EditUserForm editUserForm) {
         return userManagementService.update(editUserForm);
     }
@@ -47,8 +50,8 @@ public class UserManagementController {
         return userManagementService.unBlock(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") String id) {
-        userManagementService.delete(id);
+        userManagementService.delete(id, loggedUser.getUserId());
     }
 }

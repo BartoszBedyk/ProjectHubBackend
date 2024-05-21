@@ -38,6 +38,9 @@ public class UserEntity {
     @Column(name = "deleted_on")
     private Instant deletedOn;
 
+    @Column(name = "deleted_by_id")
+    private String deletedById;
+
     @Column(name = "is_blocked")
     private boolean isBlocked;
 
@@ -46,8 +49,10 @@ public class UserEntity {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
+        this.createdById = user.getCreatedById();
         this.createdOn = user.getCreatedOn();
         this.deletedOn = user.getDeletedOn();
+        this.deletedById = user.getDeletedById();
         this.isBlocked = user.isBlocked();
     }
 }

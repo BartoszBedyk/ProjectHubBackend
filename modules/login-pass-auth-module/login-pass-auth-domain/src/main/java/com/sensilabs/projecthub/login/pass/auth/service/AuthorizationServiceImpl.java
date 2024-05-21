@@ -2,10 +2,14 @@ package com.sensilabs.projecthub.login.pass.auth.service;
 
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
-import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.login.pass.auth.*;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.repository.AuthorizationRepository;
+import com.sensilabs.projecthub.notification.EmailingService;
+import com.sensilabs.projecthub.notification.NotificationService;
+import com.sensilabs.projecthub.notification.forms.AccountCreatedMailForm;
+import com.sensilabs.projecthub.notification.forms.ResetPasswordMailFrom;
+import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.service.UserManagementService;
@@ -32,15 +36,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final AuthPassUserProps props;
 
-    private final LoggedUser loggedUser;
+    private final EmailingService emailingService;
+    private final NotificationService notificationService;
 
-    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService, AuthPassUserProps props, LoggedUser loggedUser) {
+    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService, AuthPassUserProps props, EmailingService emailingService, NotificationService notificationService) {
         this.authorizationRepository = authorizationRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
         this.userManagementService = userManagementService;
         this.props = props;
-        this.loggedUser = loggedUser;
+        this.emailingService = emailingService;
+        this.notificationService = notificationService;
     }
 
     private AuthPassUser getByEmailOrThrowAuthPassUser(String email) {
@@ -68,9 +74,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public void createUser(CreateUserWithPasswordForm createUserRequest) {
+    public void createUser(CreateUserWithPasswordForm createUserRequest, String createdById) {
 
-        User user = userManagementService.save(createUserRequest);
+        User user = userManagementService.save(createUserRequest, createdById);
 
         AuthPassUser userAuth = AuthPassUser.builder()
                 .id(user.getId())
@@ -80,23 +86,26 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
 
         authorizationRepository.saveAuthPassUser(userAuth);
-        // serwis do wysylki maila
+        Notification notification = notificationService.save(new AccountCreatedMailForm(createUserRequest.getFirstName(), createUserRequest.getLastName(), createUserRequest.getEmail()), createdById);
+        emailingService.send(notification);
     }
 
 
     @Override
     public void resetPassword(ResetPasswordForm resetPasswordRequest) {
         Instant time = Instant.now();
-        AuthPassUser user = getByEmailOrThrowAuthPassUser(resetPasswordRequest.getEmail());
+        AuthPassUser authUser = getByEmailOrThrowAuthPassUser(resetPasswordRequest.getEmail());
+        User user = userManagementService.get(authUser.getId());
         ResetPasswordRequest request = ResetPasswordRequest.builder()
                 .id(UUID.randomUUID().toString())
                 .createdOn(time)
                 .expiredOn(time.plus(props.getResetPasswordTokenExpirationInMinutes(), ChronoUnit.MINUTES))
-                .userId(user.getId())
+                .userId(authUser.getId())
                 .build();
 
         authorizationRepository.saveResetPasswordRequest(request);
-
+        Notification notification = notificationService.save(new ResetPasswordMailFrom(user.getFirstName(), user.getLastName(), resetPasswordRequest.getEmail()), "SYSTEM");
+        emailingService.send(notification);
     }
 
     @Override
@@ -125,7 +134,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (passwordEncoder.match(changePasswordForm.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
             authorizationRepository.saveAuthPassUser(user);
-            log.info("Method changePassword(), LoggedUser {}", loggedUser.getUserId());
         } else {
             throw new ApplicationException(ErrorCode.WRONG_LOGIN_OR_PASSWORD);
         }
