@@ -11,7 +11,6 @@ import java.util.Optional;
 
 public interface ResourceRepository {
     Resource save(Resource resource);
-    List<Resource> findAll();
     Optional<Resource> findById(String id);
     Resource update(UpdateResourceForm resourceForm);
     SearchResponse search(SearchForm searchForm);

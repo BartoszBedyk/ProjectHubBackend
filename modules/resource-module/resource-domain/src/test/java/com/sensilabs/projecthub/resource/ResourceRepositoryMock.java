@@ -48,4 +48,9 @@ public class ResourceRepositoryMock implements ResourceRepository {
     public SearchResponse search(SearchForm searchForm) {
         return null;
     }
+
+    @Override
+    public Boolean checkAccess(String projectId, String environmentId, String userId) {
+        return null;
+    }
 }

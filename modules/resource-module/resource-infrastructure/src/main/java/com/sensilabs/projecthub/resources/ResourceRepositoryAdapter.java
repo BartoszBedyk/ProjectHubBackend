@@ -31,10 +31,6 @@ public class ResourceRepositoryAdapter implements ResourceRepository {
         return ResourceMapper.toResource(entity);
     }
 
-    @Override
-    public List<Resource> findAll() {
-        return repositoryJpa.findAll().stream().map(ResourceMapper::toResource).toList();
-    }
 
     @Override
     public Optional<Resource> findById(String id) {
@@ -64,4 +60,5 @@ public class ResourceRepositoryAdapter implements ResourceRepository {
                 .total(resourceEntityPage.getTotalElements())
                 .build();
     }
+
 }

@@ -25,8 +25,8 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public Resource save(ResourceForm resourceForm, String createdById) throws AccessDeniedException {
-        String userId = UUID.randomUUID().toString();   // zastąpić id z modułu Kacpra
-        if( resourceAccess.checkAccess(resourceForm.getProjectId(), resourceForm.getEnvironmentId(), userId)){
+
+        if( resourceAccess.checkAccess(resourceForm.getProjectId(), resourceForm.getEnvironmentId(), createdById)){
             Instant now = Instant.now();
             Resource resource =  Resource.builder()
                     .id(UUID.randomUUID().toString())
@@ -49,10 +49,6 @@ public class ResourceServiceImpl implements ResourceService {
 
     }
 
-    @Override
-    public List<Resource> findAll() {
-        return resourceRepository.findAll();
-    }
 
     @Override
     public Optional<Resource> findById(String id) {

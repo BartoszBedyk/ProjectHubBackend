@@ -36,7 +36,7 @@ public class MailScheduler {
     }
     @Value("${mail.enabled}")
     @Scheduled(fixedDelayString = "${app.notification.schedulerDelayInMilliseconds}")
-    public void scheduledMailing() throws InterruptedException {
+    public void scheduledMailing() {
 
         Instant now = Instant.now();
         Instant time = now.minus(notificationProps.nextMailAttemptDelayInSeconds(), ChronoUnit.SECONDS);

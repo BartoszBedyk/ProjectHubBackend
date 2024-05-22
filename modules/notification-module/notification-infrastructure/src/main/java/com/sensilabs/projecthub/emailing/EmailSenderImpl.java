@@ -35,13 +35,8 @@ public class EmailSenderImpl implements EmailSender{
 
     private static final String USER_ID = "me";
 
-
-
-
     @Override
     public void send(String sendTo, String subject, Map<String, String> params, String templateId) throws GeneralSecurityException, IOException, MessagingException {
-
-
         Gmail service = new GmailService().getService();
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper= new MimeMessageHelper(mimeMessage);
@@ -69,7 +64,6 @@ public class EmailSenderImpl implements EmailSender{
         Message message = new Message();
         message.setRaw(encodedEmail);
         service.users().messages().send(USER_ID, message).execute();
-
     }
 
 

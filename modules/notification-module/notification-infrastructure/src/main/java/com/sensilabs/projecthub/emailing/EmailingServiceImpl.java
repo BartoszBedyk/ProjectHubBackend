@@ -3,14 +3,13 @@ package com.sensilabs.projecthub.emailing;
 
 import com.sensilabs.projecthub.notification.EmailingService;
 import com.sensilabs.projecthub.notification.NotificationRepository;
-import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.notification.model.NotificationParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,6 @@ public class EmailingServiceImpl implements EmailingService {
     public void send(Notification notification) {
         notification.increaseAttempts();
         try {
-
             emailSender.send(notification.getReceiver(), notification.getType().getSubject(), EmailingServiceImpl.toMap(notification.getParams()),
                     notification.getType().getTemplateId());
             notification.finalizeSent();
