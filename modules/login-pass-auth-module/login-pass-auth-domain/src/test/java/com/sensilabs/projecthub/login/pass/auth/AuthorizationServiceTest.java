@@ -1,10 +1,13 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
-import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.repository.AuthorizationRepository;
 import com.sensilabs.projecthub.login.pass.auth.service.AuthorizationService;
 import com.sensilabs.projecthub.login.pass.auth.service.AuthorizationServiceImpl;
+import com.sensilabs.projecthub.notification.EmailingService;
+import com.sensilabs.projecthub.notification.NotificationRepository;
+import com.sensilabs.projecthub.notification.NotificationService;
+import com.sensilabs.projecthub.notification.NotificationServiceImpl;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
 import com.sensilabs.projecthub.user.management.service.UserManagementService;
 import com.sensilabs.projecthub.user.management.service.UserManagementServiceImpl;
@@ -23,14 +26,16 @@ public class AuthorizationServiceTest {
     PasswordEncoder encoder = new PasswordEncoderMock();
     TokenProvider provider = new TokenProviderMock();
 
-    LoggedUser loggedUser = new LoggedUserMock();
-
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, loggedUser);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
 
     AuthPassUserProps props = new AuthPassUserPropsMock();
 
-    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props, loggedUser);
+    EmailingService emailingService = new EmailingServiceMock();
+    NotificationRepository notificationRepository = new NotificationRepositoryMock();
+    NotificationService notificationService = new NotificationServiceImpl(notificationRepository);
+
+    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props, emailingService, notificationService);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
@@ -52,7 +57,7 @@ public class AuthorizationServiceTest {
         form.setLastName("Koncki");
         form.setEmail("test@test.pl");
         form.setPassword("password123");
-        service.createUser(form);
+        service.createUser(form, "createdByTestId");
     }
     @Test
     void successfulLogInTest() {

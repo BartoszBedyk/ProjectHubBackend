@@ -16,5 +16,6 @@ public class User {
     private Instant createdOn;
     private String createdById;
     private Instant deletedOn;
+    private String deletedById;
     private boolean isBlocked;
 }

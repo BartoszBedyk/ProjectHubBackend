@@ -22,11 +22,7 @@ import java.util.Optional;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService service;
-
     private final JwtUtil jwtUtil;
-
-    private JwtAuthUser jwtAuthUserDetails;
-
 
     public JwtAuthorizationFilter(JwtUtil jwtUtil, UserDetailsService service) {
         this.jwtUtil = jwtUtil;

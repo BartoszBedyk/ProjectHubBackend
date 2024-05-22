@@ -11,6 +11,7 @@ public class UserMapper {
                 .createdOn(userEntity.getCreatedOn())
                 .createdById(userEntity.getCreatedById())
                 .deletedOn(userEntity.getDeletedOn())
+                .deletedById(userEntity.getDeletedById())
                 .isBlocked(userEntity.isBlocked())
                 .build();
     }
