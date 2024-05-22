@@ -3,7 +3,7 @@ package com.sensilabs.projecthub.project;
 public class ProjectMemberMapper {
     public static ProjectMemberEntity toProjectMemberEntity(ProjectMember projectMember) {
         return ProjectMemberEntity.builder()
-                .id(projectMember.getId())
+                .userId(projectMember.getUserId())
                 .role(projectMember.getRole())
                 .firstName(projectMember.getFirstName())
                 .lastName(projectMember.getLastName())
@@ -15,7 +15,7 @@ public class ProjectMemberMapper {
 
     public static ProjectMember toProjectMember(ProjectMemberEntity projectMemberEntity) {
         return ProjectMember.builder()
-                .id(projectMemberEntity.getId())
+                .userId(projectMemberEntity.getUserId())
                 .role(projectMemberEntity.getRole())
                 .firstName(projectMemberEntity.getFirstName())
                 .lastName(projectMemberEntity.getLastName())
