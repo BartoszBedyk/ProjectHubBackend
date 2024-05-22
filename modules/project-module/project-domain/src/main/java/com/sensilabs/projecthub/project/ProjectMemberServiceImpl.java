@@ -3,7 +3,6 @@ package com.sensilabs.projecthub.project;
 import com.sensilabs.projecthub.commons.*;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
 
@@ -21,6 +20,8 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     @Override
     public ProjectMember save(CreateProjectMemberForm createProjectMemberForm, String createdById) {
         if (projectRepository.findById(createProjectMemberForm.getProjectId()).isPresent()) {
+
+
             ProjectMember projectMember = ProjectMember.builder()
                     .role(createProjectMemberForm.getRole())
                     .firstName(createProjectMemberForm.getFirstName())
@@ -29,6 +30,7 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
                     .createdOn(Instant.now())
                     .projectId(createProjectMemberForm.getProjectId())
                     .userId(createProjectMemberForm.getUserId())
+                    .environmentIds(createProjectMemberForm.getEnvironmentIds())
                     .build();
             return projectMemberRepository.save(projectMember);
         } else {
