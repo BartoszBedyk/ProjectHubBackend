@@ -26,7 +26,7 @@ public class SearchSpecification {
 
     static <T> Path<?> getPath(Root<T> root, String[] paramField) {
         if (paramField.length == 2) {
-            return root.joinList(paramField[0], JoinType.LEFT).get(paramField[1]);
+            return root.join(paramField[0], JoinType.LEFT).get(paramField[1]);
         } else {
             return root.get(paramField[0]);
         }

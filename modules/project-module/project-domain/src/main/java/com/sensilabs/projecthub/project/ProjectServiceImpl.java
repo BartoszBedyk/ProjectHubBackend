@@ -1,9 +1,6 @@
 package com.sensilabs.projecthub.project;
 
-import com.sensilabs.projecthub.commons.ApplicationException;
-import com.sensilabs.projecthub.commons.ErrorCode;
-import com.sensilabs.projecthub.commons.SearchForm;
-import com.sensilabs.projecthub.commons.SearchResponse;
+import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
 import org.springframework.stereotype.Service;
 
@@ -61,12 +58,14 @@ public class ProjectServiceImpl implements ProjectService {
         Project existingProject = getOrThrow(updateProjectForm.getId());
         existingProject.setName(updateProjectForm.getName());
         existingProject.setDescription(updateProjectForm.getDescription());
+        existingProject.getTechnologies().clear();
         existingProject.setTechnologies(technologies);
         return projectRepository.save(existingProject);
     }
 
     @Override
-    public SearchResponse<Project> search(SearchForm searchForm) {
+    public SearchResponse<Project> search(SearchForm searchForm, String loggedUserId) {
+        searchForm.getCriteria().add(new SearchFormCriteria("members.userId",loggedUserId,CriteriaOperator.EQUALS));
         return projectRepository.search(searchForm);
     }
 }

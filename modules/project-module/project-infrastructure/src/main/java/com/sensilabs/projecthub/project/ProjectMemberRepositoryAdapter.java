@@ -1,9 +1,15 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
+import com.sensilabs.projecthub.utils.SearchSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ProjectMemberRepositoryAdapter implements ProjectMemberRepository {
@@ -33,7 +39,9 @@ public class ProjectMemberRepositoryAdapter implements ProjectMemberRepository {
     }
 
     @Override
-    public List<Object[]> getProjects(String userId) {
-        return projectMemberRepositoryJpa.getProjects(userId);
+    public List<ProjectMember> findAllByProjectId(String projectId) {
+        return projectMemberRepositoryJpa.findAllByProjectId(projectId).stream().map(ProjectMemberMapper::toProjectMember).toList();
     }
+
+
 }

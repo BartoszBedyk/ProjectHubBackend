@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 
@@ -13,7 +15,7 @@ public interface ProjectMemberService {
 
     void remove(String userId, String projectId);
 
-    List<ProjectDTO> getProjects(String userId);
+    List<ProjectMember> findAllByProjectId(String projectId);
 
     ProjectMember getById(String userId, String projectId);
 }

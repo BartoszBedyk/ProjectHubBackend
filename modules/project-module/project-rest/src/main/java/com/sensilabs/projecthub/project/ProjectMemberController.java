@@ -1,5 +1,8 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.commons.LoggedUser;
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -9,14 +12,16 @@ import java.util.List;
 @RequestMapping("/project-member")
 public class ProjectMemberController {
     private final ProjectMemberService projectMemberService;
+    private final LoggedUser loggedUser;
 
-    public ProjectMemberController(ProjectMemberService projectMemberService) {
+    public ProjectMemberController(ProjectMemberService projectMemberService, LoggedUser loggedUser) {
         this.projectMemberService = projectMemberService;
+        this.loggedUser = loggedUser;
     }
 
     @PostMapping("/save")
     public ProjectMember create(@RequestBody CreateProjectMemberForm form) {
-        return projectMemberService.save(form, "mockUser");
+        return projectMemberService.save(form, loggedUser.getUserId());
     }
 
     @PutMapping("/update")
@@ -24,9 +29,9 @@ public class ProjectMemberController {
         return projectMemberService.update(form);
     }
 
-    @GetMapping("/search/{id}")
-    public List<ProjectDTO> searchProjects(@PathVariable("id") String userId) {
-        return projectMemberService.getProjects(userId);
+    @GetMapping("/find/{projectId}")
+    public List<ProjectMember> search(@PathVariable("projectId") String projectId) {
+        return projectMemberService.findAllByProjectId(projectId);
     }
 
     @DeleteMapping("/delete/{userId}/{projectId}")

@@ -1,7 +1,6 @@
 package com.sensilabs.projecthub.project;
 
-import com.sensilabs.projecthub.commons.ApplicationException;
-import com.sensilabs.projecthub.commons.ErrorCode;
+import com.sensilabs.projecthub.commons.*;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -51,39 +50,8 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     }
 
     @Override
-    public List<ProjectDTO> getProjects(String userId) {
-        List<Object[]> results = projectMemberRepository.getProjects(userId);
-
-        Map<String, ProjectDTO> projectMap = new HashMap<>();
-
-        for (Object[] result : results) {
-            String projectId = (String) result[0];
-            String projectName = (String) result[1];
-            String projectDescription = (String) result[2];
-            Instant projectCreatedOn = ((Timestamp) result[3]).toInstant();
-            String projectCreatedById = (String) result[4];
-            String technologyId = (String) result[5];
-            String technologyName = (String) result[6];
-            String technologyDescription = (String) result[7];
-
-            TechnologyDTO technologyDTO = TechnologyDTO.builder()
-                    .technologyId(technologyId)
-                    .technologyName(technologyName)
-                    .technologyDescription(technologyDescription)
-                    .build();
-
-            ProjectDTO projectDTO = projectMap.computeIfAbsent(projectId, id -> ProjectDTO.builder()
-                    .projectId(id)
-                    .projectName(projectName)
-                    .projectDescription(projectDescription)
-                    .projectCreatedOn(projectCreatedOn)
-                    .projectCreatedById(projectCreatedById)
-                    .projectTechnologies(new ArrayList<>())
-                    .build());
-
-            projectDTO.getProjectTechnologies().add(technologyDTO);
-        }
-        return new ArrayList<>(projectMap.values());
+    public List<ProjectMember> findAllByProjectId(String projectId) {
+        return projectMemberRepository.findAllByProjectId(projectId);
     }
 
     @Override

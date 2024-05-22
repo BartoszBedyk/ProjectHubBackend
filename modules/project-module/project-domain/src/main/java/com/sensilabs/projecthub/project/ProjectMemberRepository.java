@@ -1,5 +1,8 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,5 +13,5 @@ public interface ProjectMemberRepository {
 
     void delete(ProjectMember projectMember);
 
-    List<Object[]> getProjects(String userId);
+    List<ProjectMember> findAllByProjectId(String projectId);
 }
