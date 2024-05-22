@@ -1,16 +1,18 @@
 package com.sensilabs.projecthub.project;
 
-import com.sensilabs.projecthub.commons.*;
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.utils.SearchSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class ProjectMemberRepositoryAdapter implements ProjectMemberRepository{
+public class ProjectMemberRepositoryAdapter implements ProjectMemberRepository {
     private final ProjectMemberRepositoryJpa projectMemberRepositoryJpa;
 
     public ProjectMemberRepositoryAdapter(ProjectMemberRepositoryJpa projectMemberRepositoryJpa) {
@@ -25,20 +27,9 @@ public class ProjectMemberRepositoryAdapter implements ProjectMemberRepository{
     }
 
     @Override
-    public SearchResponse<ProjectMember> search(SearchForm searchForm) {
-        Specification<ProjectMemberEntity> specification = SearchSpecification.buildSpecification(searchForm.getCriteria());
-        Page<ProjectMemberEntity> projectMemberPage = projectMemberRepositoryJpa.findAll(specification, SearchSpecification.getPageRequest(searchForm));
-        return SearchResponse.<ProjectMember>builder()
-                .items(projectMemberPage.getContent().stream()
-                        .map(ProjectMemberMapper::toProjectMember)
-                        .collect(Collectors.toList()))
-                .total(projectMemberPage.getTotalElements())
-                .build();
-    }
-
-    @Override
-    public Optional<ProjectMember> findById(String id) {
-        return projectMemberRepositoryJpa.findById(id).map(ProjectMemberMapper::toProjectMember);
+    public Optional<ProjectMember> findById(String userId, String projectId) {
+        return projectMemberRepositoryJpa.findByUserIdAndProjectId(userId, projectId)
+                .map(ProjectMemberMapper::toProjectMember);
     }
 
     @Override
@@ -46,4 +37,11 @@ public class ProjectMemberRepositoryAdapter implements ProjectMemberRepository{
         ProjectMemberEntity projectMemberEntity = ProjectMemberMapper.toProjectMemberEntity(projectMember);
         projectMemberRepositoryJpa.delete(projectMemberEntity);
     }
+
+    @Override
+    public List<ProjectMember> findAllByProjectId(String projectId) {
+        return projectMemberRepositoryJpa.findAllByProjectId(projectId).stream().map(ProjectMemberMapper::toProjectMember).toList();
+    }
+
+
 }

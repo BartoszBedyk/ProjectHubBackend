@@ -25,4 +25,7 @@ public class CreateProjectMemberForm {
     @NotNull(message = "ID cannot be null.")
     @Size(min = 36, max = 36, message = "ID must have 36 characters.")
     private String projectId;
+    @NotNull(message = "ID cannot be null.")
+    @Size(min = 36, max = 36, message = "ID must have 36 characters.")
+    private String userId;
 }

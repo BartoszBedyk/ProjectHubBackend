@@ -10,7 +10,7 @@ public interface AuthorizationService {
 
     LoginResponse login(@Valid LoginForm logInRequest);
 
-    void createUser(@Valid CreateUserWithPasswordForm createUserRequest);
+    void createUser(@Valid CreateUserWithPasswordForm createUserRequest, String createdById);
 
     void resetPassword(@Valid ResetPasswordForm resetPasswordRequest);
 

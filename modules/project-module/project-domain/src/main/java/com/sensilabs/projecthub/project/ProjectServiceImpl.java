@@ -1,13 +1,10 @@
 package com.sensilabs.projecthub.project;
 
-import com.sensilabs.projecthub.commons.ApplicationException;
-import com.sensilabs.projecthub.commons.ErrorCode;
-import com.sensilabs.projecthub.commons.SearchForm;
-import com.sensilabs.projecthub.commons.SearchResponse;
+import com.sensilabs.projecthub.commons.*;
+import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -16,9 +13,11 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ProjectEnvironmentService projectEnvironmentService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService) {
         this.projectRepository = projectRepository;
+        this.projectEnvironmentService = projectEnvironmentService;
     }
 
     private Project getOrThrow(String id) {
@@ -39,7 +38,10 @@ public class ProjectServiceImpl implements ProjectService {
                 .createdById(createdById)
                 .technologies(technologies)
                 .build();
-        return projectRepository.save(project);
+
+        Project savedProject = projectRepository.save(project);
+        projectEnvironmentService.createDefaultEnvironments(savedProject.getId());
+        return savedProject;
     }
 
     @Override
@@ -56,12 +58,14 @@ public class ProjectServiceImpl implements ProjectService {
         Project existingProject = getOrThrow(updateProjectForm.getId());
         existingProject.setName(updateProjectForm.getName());
         existingProject.setDescription(updateProjectForm.getDescription());
+        existingProject.getTechnologies().clear();
         existingProject.setTechnologies(technologies);
         return projectRepository.save(existingProject);
     }
 
     @Override
-    public SearchResponse<Project> search(SearchForm searchForm) {
+    public SearchResponse<Project> search(SearchForm searchForm, String loggedUserId) {
+        searchForm.getCriteria().add(new SearchFormCriteria("members.userId",loggedUserId,CriteriaOperator.EQUALS));
         return projectRepository.search(searchForm);
     }
 }

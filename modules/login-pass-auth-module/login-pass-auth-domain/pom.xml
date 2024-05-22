@@ -21,5 +21,10 @@
             <artifactId>user-management-domain</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>notification-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

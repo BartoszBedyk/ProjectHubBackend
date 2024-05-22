@@ -1,6 +1,5 @@
 package com.sensilabs.projecthub.user.management;
 
-import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
@@ -16,18 +15,15 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserManagementServiceTest {
-
-    LoggedUser loggedUser = new LoggedUserMock();
-
     UserManagementRepository repository = new UserManagementRepositoryMock();
-    UserManagementService service = new UserManagementServiceImpl(repository, loggedUser);
+    UserManagementService service = new UserManagementServiceImpl(repository);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
 
     @Test
     void getTest() {
-        User userSaved = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"));
+        User userSaved = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"), "createdByTestId");
         User userFound = service.get(userSaved.getId());
         assertEquals(userSaved.getId(), userFound.getId());
         assertEquals(userFound.getFirstName(), "Kacper");
@@ -36,9 +32,11 @@ public class UserManagementServiceTest {
     }
 
     @Test
-    void saveTest() {
+    void saveTest() throws InterruptedException {
         Instant currentDate = Instant.now();
-        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"));
+        Thread.sleep(2);
+        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"), "createdByTestId");
+        Thread.sleep(2);
         Instant dateAfterSave = Instant.now();
         assertNotNull(user.getId());
         assertEquals(user.getFirstName(), "Kacper");
@@ -62,10 +60,12 @@ public class UserManagementServiceTest {
     }
 
     @Test
-    void updateTest() {
+    void updateTest() throws InterruptedException {
         Instant currentDate = Instant.now();
-        User userSaved = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"));
+        Thread.sleep(2);
+        User userSaved = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"), "createdByTestId");
         userSaved = service.update(new EditUserForm(userSaved.getId(), "Andrzej", "Kowalski", "test2@test.pl"));
+        Thread.sleep(2);
         Instant dateAfterUpdate = Instant.now();
         assertEquals(userSaved.getFirstName(), "Andrzej");
         assertEquals(userSaved.getLastName(), "Kowalski");
@@ -89,14 +89,14 @@ public class UserManagementServiceTest {
 
     @Test
     void blockTest() {
-        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"));
+        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"), "createdByTestId");
         service.block(user.getId());
         assertTrue(user.isBlocked());
     }
 
     @Test
     void unBlockTest() {
-        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"));
+        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"), "createdByTestId");
         service.block(user.getId());
         service.unBlock(user.getId());
         assertFalse(user.isBlocked());
@@ -104,8 +104,9 @@ public class UserManagementServiceTest {
 
     @Test
     void deleteTest() {
-        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"));
-        service.delete(user.getId());
-        assertThrows(RuntimeException.class, () -> service.get(user.getId()));
+        User user = service.save(new CreateUserForm("Kacper", "Koncki", "test@test.pl"), "createdByTestId");
+        service.delete(user.getId(), "deletedByTestId");
+        assertNotNull(user.getDeletedOn());
+        assertNotNull(user.getDeletedById());
     }
 }

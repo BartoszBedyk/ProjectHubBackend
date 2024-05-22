@@ -1,32 +1,30 @@
 package com.sensilabs.projecthub.user.management.service;
 
-import com.sensilabs.projecthub.commons.*;
+import com.sensilabs.projecthub.commons.ApplicationException;
+import com.sensilabs.projecthub.commons.ErrorCode;
+import com.sensilabs.projecthub.commons.SearchForm;
+import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Service
-@Slf4j
 public class UserManagementServiceImpl implements UserManagementService {
 
 	private final UserManagementRepository userManagementRepository;
 
-	private final LoggedUser loggedUser;
-
-	public UserManagementServiceImpl(UserManagementRepository userManagementRepository, LoggedUser loggedUser) {
+	public UserManagementServiceImpl(UserManagementRepository userManagementRepository) {
 		this.userManagementRepository = userManagementRepository;
-        this.loggedUser = loggedUser;
     }
 
 	@Override
 	public SearchResponse<User> search(SearchForm form) {
-		return null;
+		return userManagementRepository.search(form);
 	}
 
 	private User getOrThrow(String id) {
@@ -35,19 +33,20 @@ public class UserManagementServiceImpl implements UserManagementService {
 
 	@Override
 	public User get(String id) {
-		log.info("Method get(), LoggedUser {}", loggedUser.getUserId());
 		return getOrThrow(id);
 	}
 
 	@Override
-	public User save(CreateUserForm userRequest) {
+	public User save(CreateUserForm userRequest, String createdById) {
 		User user = User.builder()
 				.id(UUID.randomUUID().toString())
 				.firstName(userRequest.getFirstName())
 				.lastName(userRequest.getLastName())
 				.email(userRequest.getEmail())
 				.createdOn(Instant.now())
-				.createdById(loggedUser.getUserId())
+				.createdById(createdById)
+				.deletedOn(null)
+				.deletedById(null)
 				.isBlocked(false)
 				.build();
 
@@ -94,9 +93,10 @@ public class UserManagementServiceImpl implements UserManagementService {
 	}
 
 	@Override
-	public void delete(String id) {
+	public void delete(String id, String deletedById) {
 		User user = getOrThrow(id);
 		user.setDeletedOn(Instant.now());
+		user.setDeletedById(deletedById);
 		userManagementRepository.save(user);
 	}
 }

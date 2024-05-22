@@ -12,5 +12,4 @@ public interface UserManagementRepository {
     Optional<User> get(String id);
     Optional<User> getNotDeleted(String id);
     User save(User user);
-    void delete(String id);
 }
