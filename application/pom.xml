@@ -28,6 +28,21 @@
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>resource-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>resource-infrastructure</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>resource-rest</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>activity-domain</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -106,5 +121,6 @@
             <artifactId>attachment-rest</artifactId>
             <version>${revision}</version>
         </dependency>
+
     </dependencies>
 </project>

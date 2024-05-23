@@ -9,13 +9,12 @@ public interface NotificationForm {
 
 
     NotificationType getType();
+
     NotificationChannel getChannel();
+
     Map<String, String> getParams();
 
     String getReceiver();
-    //Priority getPriority();
-   // Instant getCreatedOn();
-
 
 
 }

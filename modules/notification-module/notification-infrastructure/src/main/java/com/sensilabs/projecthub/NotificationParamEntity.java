@@ -15,7 +15,7 @@ public class NotificationParamEntity {
     @Column(name = "id")
     private String id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private NotificationEntity notification;
 
     @Column(name = "name")

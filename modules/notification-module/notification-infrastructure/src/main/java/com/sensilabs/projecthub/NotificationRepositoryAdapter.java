@@ -32,7 +32,6 @@ public class NotificationRepositoryAdapter implements NotificationRepository {
 
     @Override
     public Notification save(Notification notification) {
-
         NotificationEntity notificationEntity = NotificationMapper.toNotificationEntity(notification);
         notificationRepositoryJpa.save(notificationEntity);
         List<NotificationParamEntity> notificationParamEntities =

@@ -20,6 +20,7 @@
         <module>user-management-module</module>
         <module>user-verification-module</module>
         <module>cipher-module</module>
+        <module>resource-module</module>
     </modules>
 
 </project>
