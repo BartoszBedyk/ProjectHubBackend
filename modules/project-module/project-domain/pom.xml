@@ -17,5 +17,10 @@
             <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>user-management-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

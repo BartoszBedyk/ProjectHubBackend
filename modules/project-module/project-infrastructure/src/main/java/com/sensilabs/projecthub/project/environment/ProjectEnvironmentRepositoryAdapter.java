@@ -35,4 +35,12 @@ public class ProjectEnvironmentRepositoryAdapter implements ProjectEnvironmentRe
                 .map(ProjectEnvironmentMapper::toProjectEnvironment)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ProjectEnvironment> findAllByIds(List<String> ids) {
+        List<ProjectEnvironmentEntity> entityList = projectEnvironmentRepositoryJpa.findAllByIdIn(ids);
+        return entityList.stream()
+                .map(ProjectEnvironmentMapper::toProjectEnvironment)
+                .collect(Collectors.toList());
+    }
 }

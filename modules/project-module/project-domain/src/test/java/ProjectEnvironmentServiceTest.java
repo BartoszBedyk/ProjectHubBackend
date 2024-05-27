@@ -1,3 +1,4 @@
+import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.project.*;
 import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
 import com.sensilabs.projecthub.project.environment.forms.CreateProjectEnvironmentForm;
@@ -5,6 +6,11 @@ import com.sensilabs.projecthub.project.environment.forms.UpdateProjectEnvironme
 import com.sensilabs.projecthub.project.environment.repository.ProjectEnvironmentRepository;
 import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
 import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentServiceImpl;
+import com.sensilabs.projecthub.user.management.User;
+import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
+import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
+import com.sensilabs.projecthub.user.management.service.UserManagementService;
+import com.sensilabs.projecthub.user.management.service.UserManagementServiceImpl;
 import jakarta.validation.*;
 import org.junit.jupiter.api.Test;
 
@@ -18,17 +24,20 @@ public class ProjectEnvironmentServiceTest {
     ProjectRepository projectRepository = new ProjectRepositoryMock();
     ProjectEnvironmentRepository projectEnvironmentRepository = new ProjectEnvironmentRepositoryMock();
     ProjectEnvironmentService service = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
-    ProjectService projectService = new ProjectServiceImpl(projectRepository, service);
+    ProjectMemberRepository projectMemberRepository = new ProjectMemberRepositoryMock();
+    UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
+    LoggedUser loggedUser = new LoggedUserMock();
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, loggedUser);
+    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, service, projectMemberService, userManagementService);
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
 
-
+    User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek","smolarekkamil123@gmail.com"));
     CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
             List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
                     new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
-    Project project = projectService.save(createProjectForm, "testUserId");
-
-
+    Project project = projectService.save(createProjectForm, user.getId());
 
     private <T> void genericViolationSet(T form) {
         Set<ConstraintViolation<T>> violations = validator.validate(form);

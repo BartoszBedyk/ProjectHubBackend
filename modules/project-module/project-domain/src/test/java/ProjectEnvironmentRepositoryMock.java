@@ -33,4 +33,15 @@ public class ProjectEnvironmentRepositoryMock implements ProjectEnvironmentRepos
         }
         return envs;
     }
+
+    @Override
+    public List<ProjectEnvironment> findAllByIds(List<String> ids) {
+        List<ProjectEnvironment> envs = new ArrayList<>();
+        for (ProjectEnvironment env : mockDB.values()) {
+            if (ids.contains(env.getId())) {
+                envs.add(env);
+            }
+        }
+        return envs;
+    }
 }

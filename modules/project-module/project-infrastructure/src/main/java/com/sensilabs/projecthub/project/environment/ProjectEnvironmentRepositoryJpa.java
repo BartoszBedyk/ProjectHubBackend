@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProjectEnvironmentRepositoryJpa extends JpaRepository<ProjectEnvironmentEntity, String> {
     List<ProjectEnvironmentEntity> findAllEnvsByProjectIdAndDeletedOnIsNull(String projectId);
+
+    List<ProjectEnvironmentEntity> findAllByIdIn(List<String> ids);
 }
