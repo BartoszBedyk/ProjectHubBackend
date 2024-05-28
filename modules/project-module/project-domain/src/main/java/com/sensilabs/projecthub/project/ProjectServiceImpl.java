@@ -69,13 +69,15 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
 
         Project existingProject = getOrThrow(updateProjectForm.getId());
-        if(projectMemberService.getById(userId, existingProject.getId()).getRole() == Role.OWNER){
+
+        if(!projectMemberService.getById(userId, existingProject.getId()).getRole().equals(Role.OWNER)){
+            throw new ApplicationException(ErrorCode.NOT_PROJECT_OWNER);
+        }
             existingProject.setName(updateProjectForm.getName());
             existingProject.setDescription(updateProjectForm.getDescription());
             existingProject.getTechnologies().clear();
             existingProject.setTechnologies(technologies);
             return projectRepository.save(existingProject);
-        } else {throw new ApplicationException(ErrorCode.NOT_PROJECT_OWNER);}
     }
 
     @Override
