@@ -26,7 +26,7 @@ public class ProjectMemberController {
 
     @PutMapping("/update")
     public ProjectMember update(@RequestBody UpdateProjectMemberForm form) {
-        return projectMemberService.update(form);
+        return projectMemberService.update(form, loggedUser.getUserId());
     }
 
     @GetMapping("/find/{projectId}")

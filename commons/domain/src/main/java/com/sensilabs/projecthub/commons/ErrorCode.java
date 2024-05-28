@@ -15,7 +15,8 @@ public enum ErrorCode {
     DECRYPTION_FAILED("Decryption failed"),
     FILE_STREAM_PROCESSING_FAILED("File stream processing failed"),
     PROJECT_MEMBER_NOT_FOUND("Project member not found"),
-    PROJECT_ENVIRONMENT_NOT_FOUND("Project environment not found");
+    PROJECT_ENVIRONMENT_NOT_FOUND("Project environment not found"),
+    NOT_PROJECT_OWNER("You are not project owner");
 
     ErrorCode(String message) {
         this.message = message;

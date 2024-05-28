@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,4 +30,7 @@ public class CreateProjectMemberForm {
     @NotNull(message = "ID cannot be null.")
     @Size(min = 36, max = 36, message = "ID must have 36 characters.")
     private String userId;
+    @NotNull(message = "Environments IDs cannot be null.")
+    @Size(min = 1, message = "At least one environment ID must be provided.")
+    List<@Size(min = 36, max = 36, message = "ID must have 36 characters.") String> environmentIds;
 }

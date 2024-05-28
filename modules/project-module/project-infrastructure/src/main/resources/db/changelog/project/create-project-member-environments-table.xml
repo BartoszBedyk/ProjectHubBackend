@@ -1,0 +1,24 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-project-member-environments-table" author="Kamil Smolarek">
+        <createTable tableName="project_member_environments">
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="environment_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="project_member_environments"
+                                 baseColumnNames="user_id, project_id"
+                                 referencedTableName="project_member"
+                                 referencedColumnNames="user_id, project_id"
+                                 constraintName="fk_env_project_member"/>
+    </changeSet>
+
+</databaseChangeLog>

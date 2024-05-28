@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,4 +33,11 @@ public class ProjectMemberEntity {
     @Id
     @Column(name = "project_id")
     private String projectId;
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "project_member_environments", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    })
+    @Column(name = "environment_id", nullable = false)
+    private List<String> environmentIds;
 }

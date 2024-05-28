@@ -11,7 +11,7 @@ public interface ProjectService {
 
     Project getById(String id);
 
-    Project update(@Valid UpdateProjectForm updateProjectForm);
+    Project update(@Valid UpdateProjectForm updateProjectForm, String userId);
 
     SearchResponse<Project> search(SearchForm searchForm, String loggedUserId);
 }

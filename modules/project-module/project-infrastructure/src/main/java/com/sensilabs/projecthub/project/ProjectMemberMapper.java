@@ -10,6 +10,7 @@ public class ProjectMemberMapper {
                 .createdById(projectMember.getCreatedById())
                 .createdOn(projectMember.getCreatedOn())
                 .projectId(projectMember.getProjectId())
+                .environmentIds(projectMember.getEnvironmentIds())
                 .build();
     }
 
@@ -22,6 +23,7 @@ public class ProjectMemberMapper {
                 .createdById(projectMemberEntity.getCreatedById())
                 .createdOn(projectMemberEntity.getCreatedOn())
                 .projectId(projectMemberEntity.getProjectId())
+                .environmentIds(projectMemberEntity.getEnvironmentIds())
                 .build();
     }
 }

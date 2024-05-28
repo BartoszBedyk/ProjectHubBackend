@@ -23,7 +23,7 @@ public class ProjectController {
 
     @PutMapping("/update")
     public Project update(@RequestBody UpdateProjectForm form) {
-        return projectService.update(form);
+        return projectService.update(form, loggedUser.getUserId());
     }
 
     @GetMapping("/get/{id}")

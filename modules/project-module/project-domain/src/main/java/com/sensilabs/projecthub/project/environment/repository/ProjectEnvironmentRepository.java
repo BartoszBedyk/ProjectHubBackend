@@ -9,4 +9,5 @@ public interface ProjectEnvironmentRepository {
     void save(ProjectEnvironment projectEnvironment);
     Optional<ProjectEnvironment> findById(String id);
     List<ProjectEnvironment> findAllNotDeleted(String projectId);
+    List<ProjectEnvironment> findAllByIds(List<String> ids);
 }
