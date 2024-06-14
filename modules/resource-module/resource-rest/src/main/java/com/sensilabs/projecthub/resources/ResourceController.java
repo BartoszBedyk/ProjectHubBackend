@@ -51,6 +51,7 @@ public class ResourceController {
         return resourceService.update(form);
     }
 
+    @CrossOrigin
     @PostMapping("/search")
     public SearchResponse<Resource> search(@RequestBody SearchForm searchForm) {
         return resourceService.search(searchForm);

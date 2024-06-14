@@ -33,7 +33,7 @@ spring:
   security:
     jwt:
       secret: 5pAq6zRyX8bC3dV2wS7gN1mK9jF0hL4tUoP6iBvE3nG8xZaQrY7cW2fA
-      tokenExpirationTimeInMinutes: 1000
+      tokenExpirationTimeInMinutes: 10000
       securityFilterPath: /auth/**
 
 gmail:
