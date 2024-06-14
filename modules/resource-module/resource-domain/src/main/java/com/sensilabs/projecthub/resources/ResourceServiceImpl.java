@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,25 +25,23 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Resource save(ResourceForm resourceForm, String createdById) throws AccessDeniedException {
 
-        if( resourceAccess.checkAccess(resourceForm.getProjectId(), resourceForm.getEnvironmentId(), createdById)){
-            Instant now = Instant.now();
-            Resource resource =  Resource.builder()
-                    .id(UUID.randomUUID().toString())
-                    .name(resourceForm.getName())
-                    .description(resourceForm.getDescription())
-                    .value(resourceForm.getValue())
-                    .resourceType(resourceForm.getType())
-                    .environmentId(resourceForm.getEnvironmentId())
-                    .projectId(resourceForm.getProjectId())
-                    .createdById(createdById)
-                    .createdOn(now)
-                    .lastModifiedOn(null)
-                    .build();
-            return resourceRepository.save(resource);
-        }
-        else{
+        if (!resourceAccess.checkAccess(resourceForm.getProjectId(), resourceForm.getEnvironmentId(), createdById))
             throw new AccessDeniedException("Access denied to save the resource for user.");
-        }
+
+        Instant now = Instant.now();
+        Resource resource = Resource.builder()
+                .id(UUID.randomUUID().toString())
+                .name(resourceForm.getName())
+                .description(resourceForm.getDescription())
+                .value(resourceForm.getValue())
+                .resourceType(resourceForm.getType())
+                .environmentId(resourceForm.getEnvironmentId())
+                .projectId(resourceForm.getProjectId())
+                .createdById(createdById)
+                .createdOn(now)
+                .lastModifiedOn(null)
+                .build();
+        return resourceRepository.save(resource);
 
 
     }

@@ -34,7 +34,6 @@ public class MailScheduler {
         this.notificationProps = notificationProps;
         this.executorService = Executors.newFixedThreadPool(notificationProps.numberOfThreadsAndMailPerThread());
     }
-    @Value("${mail.enabled}")
     @Scheduled(fixedDelayString = "${app.notification.schedulerDelayInMilliseconds}")
     public void scheduledMailing() {
 
