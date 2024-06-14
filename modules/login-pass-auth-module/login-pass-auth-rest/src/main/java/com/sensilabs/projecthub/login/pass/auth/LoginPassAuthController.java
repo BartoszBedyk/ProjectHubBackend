@@ -19,7 +19,7 @@ public class LoginPassAuthController {
         this.authorizationService = authorizationService;
         this.loggedUser = loggedUser;
     }
-    @CrossOrigin
+
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginForm form) {
         return authorizationService.login(form);

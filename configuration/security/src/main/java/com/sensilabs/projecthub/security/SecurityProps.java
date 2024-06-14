@@ -22,4 +22,8 @@ public class SecurityProps {
     public String getSecurityFilterPath() {
         return env.getRequiredProperty("spring.security.jwt.securityFilterPath");
     }
+
+    public String getAllowedOriginLink() {
+        return env.getRequiredProperty("spring.security.jwt.allowedOriginLink");
+    }
 }
