@@ -3,6 +3,7 @@ package com.sensilabs.projecthub.attachment;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.sensilabs.projecthub.commons.LoggedUser;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,16 +21,18 @@ import org.springframework.web.multipart.MultipartFile;
 public class AttachmentController {
 	private final AttachmentService attachmentService;
 	private final StorageService storageService;
+	private final LoggedUser loggedUser;
 
-	public AttachmentController(AttachmentService attachmentService, StorageService storageService) {
+	public AttachmentController(AttachmentService attachmentService, StorageService storageService, LoggedUser loggedUser) {
 		this.attachmentService = attachmentService;
 		this.storageService = storageService;
-	}
+        this.loggedUser = loggedUser;
+    }
 
 	@PostMapping("/upload")
-	public Attachment upload(@RequestParam("file") MultipartFile file, @RequestParam("createdById") String createdById) throws IOException {
+	public Attachment upload(@RequestParam("file") MultipartFile file) throws IOException {
 		try (InputStream in = file.getInputStream()) {
-			return attachmentService.save(in, file.getOriginalFilename(), createdById);
+			return attachmentService.save(in, file.getOriginalFilename(), loggedUser.getUserId());
 		}
 	}
 
