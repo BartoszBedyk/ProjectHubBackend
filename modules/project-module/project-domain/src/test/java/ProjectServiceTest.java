@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 public class ProjectServiceTest {
     ProjectRepository projectRepository = new ProjectRepositoryMock();
@@ -26,17 +25,15 @@ public class ProjectServiceTest {
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
     ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
     ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, loggedUser);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
     ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService);
 
     @Test
     void createProjectTest() throws InterruptedException {
-        User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek", "smolarekkamil123@gmail.com"));
+        User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek", "smolarekkamil123@gmail.com"), "1");
         Instant beforeDate = Instant.now();
         Thread.sleep(2);
-        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
-                List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
-                        new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
+        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description", List.of("1", "2", "3"));
         Project project = projectService.save(createProjectForm, user.getId());
         Thread.sleep(2);
         Instant afterDate = Instant.now();
@@ -44,15 +41,7 @@ public class ProjectServiceTest {
         Assertions.assertEquals("Project", project.getName());
         Assertions.assertEquals("Description", project.getDescription());
         Assertions.assertTrue(project.getCreatedOn().isAfter(beforeDate) && project.getCreatedOn().isBefore(afterDate));
-        List<Technology> technologyList = project.getTechnologies();
 
-        Technology javaTechnology = technologyList.get(0);
-        Assertions.assertEquals("Java", javaTechnology.getName());
-        Assertions.assertEquals("JavaDesc", javaTechnology.getDescription());
-
-        Technology springTechnology = technologyList.get(1);
-        Assertions.assertEquals("Spring", springTechnology.getName());
-        Assertions.assertEquals("SpringDesc", springTechnology.getDescription());
 
         ProjectMember projectMember = projectMemberService.getById(user.getId(), project.getId());
         Assertions.assertEquals(user.getId(), projectMember.getUserId());
@@ -64,42 +53,26 @@ public class ProjectServiceTest {
 
     @Test
     void updateProjectTest() {
-        User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek", "smolarekkamil123@gmail.com"));
-        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
-                List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
-                        new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
+        User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek", "smolarekkamil123@gmail.com"), "1");
+        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description", List.of("1", "2", "3"));
         Project project = projectService.save(createProjectForm, user.getId());
         UpdateProjectForm updateProjectForm = new UpdateProjectForm(project.getId(), "Project2", "Description2",
-                List.of(new Technology(UUID.randomUUID().toString(), "C++", "C++ Desc"),
-                        new Technology(UUID.randomUUID().toString(), "PHP", "PHP Desc")));
+                List.of("4", "5", "6"));
 
         projectService.update(updateProjectForm, user.getId());
 
         Assertions.assertEquals("Project2", project.getName());
         Assertions.assertEquals("Description2", project.getDescription());
-        List<Technology> technologyList = project.getTechnologies();
-
-        Technology javaTechnology = technologyList.get(0);
-        Assertions.assertEquals("C++", javaTechnology.getName());
-        Assertions.assertEquals("C++ Desc", javaTechnology.getDescription());
-
-        Technology springTechnology = technologyList.get(1);
-        Assertions.assertEquals("PHP", springTechnology.getName());
-        Assertions.assertEquals("PHP Desc", springTechnology.getDescription());
     }
 
     @Test
     void updateProjectNotOwnerTest() {
-        User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek", "smolarekkamil123@gmail.com"));
-        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
-                List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
-                        new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
+        User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek", "smolarekkamil123@gmail.com"), "1");
+        CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description", List.of("1", "2", "3"));
         Project project = projectService.save(createProjectForm, user.getId());
 
-        UpdateProjectForm updateProjectForm = new UpdateProjectForm(project.getId(), "Project2", "Description2",
-                List.of(new Technology(UUID.randomUUID().toString(), "C++", "C++ Desc"),
-                        new Technology(UUID.randomUUID().toString(), "PHP", "PHP Desc")));
-        User userNotOwner = userManagementService.save(new CreateUserForm("Mariusz", "Szpakowski", "mariuszszpakowski@gmail.com"));
+        UpdateProjectForm updateProjectForm = new UpdateProjectForm(project.getId(), "Project2", "Description2", List.of("1", "2", "3"));
+        User userNotOwner = userManagementService.save(new CreateUserForm("Mariusz", "Szpakowski", "mariuszszpakowski@gmail.com"), "1");
         List<String> envIds = projectMemberRepository.findById(user.getId(), project.getId()).get().getEnvironmentIds();
         CreateProjectMemberForm createProjectMemberForm = new CreateProjectMemberForm("Mariusz", "Szpakowski", Role.MAINTAINER, project.getId(), userNotOwner.getId(), envIds);
         projectMemberService.save(createProjectMemberForm, user.getId());

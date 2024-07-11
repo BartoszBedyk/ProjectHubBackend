@@ -11,3 +11,9 @@ databaseChangeLog:
       file: classpath:db/changelog/project/update-project-member-table.xml
   - include:
       file: classpath:db/changelog/project/create-project-member-environments-table.xml
+  - include:
+      file: classpath:db/changelog/project/create-project-technologies-table.xml
+  - include:
+      file: classpath:db/changelog/project/update-project-table.xml
+  - include:
+      file: classpath:db/changelog/project/update-technology.table.xml

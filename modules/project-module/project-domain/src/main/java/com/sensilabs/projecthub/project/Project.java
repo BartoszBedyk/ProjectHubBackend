@@ -16,5 +16,7 @@ public class Project {
     private String description;
     private Instant createdOn;
     private String createdById;
-    private List<Technology> technologies;
+    private List<String> technologies;
+    private String deletedById;
+    private Instant deletedOn;
 }

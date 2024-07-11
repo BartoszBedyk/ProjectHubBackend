@@ -35,4 +35,9 @@ public class ProjectController {
     public SearchResponse<Project> search(@RequestBody SearchForm searchForm) {
         return projectService.search(searchForm, loggedUser.getUserId());
     }
+
+    @DeleteMapping("/delete/{id}")
+    public Project delete(@PathVariable("id") String id) {
+        return projectService.delete(id, loggedUser.getUserId());
+    }
 }

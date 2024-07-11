@@ -27,16 +27,15 @@ public class ProjectEnvironmentServiceTest {
     ProjectMemberRepository projectMemberRepository = new ProjectMemberRepositoryMock();
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
     LoggedUser loggedUser = new LoggedUserMock();
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, loggedUser);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
     ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
     ProjectService projectService = new ProjectServiceImpl(projectRepository, service, projectMemberService, userManagementService);
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
 
-    User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek","smolarekkamil123@gmail.com"));
+    User user = userManagementService.save(new CreateUserForm("Kamil", "Smolarek","smolarekkamil123@gmail.com"), "1");
     CreateProjectForm createProjectForm = new CreateProjectForm("Project", "Description",
-            List.of(new Technology(UUID.randomUUID().toString(), "Java", "JavaDesc"),
-                    new Technology(UUID.randomUUID().toString(), "Spring", "SpringDesc")));
+            List.of("1", "2", "3"));
     Project project = projectService.save(createProjectForm, user.getId());
 
     private <T> void genericViolationSet(T form) {

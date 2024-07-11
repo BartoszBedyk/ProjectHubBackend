@@ -7,31 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.sensilabs.projecthub.project.ProjectMapper.toTechnologyEntity;
 
 @Component
 public class ProjectRepositoryAdapter implements ProjectRepository {
 
     private final ProjectRepositoryJpa projectRepositoryJpa;
-    private final TechnologyRepositoryJpa technologyRepositoryJpa;
 
-    public ProjectRepositoryAdapter(ProjectRepositoryJpa projectRepositoryJpa, TechnologyRepositoryJpa technologyRepositoryJpa) {
+    public ProjectRepositoryAdapter(ProjectRepositoryJpa projectRepositoryJpa) {
         this.projectRepositoryJpa = projectRepositoryJpa;
-        this.technologyRepositoryJpa = technologyRepositoryJpa;
     }
 
     @Override
     public Project save(Project project) {
         ProjectEntity projectEntity = ProjectMapper.toProjectEntity(project);
         projectRepositoryJpa.save(projectEntity);
-        List<TechnologyEntity> technologyEntities =
-                project.getTechnologies().stream().map(technology -> toTechnologyEntity(technology, projectEntity)).toList();
-        technologyRepositoryJpa.saveAll(technologyEntities);
-        projectEntity.setTechnologies(technologyEntities);
         return ProjectMapper.toProject(projectEntity);
     }
 

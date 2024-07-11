@@ -18,6 +18,4 @@ public class TechnologyEntity {
     private String name;
     @Column(name = "description")
     private String description;
-    @ManyToOne
-    private ProjectEntity project;
 }
