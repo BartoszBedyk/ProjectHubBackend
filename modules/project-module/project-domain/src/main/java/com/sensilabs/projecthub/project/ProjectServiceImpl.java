@@ -8,6 +8,7 @@ import com.sensilabs.projecthub.user.management.service.UserManagementService;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -33,17 +34,15 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project save(CreateProjectForm createProjectForm, String createdById) {
-        List<Technology> technologies = createProjectForm.getTechnologyList().stream()
-                .map(tech -> new Technology(UUID.randomUUID().toString(), tech.getName(), tech.getDescription()))
-                .collect(Collectors.toList());
-
         Project project = Project.builder()
                 .id(UUID.randomUUID().toString())
                 .name(createProjectForm.getName())
                 .description(createProjectForm.getDescription())
                 .createdOn(Instant.now())
                 .createdById(createdById)
-                .technologies(technologies)
+                .technologies(createProjectForm.getTechnologyList())
+                .deletedById(null)
+                .deletedOn(null)
                 .build();
 
         Project savedProject = projectRepository.save(project);
@@ -64,9 +63,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project update(UpdateProjectForm updateProjectForm, String userId) {
-        List<Technology> technologies = updateProjectForm.getTechnologyList().stream()
-                .map(tech -> new Technology(UUID.randomUUID().toString(), tech.getName(), tech.getDescription()))
-                .collect(Collectors.toList());
 
         Project existingProject = getOrThrow(updateProjectForm.getId());
 
@@ -75,14 +71,24 @@ public class ProjectServiceImpl implements ProjectService {
         }
             existingProject.setName(updateProjectForm.getName());
             existingProject.setDescription(updateProjectForm.getDescription());
-            existingProject.getTechnologies().clear();
-            existingProject.setTechnologies(technologies);
+            existingProject.setTechnologies(new ArrayList<>());
+            existingProject.setTechnologies(updateProjectForm.getTechnologyList());
             return projectRepository.save(existingProject);
     }
 
     @Override
     public SearchResponse<Project> search(SearchForm searchForm, String loggedUserId) {
         searchForm.getCriteria().add(new SearchFormCriteria("members.userId",loggedUserId,CriteriaOperator.EQUALS));
+        searchForm.getCriteria().add(new SearchFormCriteria("deletedOn",null,CriteriaOperator.EQUALS));
+        searchForm.getCriteria().add(new SearchFormCriteria("deletedById",null,CriteriaOperator.EQUALS));
         return projectRepository.search(searchForm);
+    }
+
+    @Override
+    public Project delete(String id, String deletedById) {
+        Project existingProject = getOrThrow(id);
+        existingProject.setDeletedById(deletedById);
+        existingProject.setDeletedOn(Instant.now());
+        return projectRepository.save(existingProject);
     }
 }

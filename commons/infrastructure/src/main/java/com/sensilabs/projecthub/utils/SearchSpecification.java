@@ -35,9 +35,19 @@ public class SearchSpecification {
     static Predicate buildPredicateForCriteria(CriteriaBuilder cb, Path<?> fieldPath, SearchFormCriteria criteria) {
         switch (criteria.getOperator()) {
             case EQUALS:
-                return cb.equal(fieldPath, convertToType(criteria.getValue(), fieldPath.getJavaType()));
+                Object equalsValue = convertToType(criteria.getValue(), fieldPath.getJavaType());
+                if (equalsValue == null) {
+                    return cb.isNull(fieldPath);
+                } else {
+                    return cb.equal(fieldPath, equalsValue);
+                }
             case NOT_EQUALS:
-                return cb.notEqual(fieldPath, convertToType(criteria.getValue(), fieldPath.getJavaType()));
+                Object notEqualsValue = convertToType(criteria.getValue(), fieldPath.getJavaType());
+                if (notEqualsValue == null) {
+                    return cb.isNotNull(fieldPath);
+                } else {
+                    return cb.notEqual(fieldPath, notEqualsValue);
+                }
             case LIKE:
                 return cb.like(fieldPath.as(String.class), "%" + criteria.getValue() + "%");
             case GR:
@@ -54,6 +64,10 @@ public class SearchSpecification {
     }
 
     static Object convertToType(Object value, Class<?> targetType) {
+        if (value == null) {
+            return null;
+        }
+
         if (targetType.isEnum()) {
             return Enum.valueOf((Class<Enum>) targetType, value.toString());
         } else if (targetType.equals(Instant.class)) {

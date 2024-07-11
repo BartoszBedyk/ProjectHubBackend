@@ -14,4 +14,6 @@ public interface ProjectService {
     Project update(@Valid UpdateProjectForm updateProjectForm, String userId);
 
     SearchResponse<Project> search(SearchForm searchForm, String loggedUserId);
+
+    Project delete(String id, String deletedById);
 }
