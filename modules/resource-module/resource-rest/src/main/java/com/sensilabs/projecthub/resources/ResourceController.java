@@ -3,10 +3,14 @@ package com.sensilabs.projecthub.resources;
 import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.resources.forms.*;
 import com.sensilabs.projecthub.resources.model.Resource;
+import com.sensilabs.projecthub.resources.model.ResourceType;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
+import java.util.Arrays;
 import java.util.List;
+
+import static java.lang.String.join;
 
 @RestController
 @RequestMapping("/resource")
@@ -54,8 +58,19 @@ public class ResourceController {
 
     @PostMapping("/search")
     public SearchResponse<Resource> search(@RequestBody SearchForm searchForm) {
-        return resourceService.search(searchForm);
+        SearchResponse<Resource> searchResponse = resourceService.search(searchForm);
+
+        searchResponse.getItems().forEach(resource -> {
+            if (resource.getResourceType() == ResourceType.SECRET) {
+                StringBuilder maskedValue = new StringBuilder();
+                maskedValue.append("*".repeat(resource.getValue().length()));
+                resource.setValue(maskedValue.toString());
+            }
+        });
+        return searchResponse;
     }
+
+
 
     @PostMapping("{projectId}/{environmentId}/search")
     public SearchResponse<Resource> search(@RequestBody SearchForm searchForm, @PathVariable String projectId, @PathVariable String environmentId){
