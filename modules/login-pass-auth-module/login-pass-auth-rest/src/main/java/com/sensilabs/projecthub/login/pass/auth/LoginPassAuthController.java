@@ -39,4 +39,11 @@ public class LoginPassAuthController {
     public void resetPasswordConfirm(@RequestBody ResetPasswordConfirmForm form) {
         authorizationService.resetPasswordConfirm(form);
     }
+
+    @PostMapping("/logout")
+    public void logout() { authorizationService.logout(loggedUser.getUserId());}
+
+    @PostMapping("/delete-user")
+    public void deleteUser() { authorizationService.deleteUser(loggedUser.getUserId());}
+
 }
