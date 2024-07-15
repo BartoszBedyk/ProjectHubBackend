@@ -1,3 +1,6 @@
+import com.sensilabs.projecthub.activity.ActivityRepository;
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.commons.LoggedUser;
@@ -25,7 +28,9 @@ public class ProjectServiceTest {
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
     ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
     ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
+    ActivityRepository activityRepository = new ActivityRepositoryMock();
+    ActivityService activityService = new ActivityServiceImpl(activityRepository);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
     ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService);
 
     @Test

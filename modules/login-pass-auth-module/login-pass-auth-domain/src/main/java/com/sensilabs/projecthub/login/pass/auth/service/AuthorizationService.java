@@ -19,4 +19,8 @@ public interface AuthorizationService {
     void resetPasswordConfirm(@Valid ResetPasswordConfirmForm resetPasswordConfirmForm);
 
     void changePassword(@Valid ChangePasswordForm changePasswordForm);
+
+    void deleteUser(String userId);
+
+    void logout(String userId);
 }

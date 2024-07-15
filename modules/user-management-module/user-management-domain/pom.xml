@@ -24,5 +24,10 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sensilabs.projecthub</groupId>
+            <artifactId>activity-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 </project>

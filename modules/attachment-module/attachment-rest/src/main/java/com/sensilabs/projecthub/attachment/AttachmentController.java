@@ -38,7 +38,7 @@ public class AttachmentController {
 
 	@GetMapping("/download/{attachmentId}")
 	public ResponseEntity<?> download(@PathVariable String attachmentId) {
-		Attachment attachment = attachmentService.getById(attachmentId);
+		Attachment attachment = attachmentService.getById(attachmentId, loggedUser.getUserId());
 		byte[] fileData = storageService.get(attachment.getPath());
 
 		ByteArrayResource resource = new ByteArrayResource(fileData);

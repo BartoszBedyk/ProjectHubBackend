@@ -1,5 +1,10 @@
 package com.sensilabs.projecthub.login.pass.auth.service;
 
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.forms.DeleteUserForm;
+import com.sensilabs.projecthub.activity.forms.LogInFailedUserForm;
+import com.sensilabs.projecthub.activity.forms.LogInSuccessUserForm;
+import com.sensilabs.projecthub.activity.forms.LogOutUserForm;
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.login.pass.auth.*;
@@ -39,7 +44,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final EmailingService emailingService;
     private final NotificationService notificationService;
 
-    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService, AuthPassUserProps props, EmailingService emailingService, NotificationService notificationService) {
+    private final ActivityService activityService;
+
+    public AuthorizationServiceImpl(AuthorizationRepository authorizationRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, UserManagementService userManagementService, AuthPassUserProps props, EmailingService emailingService, NotificationService notificationService, ActivityService activityService) {
         this.authorizationRepository = authorizationRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
@@ -47,6 +54,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         this.props = props;
         this.emailingService = emailingService;
         this.notificationService = notificationService;
+        this.activityService = activityService;
     }
 
     private AuthPassUser getByEmailOrThrowAuthPassUser(String email) {
@@ -63,13 +71,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public LoginResponse login(LoginForm loginRequest) {
         AuthPassUser user = getByEmailOrThrowAuthPassUser(loginRequest.getEmail());
-
+        User userDetails = userManagementService.get(user.getId());
         if (passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
             String token = tokenProvider.generateToken(user.getId());
-
+            activityService.save(new LogInSuccessUserForm(user.getId(), userDetails.getFirstName(), userDetails.getLastName()), user.getId());
             return new LoginResponse(token);
         }
-
+        activityService.save(new LogInFailedUserForm(user.getId(), userDetails.getFirstName(), userDetails.getLastName()), user.getId());
         throw new ApplicationException(ErrorCode.WRONG_LOGIN_OR_PASSWORD);
     }
 
@@ -88,6 +96,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         authorizationRepository.saveAuthPassUser(userAuth);
         Notification notification = notificationService.save(new AccountCreatedMailForm(createUserRequest.getFirstName(), createUserRequest.getLastName(), createUserRequest.getEmail()), createdById);
         emailingService.send(notification);
+        activityService.save(new com.sensilabs.projecthub.activity.forms.CreateUserForm(user.getId(), user.getFirstName(), user.getLastName()), createdById);
     }
 
 
@@ -137,6 +146,18 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         } else {
             throw new ApplicationException(ErrorCode.WRONG_LOGIN_OR_PASSWORD);
         }
+    }
+
+    @Override
+    public void deleteUser(String userId) {
+        User user = userManagementService.get(userId);
+        activityService.save(new DeleteUserForm(userId, user.getFirstName(), user.getLastName()), userId);
+    }
+
+    @Override
+    public void logout(String userId) {
+        User user = userManagementService.get(userId);
+        activityService.save(new LogOutUserForm(userId, user.getFirstName(), user.getLastName()), userId);
     }
 
     @EventListener(ContextRefreshedEvent.class)

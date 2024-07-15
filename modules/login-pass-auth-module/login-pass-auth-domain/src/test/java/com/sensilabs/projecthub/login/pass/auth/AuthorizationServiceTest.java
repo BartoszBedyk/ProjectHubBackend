@@ -1,5 +1,8 @@
 package com.sensilabs.projecthub.login.pass.auth;
 
+import com.sensilabs.projecthub.activity.ActivityRepository;
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.login.pass.auth.forms.*;
 import com.sensilabs.projecthub.login.pass.auth.repository.AuthorizationRepository;
 import com.sensilabs.projecthub.login.pass.auth.service.AuthorizationService;
@@ -25,9 +28,11 @@ public class AuthorizationServiceTest {
     AuthorizationRepository repository = new AuthorizationRepositoryMock();
     PasswordEncoder encoder = new PasswordEncoderMock();
     TokenProvider provider = new TokenProviderMock();
+    ActivityRepository activityRepository = new ActivityRepositoryMock();
+    ActivityService activityService = new ActivityServiceImpl(activityRepository);
 
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
 
     AuthPassUserProps props = new AuthPassUserPropsMock();
 
@@ -35,7 +40,9 @@ public class AuthorizationServiceTest {
     NotificationRepository notificationRepository = new NotificationRepositoryMock();
     NotificationService notificationService = new NotificationServiceImpl(notificationRepository);
 
-    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props, emailingService, notificationService);
+
+
+    AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props, emailingService, notificationService, activityService);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
