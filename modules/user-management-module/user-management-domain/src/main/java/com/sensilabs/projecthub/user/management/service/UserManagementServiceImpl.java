@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.user.management.service;
 
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.forms.DeleteUserForm;
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.commons.SearchForm;
@@ -17,9 +19,11 @@ import java.util.UUID;
 public class UserManagementServiceImpl implements UserManagementService {
 
 	private final UserManagementRepository userManagementRepository;
+	private final ActivityService activityService;
 
-	public UserManagementServiceImpl(UserManagementRepository userManagementRepository) {
+	public UserManagementServiceImpl(UserManagementRepository userManagementRepository, ActivityService activityService) {
 		this.userManagementRepository = userManagementRepository;
+        this.activityService = activityService;
     }
 
 	@Override
@@ -49,7 +53,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 				.deletedById(null)
 				.isBlocked(false)
 				.build();
-
+		activityService.save(new com.sensilabs.projecthub.activity.forms.CreateUserForm(user.getId(), user.getFirstName(), user.getLastName()), createdById);
 		return userManagementRepository.save(user);
 	}
 
@@ -98,5 +102,6 @@ public class UserManagementServiceImpl implements UserManagementService {
 		user.setDeletedOn(Instant.now());
 		user.setDeletedById(deletedById);
 		userManagementRepository.save(user);
+		activityService.save(new DeleteUserForm(id, user.getFirstName(), user.getLastName()), deletedById);
 	}
 }

@@ -1,5 +1,8 @@
 package com.sensilabs.projecthub.user.management;
 
+import com.sensilabs.projecthub.activity.ActivityRepository;
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.user.management.forms.CreateUserForm;
 import com.sensilabs.projecthub.user.management.forms.EditUserForm;
 import com.sensilabs.projecthub.user.management.repository.UserManagementRepository;
@@ -16,7 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserManagementServiceTest {
     UserManagementRepository repository = new UserManagementRepositoryMock();
-    UserManagementService service = new UserManagementServiceImpl(repository);
+    ActivityRepository activityRepository = new ActivityRepositoryMock();
+    ActivityService activityService = new ActivityServiceImpl(activityRepository);
+    UserManagementService service = new UserManagementServiceImpl(repository, activityService);
 
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();

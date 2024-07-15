@@ -43,7 +43,4 @@ public class LoginPassAuthController {
     @PostMapping("/logout")
     public void logout() { authorizationService.logout(loggedUser.getUserId());}
 
-    @PostMapping("/delete-user")
-    public void deleteUser() { authorizationService.deleteUser(loggedUser.getUserId());}
-
 }

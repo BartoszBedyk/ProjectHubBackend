@@ -1,3 +1,6 @@
+import com.sensilabs.projecthub.activity.ActivityRepository;
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.commons.LoggedUser;
 import com.sensilabs.projecthub.project.*;
 import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
@@ -27,7 +30,9 @@ public class ProjectEnvironmentServiceTest {
     ProjectMemberRepository projectMemberRepository = new ProjectMemberRepositoryMock();
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
     LoggedUser loggedUser = new LoggedUserMock();
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
+    ActivityRepository activityRepository = new ActivityRepositoryMock();
+    ActivityService activityService = new ActivityServiceImpl(activityRepository);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
     ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
     ProjectService projectService = new ProjectServiceImpl(projectRepository, service, projectMemberService, userManagementService);
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();

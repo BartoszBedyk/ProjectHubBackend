@@ -28,9 +28,11 @@ public class AuthorizationServiceTest {
     AuthorizationRepository repository = new AuthorizationRepositoryMock();
     PasswordEncoder encoder = new PasswordEncoderMock();
     TokenProvider provider = new TokenProviderMock();
+    ActivityRepository activityRepository = new ActivityRepositoryMock();
+    ActivityService activityService = new ActivityServiceImpl(activityRepository);
 
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
-    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository);
+    UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
 
     AuthPassUserProps props = new AuthPassUserPropsMock();
 
@@ -38,8 +40,6 @@ public class AuthorizationServiceTest {
     NotificationRepository notificationRepository = new NotificationRepositoryMock();
     NotificationService notificationService = new NotificationServiceImpl(notificationRepository);
 
-    ActivityRepository activityRepository = new ActivityRepositoryMock();
-    ActivityService activityService = new ActivityServiceImpl(activityRepository);
 
 
     AuthorizationService service = new AuthorizationServiceImpl(repository, encoder, provider, userManagementService, props, emailingService, notificationService, activityService);
