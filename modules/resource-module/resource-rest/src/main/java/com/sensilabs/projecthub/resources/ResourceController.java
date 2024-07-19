@@ -59,16 +59,7 @@ public class ResourceController {
 
     @PostMapping("/search")
     public SearchResponse<Resource> search(@RequestBody SearchForm searchForm) {
-        SearchResponse<Resource> searchResponse = resourceService.search(searchForm);
-
-        searchResponse.getItems().forEach(resource -> {
-            if (resource.getResourceType() == ResourceType.SECRET) {
-                StringBuilder maskedValue = new StringBuilder();
-                maskedValue.append("*".repeat(resource.getValue().length()));
-                resource.setValue(maskedValue.toString());
-            }
-        });
-        return searchResponse;
+        return resourceService.search(searchForm);
     }
 
 
@@ -84,13 +75,9 @@ public class ResourceController {
         return resourceService.search(searchForm);
     }
 
-    @PostMapping("/secret-unmasked")
-    public String readSecret(@RequestBody SearchForm searchForm) {
-        List<Resource> items = resourceService.search(searchForm).getItems();
-        if (items != null && !items.isEmpty()) {
-            return items.get(0).getValue();
-        }
-        return "No secret found";
+    @PostMapping("/secret-unmasked/{id}")
+    public String readSecret(@PathVariable String id) {
+        return resourceService.findById(id).get().getValue();
     }
 
 }

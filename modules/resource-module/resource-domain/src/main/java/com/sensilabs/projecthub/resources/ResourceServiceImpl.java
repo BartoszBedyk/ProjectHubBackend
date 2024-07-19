@@ -5,6 +5,7 @@ import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.resources.forms.ResourceForm;
 import com.sensilabs.projecthub.resources.forms.UpdateResourceForm;
 import com.sensilabs.projecthub.resources.model.Resource;
+import com.sensilabs.projecthub.resources.model.ResourceType;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -59,7 +60,14 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public SearchResponse<Resource> search(SearchForm searchFrom) {
-        return resourceRepository.search(searchFrom);
+
+        SearchResponse<Resource> searchResponse = resourceRepository.search(searchFrom);
+        searchResponse.getItems().forEach(resource -> {
+            if (resource.getResourceType() == ResourceType.SECRET) {
+                resource.setValue("*".repeat(resource.getValue().length()));
+            }
+        });
+        return searchResponse;
     }
 
 }
