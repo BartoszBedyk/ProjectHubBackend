@@ -61,4 +61,5 @@ public class ResourceServiceImpl implements ResourceService {
     public SearchResponse<Resource> search(SearchForm searchFrom) {
         return resourceRepository.search(searchFrom);
     }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.join;
 
@@ -81,6 +82,15 @@ public class ResourceController {
         criteria.add(new SearchFormCriteria("environmentId", environmentId, CriteriaOperator.EQUALS));
         searchForm.setCriteria(criteria);
         return resourceService.search(searchForm);
+    }
+
+    @PostMapping("/secret-unmasked")
+    public String readSecret(@RequestBody SearchForm searchForm) {
+        List<Resource> items = resourceService.search(searchForm).getItems();
+        if (items != null && !items.isEmpty()) {
+            return items.get(0).getValue();
+        }
+        return "No secret found";
     }
 
 }
