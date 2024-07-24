@@ -16,7 +16,8 @@ public enum ErrorCode {
     FILE_STREAM_PROCESSING_FAILED("File stream processing failed"),
     PROJECT_MEMBER_NOT_FOUND("Project member not found"),
     PROJECT_ENVIRONMENT_NOT_FOUND("Project environment not found"),
-    NOT_PROJECT_OWNER("You are not project owner");
+    NOT_PROJECT_OWNER("You are not project owner"),
+    TECHNOLOGY_NOT_FOUND("Technology not found");
 
     ErrorCode(String message) {
         this.message = message;

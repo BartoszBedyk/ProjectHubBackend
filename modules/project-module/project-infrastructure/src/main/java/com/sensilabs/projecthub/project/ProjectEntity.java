@@ -31,8 +31,8 @@ public class ProjectEntity {
     @CollectionTable(name = "project_technologies", joinColumns = @JoinColumn(name = "project_id"))
     @Column(name = "technology_id")
     private List<String> technologies;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id", nullable = false)
+
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ProjectMemberEntity> members = new HashSet<>();
     @Column(name = "deletedOn")
     private Instant deletedOn;

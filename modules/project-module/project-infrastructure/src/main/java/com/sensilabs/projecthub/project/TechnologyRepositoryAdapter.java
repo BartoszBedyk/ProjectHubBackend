@@ -3,6 +3,7 @@ package com.sensilabs.projecthub.project;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,5 +26,10 @@ public class TechnologyRepositoryAdapter implements TechnologyRepository{
         return technologyRepositoryJpa.findAll().stream()
                 .map(TechnologyMapper::toTechnology)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Technology> findById(String id) {
+        return technologyRepositoryJpa.findById(id).map(TechnologyMapper::toTechnology);
     }
 }
