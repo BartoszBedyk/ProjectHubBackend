@@ -87,6 +87,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project delete(String id, String deletedById) {
         Project existingProject = getOrThrow(id);
+
+        if(!projectMemberService.getById(deletedById, existingProject.getId()).getRole().equals(Role.OWNER)){
+            throw new ApplicationException(ErrorCode.NOT_PROJECT_OWNER);
+        }
+
         existingProject.setDeletedById(deletedById);
         existingProject.setDeletedOn(Instant.now());
         return projectRepository.save(existingProject);

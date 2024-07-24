@@ -22,4 +22,7 @@ public class TechnologyController {
     public List<Technology> findAll() {
         return technologyService.findAll();
     }
+
+    @GetMapping("/{id}")
+    public Technology getById(@PathVariable("id") String id) { return technologyService.get(id);}
 }

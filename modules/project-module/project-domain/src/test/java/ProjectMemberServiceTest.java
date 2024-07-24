@@ -56,6 +56,7 @@ public class ProjectMemberServiceTest {
         Assertions.assertEquals(projectMember.getRole(), Role.MAINTAINER);
         Assertions.assertEquals(projectMember.getProjectId(), project.getId());
         Assertions.assertEquals(projectMember.getEnvironmentIds(), envIds);
+        System.out.println("ProjectMember: " + projectMember);
     }
 
     @Test

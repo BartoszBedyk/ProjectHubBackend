@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.commons.ApplicationException;
+import com.sensilabs.projecthub.commons.ErrorCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +29,16 @@ public class TechnologyServiceImpl implements TechnologyService{
     @Override
     public List<Technology> findAll() {
         return technologyRepository.findAll();
+    }
+
+    @Override
+    public Technology get(String id) {
+        return getOrThrow(id);
+    }
+
+
+    private Technology getOrThrow(String id) {
+        return technologyRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ErrorCode.TECHNOLOGY_NOT_FOUND));
     }
 }

@@ -39,4 +39,9 @@ public class ProjectMemberController {
         projectMemberService.remove(userId, projectId);
     }
 
+    @GetMapping("/get/{userId}/{projectId}")
+    public ProjectMember getByIds(@PathVariable("userId") String userId,@PathVariable("projectId") String projectId) {
+        return projectMemberService.getById(userId, projectId);
+    }
+
 }
