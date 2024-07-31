@@ -75,4 +75,9 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
     public List<ProjectEnvironment> getAllEnvironments(String projectId) {
         return projectEnvironmentRepository.findAllNotDeleted(projectId);
     }
+
+    @Override
+    public ProjectEnvironment findById(String id) {
+        return getOrThrow(id);
+    }
 }
