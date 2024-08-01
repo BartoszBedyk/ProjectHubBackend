@@ -39,4 +39,9 @@ public class ProjectEnvironmentController {
     public List<ProjectEnvironment> findAll(@PathVariable("projectId") String projectId) {
         return service.getAllEnvironments(projectId);
     }
+
+    @GetMapping("/get/{id}")
+    public ProjectEnvironment findById(@PathVariable("id") String id) {
+        return service.findById(id);
+    }
 }
