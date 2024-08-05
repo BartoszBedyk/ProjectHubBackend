@@ -17,9 +17,10 @@ public class ProjectEnvironmentRepositoryAdapter implements ProjectEnvironmentRe
     }
 
     @Override
-    public void save(ProjectEnvironment projectEnvironment) {
+    public ProjectEnvironment save(ProjectEnvironment projectEnvironment) {
         ProjectEnvironmentEntity projectEnvironmentEntity = ProjectEnvironmentMapper.toProjectEnvironmentEntity(projectEnvironment);
         projectEnvironmentRepositoryJpa.save(projectEnvironmentEntity);
+        return ProjectEnvironmentMapper.toProjectEnvironment(projectEnvironmentEntity);
     }
 
     @Override

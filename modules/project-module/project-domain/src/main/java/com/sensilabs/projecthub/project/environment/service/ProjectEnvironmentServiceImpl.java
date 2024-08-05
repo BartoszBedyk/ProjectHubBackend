@@ -29,7 +29,7 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
     }
 
     @Override
-    public void create(CreateProjectEnvironmentForm createProjectEnvironmentForm, String createdById) {
+    public ProjectEnvironment create(CreateProjectEnvironmentForm createProjectEnvironmentForm, String createdById) {
         if(projectRepository.findById(createProjectEnvironmentForm.getProjectId()).isPresent()) {
             ProjectEnvironment projectEnvironment = ProjectEnvironment.builder()
                     .id(UUID.randomUUID().toString())
@@ -42,7 +42,7 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
                     .deletedById(null)
                     .createdById(createdById)
                     .build();
-            projectEnvironmentRepository.save(projectEnvironment);
+            return projectEnvironmentRepository.save(projectEnvironment);
         } else {
             throw new ApplicationException(ErrorCode.PROJECT_NOT_FOUND);
         }
@@ -55,12 +55,12 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
     }
 
     @Override
-    public void update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm) {
+    public ProjectEnvironment update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm) {
         ProjectEnvironment existingEnvironment = getOrThrow(updateProjectEnvironmentForm.getId());
         existingEnvironment.setName(updateProjectEnvironmentForm.getName());
         existingEnvironment.setEncrypted(updateProjectEnvironmentForm.isEncrypted());
         existingEnvironment.setUpdatedOn(Instant.now());
-        projectEnvironmentRepository.save(existingEnvironment);
+        return projectEnvironmentRepository.save(existingEnvironment);
     }
 
     @Override
