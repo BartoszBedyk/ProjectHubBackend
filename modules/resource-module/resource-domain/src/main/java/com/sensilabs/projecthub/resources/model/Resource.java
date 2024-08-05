@@ -21,6 +21,8 @@ public class Resource {
     private String createdById;
     private Instant createdOn;
     private Instant lastModifiedOn;
+    private Instant deletedOn;
+    private String deletedById;
 
 
 

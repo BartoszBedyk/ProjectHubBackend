@@ -31,6 +31,11 @@ public class ResourceRepositoryAdapter implements ResourceRepository {
         return ResourceMapper.toResource(entity);
     }
 
+    @Override
+    public List<Resource> findAll() {
+        return List.of();
+    }
+
 
     @Override
     public Optional<Resource> findById(String id) {
@@ -60,5 +65,11 @@ public class ResourceRepositoryAdapter implements ResourceRepository {
                 .total(resourceEntityPage.getTotalElements())
                 .build();
     }
+
+    @Override
+    public Boolean checkAccess(String projectId, String environmentId, String userId) {
+        return null;
+    }
+
 
 }

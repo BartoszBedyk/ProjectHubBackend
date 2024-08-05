@@ -80,4 +80,9 @@ public class ResourceController {
         return resourceService.findById(id).get().getValue();
     }
 
+    @PostMapping("/delete/{id}")
+    public Resource delete(@PathVariable String id){
+        return  resourceService.delete(id,  loggedUser.getUserId());
+    }
+
 }

@@ -44,4 +44,10 @@ public class ResourceEntity {
 
     @Column(name = "last_modified_on")
     private Instant lastModifiedOn;
+
+    @Column(name = "deleted_on")
+    private Instant deletedOn;
+
+    @Column(name = "deleted_by_id")
+    private String deletedById;
 }
