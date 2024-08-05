@@ -14,4 +14,6 @@ public interface ProjectEnvironmentService {
     void update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm);
     void delete(String id, String deletedById);
     List<ProjectEnvironment> getAllEnvironments(String projectId);
+
+    ProjectEnvironment findById(String id);
 }
