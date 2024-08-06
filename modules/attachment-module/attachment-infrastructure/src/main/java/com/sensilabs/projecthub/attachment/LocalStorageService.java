@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.attachment;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
@@ -9,6 +11,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.sensilabs.projecthub.cipher.DataEncryptionService;
 import org.springframework.stereotype.Component;
 
 import com.sensilabs.projecthub.commons.ApplicationException;
@@ -16,16 +19,22 @@ import com.sensilabs.projecthub.commons.ErrorCode;
 
 @Component
 public class LocalStorageService implements StorageService {
-	@Override
+
+	private final DataEncryptionService dataEncryptionService;
+
+    public LocalStorageService(DataEncryptionService dataEncryptionService) {
+        this.dataEncryptionService = dataEncryptionService;
+    }
+
+    @Override
 	public String save(InputStream inputStream) {
 		String path = preparePath() + "/" + UUID.randomUUID();
-		try {
-			Files.copy(inputStream, Paths.get(path));
+		try (InputStream encryptedInput = dataEncryptionService.encryptFile(inputStream)) {
+			Files.copy(encryptedInput, Paths.get(path));
+		} catch (FileAlreadyExistsException e) {
+			throw new RuntimeException("A file of that name already exists: " + path, e);
 		} catch (Exception e) {
-			if (e instanceof FileAlreadyExistsException) {
-				throw new RuntimeException("A file of that name already exists.");
-			}
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException("Failed to save file to path: " + path, e);
 		}
 		return path;
 	}
@@ -33,7 +42,19 @@ public class LocalStorageService implements StorageService {
 	@Override
 	public byte[] get(String path) {
 		try {
-			return Files.readAllBytes(Path.of(path));
+			byte[] data = Files.readAllBytes(Paths.get(path));
+			InputStream inputStream = new ByteArrayInputStream(data);
+			InputStream decryptedStream = dataEncryptionService.decryptFile(inputStream);
+
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = decryptedStream.read(buffer)) != -1) {
+				outputStream.write(buffer, 0, bytesRead);
+			}
+
+			// Return the decrypted byte array
+			return outputStream.toByteArray();
 		} catch (IOException e) {
 			throw new ApplicationException(ErrorCode.FILE_NOT_FOUND);
 		}
