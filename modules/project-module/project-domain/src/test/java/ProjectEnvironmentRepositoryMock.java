@@ -8,8 +8,8 @@ public class ProjectEnvironmentRepositoryMock implements ProjectEnvironmentRepos
 
 
     @Override
-    public void save(ProjectEnvironment projectEnvironment) {
-        mockDB.put(projectEnvironment.getId(), projectEnvironment);
+    public ProjectEnvironment save(ProjectEnvironment projectEnvironment) {
+       return mockDB.put(projectEnvironment.getId(), projectEnvironment);
 
     }
 

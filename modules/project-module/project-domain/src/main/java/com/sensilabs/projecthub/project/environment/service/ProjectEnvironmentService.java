@@ -9,9 +9,9 @@ import java.util.List;
 
 @Validated
 public interface ProjectEnvironmentService {
-    void create(CreateProjectEnvironmentForm createProjectEnvironmentForm, String createdById);
+    ProjectEnvironment create(CreateProjectEnvironmentForm createProjectEnvironmentForm, String createdById);
     void createDefaultEnvironments(String projectId);
-    void update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm);
+    ProjectEnvironment update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm);
     void delete(String id, String deletedById);
     List<ProjectEnvironment> getAllEnvironments(String projectId);
 

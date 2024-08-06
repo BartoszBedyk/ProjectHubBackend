@@ -21,13 +21,13 @@ public class ProjectEnvironmentController {
     }
 
     @PostMapping("/save")
-    public void create(@RequestBody CreateProjectEnvironmentForm form) {
-        service.create(form, loggedUser.getUserId());
+    public ProjectEnvironment create(@RequestBody CreateProjectEnvironmentForm form) {
+        return service.create(form, loggedUser.getUserId());
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody UpdateProjectEnvironmentForm form) {
-        service.update(form);
+    public ProjectEnvironment update(@RequestBody UpdateProjectEnvironmentForm form) {
+        return service.update(form);
     }
 
     @DeleteMapping("/delete/{id}")
