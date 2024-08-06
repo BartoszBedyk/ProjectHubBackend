@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.resources;
 
+import com.sensilabs.projecthub.commons.ApplicationException;
+import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.commons.SearchForm;
 import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.resources.forms.ResourceForm;
@@ -41,6 +43,8 @@ public class ResourceServiceImpl implements ResourceService {
                 .createdById(createdById)
                 .createdOn(now)
                 .lastModifiedOn(null)
+                .deletedOn(null)
+                .deletedById(null)
                 .build();
         return resourceRepository.save(resource);
 
@@ -68,6 +72,20 @@ public class ResourceServiceImpl implements ResourceService {
             }
         });
         return searchResponse;
+    }
+
+    private Resource getOrThrow(String id) {
+        return resourceRepository.findById(id).orElseThrow(() -> new ApplicationException(ErrorCode.RESOURCE_NOT_FOUND));
+    }
+
+    @Override
+    public Resource delete(String id, String userId) {
+
+        Resource existingResource = getOrThrow(id);
+        existingResource.setDeletedById(userId);
+        existingResource.setDeletedOn(Instant.now());
+
+        return  resourceRepository.save(existingResource);
     }
 
 }

@@ -25,7 +25,7 @@ public class CreateTextResourceForm implements ResourceForm {
 
     @NotNull(message = "Value of the resource cannot be null.")
     @NotBlank(message = "Value of the resource cannot be null.")
-    @Size(min = 1, max = 200, message = "Length of value of the resource cannot be less than 1 and longer than 200.")
+    @Size(min = 1, max = 10000, message = "Length of value of the resource cannot be less than 1 and longer than 10000.")
     private String value;
 
     @NotNull(message = "Environment id cannot be null.")

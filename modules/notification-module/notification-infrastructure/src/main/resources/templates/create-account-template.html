@@ -1,95 +1,99 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8">
+    <title>Account Created</title>
     <style>
         body {
-            background-color: #fafafa
+            background-color: #F4F4F9;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .fullsite {
-            background-color: #f4f3ee;
-            color: #1c1c1c;
-            font-family: Lucida Sans Unicode, serif;
-            border: solid 1px #ffffff;
-            padding-left: 5%;
-            padding-right: 5%;
-            padding-top: 2%;
-            padding-bottom: 2%;
-        }
-
-        h1, h2 {
-            background-color: #f4f3ee;
-        }
-
-        .textbody {
-            text-align: left;
-            padding-right: 5%;
-        }
-
-        .noLink {
-            text-decoration: none;
-            color: #1c1c1c;
-        }
-
-        .upperFooter {
-            height: 10%;
+        .container {
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
             width: 100%;
-            line-height: 10px;
-            padding-top: 5%;
+            border-radius: 12px;
         }
 
-        .bottomText {
-            color: #3f3e3e
+        h1 {
+            font-size: 26px;
+            color: #1D82E6;
+            margin-bottom: 20px;
+            font-family: 'Trebuchet MS', sans-serif;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #333333;
+            margin-bottom: 20px;
+            font-family: 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #1D82E6;
         }
 
         .footer {
-            padding-top: 2%;
-            padding-bottom: 1%;
+            border-top: 1px solid #E0E0E0;
+            padding: 20px;
+            color: #d4d1d1;
+            font-size: 14px;
             text-align: center;
-            color: #8f8c8c;
-            font-family: Helvetica;
-            line-height: 1px;
-            font-weight: 100;
+            background-color: #FFFFFF;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+            border-radius: 0 0 12px 12px;
+            line-height: 1.1;
+        }
+
+        .footer p {
+            margin: 0 0;
+        }
+
+        a {
+            color: #1D82E6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-<div class="fullsite">
-
-
-    <h1>Account created</h1>
+<div class="container">
+    <h1>Account Created</h1>
     <h2>Your ProjectHub account has been successfully created.</h2>
-    <br>
-    <p> Hi, <span th:text="${FIRST_NAME}"> </span><span> </span> <span th:text="${LAST_NAME}"></span></p>
-    <div class="textbody"> Your Project Hub account has been successfully created using the email address:
+    <p>Hello, <span th:text="${FIRST_NAME}">First Name</span> <span th:text="${LAST_NAME}">Last Name</span>,</p>
+    <p>Your ProjectHub account has been successfully created using the email address:</p>
+    <p class="highlight" th:text="${toMail}">userEmail@gmail.com</p>
+    <p>Remember not to share your login details with anyone. Stay safe while using our services.</p>
+    <p>We hope you enjoy using our platform!</p>
+
+    <div class="footer">
+        <p>Request sent at: <span th:text="${sendTime}">no time</span></p>
+        <p>&copy; 2024 ProjectHub Solutions</p>
+        <p>projecthub.sl.noreply@gmail.com</p>
+        <p>Płock 09-400</p>
     </div>
-    <b><p th:utext="${toMail}" class="noLink">userEmail@gmail.com</p></b>
-
-    <br>
-
-    Remember not to share your website login details with anyone. Stay safe using our services.
-    We hope you enjoy using our software.
-
-    <br>
-    <div class="upperFooter">
-        <p>Regards, ProjectHub team.</p>
-        <br><br>
-        <hr>
-        <div class="bottomText">
-            <p>Request created at: <span th:text="${time}"></span></p>
-            <p>Request send at: <span th:text="${sendTime}"></span></p>
-            <p>Copyright 2024</p>
-        </div>
-    </div>
-
-</div>
-<div class="footer">
-    <p> projecthub.sl.noreply@gmail.com</p>
-    <p> ProjectHub Solutions </p>
-    <p> Płock 09-400 </p>
-
-
 </div>
 </body>
 </html>

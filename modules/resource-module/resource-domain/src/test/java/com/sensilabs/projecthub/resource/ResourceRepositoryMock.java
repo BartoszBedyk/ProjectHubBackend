@@ -3,7 +3,6 @@ package com.sensilabs.projecthub.resource;
 import com.sensilabs.projecthub.commons.SearchForm;
 import com.sensilabs.projecthub.commons.SearchResponse;
 import com.sensilabs.projecthub.resources.ResourceRepository;
-import com.sensilabs.projecthub.resources.forms.ResourceForm;
 import com.sensilabs.projecthub.resources.forms.UpdateResourceForm;
 import com.sensilabs.projecthub.resources.model.Resource;
 
@@ -48,6 +47,7 @@ public class ResourceRepositoryMock implements ResourceRepository {
     public SearchResponse search(SearchForm searchForm) {
         return null;
     }
+
 
     @Override
     public Boolean checkAccess(String projectId, String environmentId, String userId) {

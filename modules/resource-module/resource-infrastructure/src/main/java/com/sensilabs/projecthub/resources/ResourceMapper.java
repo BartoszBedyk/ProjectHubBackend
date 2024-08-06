@@ -15,6 +15,8 @@ public class ResourceMapper {
                 .createdById(resource.getCreatedById())
                 .createdOn(resource.getCreatedOn())
                 .lastModifiedOn(resource.getLastModifiedOn())
+                .deletedOn(resource.getDeletedOn())
+                .deletedById(resource.getDeletedById())
                 .build();
     }
 
@@ -30,6 +32,8 @@ public class ResourceMapper {
                 .createdById(entity.getCreatedById())
                 .createdOn(entity.getCreatedOn())
                 .lastModifiedOn(entity.getLastModifiedOn())
+                .deletedById(entity.getDeletedById())
+                .deletedOn(entity.getDeletedOn())
                 .build();
     }
 }
