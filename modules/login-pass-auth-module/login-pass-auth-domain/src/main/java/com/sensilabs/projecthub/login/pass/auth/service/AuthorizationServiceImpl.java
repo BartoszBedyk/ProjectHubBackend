@@ -72,6 +72,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public LoginResponse login(LoginForm loginRequest) {
         AuthPassUser user = getByEmailOrThrowAuthPassUser(loginRequest.getEmail());
         User userDetails = userManagementService.get(user.getId());
+
+        if (userDetails.isBlocked()) {
+            throw new ApplicationException(ErrorCode.USER_IS_BLOCKED);
+        }
+
         if (passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
             String token = tokenProvider.generateToken(user.getId());
             activityService.save(new LogInSuccessUserForm(user.getId(), userDetails.getFirstName(), userDetails.getLastName()), user.getId());

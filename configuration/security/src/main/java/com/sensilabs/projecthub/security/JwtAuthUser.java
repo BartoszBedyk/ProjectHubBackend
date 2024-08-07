@@ -35,7 +35,7 @@ public class JwtAuthUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return locked;
+        return !locked;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class JwtAuthUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return locked;
+        return !locked;
     }
 }
