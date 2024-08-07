@@ -81,10 +81,11 @@ public class ResourceServiceImpl implements ResourceService {
 
         SearchResponse<Resource> searchResponse = resourceRepository.search(searchFrom);
         searchResponse.getItems().forEach(resource -> {
+            resource.setValue(dataEncryptionService.decryptString(resource.getValue()));
             if (resource.getResourceType() == ResourceType.SECRET) {
                 resource.setValue("*".repeat(resource.getValue().length()));
             }
-            resource.setValue(dataEncryptionService.decryptString(resource.getValue()));
+
         });
         return searchResponse;
     }

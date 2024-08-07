@@ -52,8 +52,6 @@ public class LocalStorageService implements StorageService {
 			while ((bytesRead = decryptedStream.read(buffer)) != -1) {
 				outputStream.write(buffer, 0, bytesRead);
 			}
-
-			// Return the decrypted byte array
 			return outputStream.toByteArray();
 		} catch (IOException e) {
 			throw new ApplicationException(ErrorCode.FILE_NOT_FOUND);
