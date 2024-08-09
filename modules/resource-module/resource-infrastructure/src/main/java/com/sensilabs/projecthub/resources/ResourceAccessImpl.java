@@ -14,6 +14,6 @@ public class ResourceAccessImpl implements ResourceAccess {
 
     @Override
     public boolean checkAccess(String projectId, String environmentId, String userId) {
-        return true;
+        return resourceRepository.checkAccess(projectId, environmentId, userId);
     }
 }

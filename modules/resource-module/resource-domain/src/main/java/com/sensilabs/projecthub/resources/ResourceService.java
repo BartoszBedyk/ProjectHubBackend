@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface ResourceService {
     Resource save(@Valid ResourceForm resourceForm, String createdById) throws AccessDeniedException;
     Optional<Resource> findById(String id);
-    Resource update(@Validated UpdateResourceForm updateResourceForm);
+    Resource update(@Valid UpdateResourceForm updateResourceForm);
     SearchResponse<Resource> search(SearchForm searchFrom);
     Resource delete(String id, String userID);
 }

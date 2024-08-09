@@ -1,10 +1,7 @@
 package com.sensilabs.projecthub.resources;
 
 import com.sensilabs.projecthub.cipher.DataEncryptionServiceImpl;
-import com.sensilabs.projecthub.commons.ApplicationException;
-import com.sensilabs.projecthub.commons.ErrorCode;
-import com.sensilabs.projecthub.commons.SearchForm;
-import com.sensilabs.projecthub.commons.SearchResponse;
+import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.resources.forms.ResourceForm;
 import com.sensilabs.projecthub.resources.forms.UpdateResourceForm;
 import com.sensilabs.projecthub.resources.model.Resource;
@@ -21,18 +18,22 @@ public class ResourceServiceImpl implements ResourceService {
     private final ResourceRepository resourceRepository;
     private final ResourceAccess resourceAccess;
     private final DataEncryptionServiceImpl dataEncryptionService;
+    private final LoggedUser loggedUser;
 
-    public ResourceServiceImpl(ResourceRepository resourceRepository, ResourceAccess resourceAccess, DataEncryptionServiceImpl dataEncryptionService) {
+    public ResourceServiceImpl(ResourceRepository resourceRepository, ResourceAccess resourceAccess, DataEncryptionServiceImpl dataEncryptionService, LoggedUser loggedUser) {
         this.resourceRepository = resourceRepository;
         this.resourceAccess = resourceAccess;
         this.dataEncryptionService = dataEncryptionService;
+        this.loggedUser = loggedUser;
     }
 
     @Override
     public Resource save(ResourceForm resourceForm, String createdById) throws AccessDeniedException {
 
-        if (!resourceAccess.checkAccess(resourceForm.getProjectId(), resourceForm.getEnvironmentId(), createdById))
-            throw new AccessDeniedException("Access denied to save the resource for user.");
+        if (!resourceAccess.checkAccess(resourceForm.getProjectId(), resourceForm.getEnvironmentId(), createdById)){
+            throw new  RuntimeException("Access denied to save the resource for user.");
+        }
+
         String encryptedValue = dataEncryptionService.encryptString(resourceForm.getValue());
 
         Instant now = Instant.now();
