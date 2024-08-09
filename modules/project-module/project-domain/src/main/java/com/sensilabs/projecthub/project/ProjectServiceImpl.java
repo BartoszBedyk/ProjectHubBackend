@@ -78,9 +78,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public SearchResponse<Project> search(SearchForm searchForm, String loggedUserId) {
-        searchForm.getCriteria().add(new SearchFormCriteria("members.userId",loggedUserId,CriteriaOperator.EQUALS));
-        searchForm.getCriteria().add(new SearchFormCriteria("deletedOn",null,CriteriaOperator.EQUALS));
-        searchForm.getCriteria().add(new SearchFormCriteria("deletedById",null,CriteriaOperator.EQUALS));
         return projectRepository.search(searchForm);
     }
 
