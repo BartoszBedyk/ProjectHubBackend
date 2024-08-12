@@ -9,5 +9,5 @@ import java.util.Map;
 @Component
 public interface EmailSender {
 
-    void send(String sendTo, String subject, Map<String, String> params, String templateId) throws MessagingException, IOException, GeneralSecurityException;
+    void send(String sendTo, String subject, Map<String, String> params, String templateIdm, String link) throws MessagingException, IOException, GeneralSecurityException;
 }

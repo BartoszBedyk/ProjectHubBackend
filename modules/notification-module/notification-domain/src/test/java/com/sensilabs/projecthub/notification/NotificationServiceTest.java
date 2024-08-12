@@ -19,7 +19,7 @@ public class NotificationServiceTest {
     public void createResetPasswordMail() throws InterruptedException {
         Instant beforeDate = Instant.now();
         Thread.sleep(2);
-        Notification notification = notificationService.save(new ResetPasswordMailFrom("Adam","Kowalczyk","AK@sensilabs.com"), "Admin");
+        Notification notification = notificationService.save(new ResetPasswordMailFrom("Adam","Kowalczyk","AK@sensilabs.com",  "link"), "Admin");
         Thread.sleep(2);
         Instant afterDate = Instant.now();
         Assertions.assertEquals(notification.getCreatedById(), "Admin");

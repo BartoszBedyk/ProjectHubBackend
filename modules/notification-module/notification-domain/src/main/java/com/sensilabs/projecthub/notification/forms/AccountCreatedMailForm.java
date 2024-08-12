@@ -58,5 +58,10 @@ public class AccountCreatedMailForm implements NotificationForm {
         return this.email;
     }
 
+    @Override
+    public String getLink() {
+        return "";
+    }
+
 
 }
