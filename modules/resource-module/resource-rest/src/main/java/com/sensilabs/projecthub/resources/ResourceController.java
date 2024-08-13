@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.resources;
 
+
 import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.resources.forms.*;
 import com.sensilabs.projecthub.resources.model.Resource;
@@ -7,11 +8,9 @@ import com.sensilabs.projecthub.resources.model.ResourceType;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
-import static java.lang.String.join;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/resource")
