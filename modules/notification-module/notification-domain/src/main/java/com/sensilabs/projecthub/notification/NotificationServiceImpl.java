@@ -38,6 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .stream()
                         .map(param -> new NotificationParam(UUID.randomUUID().toString(), param.getKey(), param.getValue()))
                         .toList())
+                .link(notificationForm.getLink())
                 .build();
 
         return notificationRepository.save(notification);

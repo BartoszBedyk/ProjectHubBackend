@@ -4,6 +4,10 @@ import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.commons.LoggedUser;
+import com.sensilabs.projecthub.notification.EmailingService;
+import com.sensilabs.projecthub.notification.NotificationRepository;
+import com.sensilabs.projecthub.notification.NotificationService;
+import com.sensilabs.projecthub.notification.NotificationServiceImpl;
 import com.sensilabs.projecthub.project.*;
 import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
 import com.sensilabs.projecthub.project.environment.repository.ProjectEnvironmentRepository;
@@ -26,12 +30,15 @@ public class ProjectServiceTest {
     ProjectMemberRepository projectMemberRepository = new ProjectMemberRepositoryMock();
     LoggedUser loggedUser = new LoggedUserMock();
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
+
     ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
     ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
     ActivityRepository activityRepository = new ActivityRepositoryMock();
     ActivityService activityService = new ActivityServiceImpl(activityRepository);
     UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
-    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService);
+    NotificationService notificationService;
+    EmailingService emailingService;
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService, notificationService, emailingService);
 
     @Test
     void createProjectTest() throws InterruptedException {

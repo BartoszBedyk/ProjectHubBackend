@@ -1,17 +1,20 @@
 databaseChangeLog:
   - include:
       file:
-        classpath:db/changelog/project/create-notification-param-table.xml
+        classpath:db/changelog/notification/create-notification-param-table.xml
   - include:
       file:
-        classpath:db/changelog/project/create-notification-table.xml
+        classpath:db/changelog/notification/create-notification-table.xml
   - include:
       file:
-        classpath:db/changelog/project/notification-param-table-relation.xml
+        classpath:db/changelog/notification/notification-param-table-relation.xml
   - include:
       file:
-        classpath:db/changelog/project/notification-alter-table.xml
+        classpath:db/changelog/notification/notification-alter-table.xml
   - include:
       file:
-        classpath:db/changelog/project/notification-alter-table-v2.xml
+        classpath:db/changelog/notification/notification-alter-table-v2.xml
+  - include:
+      file:
+        classpath:db/changelog/notification/update-notification-table-v3.xml
 

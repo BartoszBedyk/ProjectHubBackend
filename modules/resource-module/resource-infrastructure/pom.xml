@@ -12,10 +12,15 @@
     <version>${revision}</version>
     <dependencies>
         <dependency>
-           <groupId>com.sensilabs.projecthub</groupId>
+            <groupId>com.sensilabs.projecthub</groupId>
             <artifactId>resource-domain</artifactId>
             <version>${revision}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sensilabs.projecthub</groupId>

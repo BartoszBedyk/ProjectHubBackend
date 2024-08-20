@@ -57,5 +57,10 @@ public class AccountCreatedSmsForm implements NotificationForm {
         return this.phone;
     }
 
+    @Override
+    public String getLink() {
+        return "";
+    }
+
 
 }

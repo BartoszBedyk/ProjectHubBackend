@@ -36,6 +36,8 @@ public class Notification {
 
     private Integer numberOfAttempts;
 
+    private String link;
+
 
     public void  increaseAttempts(){
         this.lastAttemptOn = Instant.now();

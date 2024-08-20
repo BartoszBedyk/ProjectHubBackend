@@ -2,6 +2,7 @@ package com.sensilabs.projecthub;
 
 import com.sensilabs.projecthub.notification.forms.NotificationChannel;
 import com.sensilabs.projecthub.notification.model.NotificationType;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,6 +48,10 @@ public class NotificationEntity {
 
     @Column(name = "number_of_attempts")
     private Integer numberOfAttempts;
+
+    @Column(name = "link")
+    @Nullable
+    private String link;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "notification", fetch = FetchType.EAGER)
     private List<NotificationParamEntity> params;

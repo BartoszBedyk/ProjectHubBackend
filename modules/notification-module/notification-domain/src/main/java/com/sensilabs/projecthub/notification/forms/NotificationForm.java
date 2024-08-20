@@ -16,5 +16,7 @@ public interface NotificationForm {
 
     String getReceiver();
 
+    String getLink();
+
 
 }

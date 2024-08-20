@@ -1,7 +1,10 @@
 package com.sensilabs.projecthub.resource;
 
+import com.sensilabs.projecthub.activity.ActivityService;
 import com.sensilabs.projecthub.cipher.CipherProps;
 import com.sensilabs.projecthub.cipher.DataEncryptionServiceImpl;
+import com.sensilabs.projecthub.commons.LoggedUser;
+import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
 import com.sensilabs.projecthub.resources.ResourceService;
 import com.sensilabs.projecthub.resources.ResourceServiceImpl;
 import com.sensilabs.projecthub.resources.forms.*;
@@ -18,7 +21,10 @@ public class ResourceServiceTest {
 
     ResourceRepositoryMock resourceRepository = new ResourceRepositoryMock();
     DataEncryptionServiceImpl dataEncryptionService;
-    ResourceService resourceService = new ResourceServiceImpl(resourceRepository, null,dataEncryptionService );
+    LoggedUser loggedUser;
+    ActivityService activityService;
+    ProjectEnvironmentService projectEnvironmentService;
+    ResourceService resourceService = new ResourceServiceImpl(resourceRepository, null,dataEncryptionService, loggedUser, activityService, projectEnvironmentService  );
 
     @Test
     void createAttachmentResourceTest() throws InterruptedException, AccessDeniedException {

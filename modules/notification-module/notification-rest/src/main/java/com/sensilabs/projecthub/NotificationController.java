@@ -3,10 +3,7 @@ package com.sensilabs.projecthub;
 
 import com.sensilabs.projecthub.notification.NotificationService;
 import com.sensilabs.projecthub.notification.EmailingService;
-import com.sensilabs.projecthub.notification.forms.AccountCreatedMailForm;
-import com.sensilabs.projecthub.notification.forms.AccountCreatedSmsForm;
-import com.sensilabs.projecthub.notification.forms.ResetPasswordMailFrom;
-import com.sensilabs.projecthub.notification.forms.ResetPasswordSmsForm;
+import com.sensilabs.projecthub.notification.forms.*;
 import com.sensilabs.projecthub.notification.model.Notification;
 
 import jakarta.mail.MessagingException;
@@ -55,6 +52,13 @@ public class NotificationController {
 
     @PostMapping("/reset-password-sms")
     public Notification save(@RequestBody ResetPasswordSmsForm form) throws MessagingException {
+        String std = UUID.randomUUID().toString();
+        Notification notification = notificationService.save(form, std);
+        emailingService.send(notification);
+        return notification;
+    }
+    @PostMapping("/add-user-to-project-mail")
+    public Notification save(@RequestBody AddToProjectMailForm form) throws MessagingException {
         String std = UUID.randomUUID().toString();
         Notification notification = notificationService.save(form, std);
         emailingService.send(notification);

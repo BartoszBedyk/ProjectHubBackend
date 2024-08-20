@@ -20,6 +20,7 @@ public class NotificationMapper {
                 .sent(notification.getSent())
                 .numberOfAttempts(notification.getNumberOfAttempts())
                 .lastAttemptOn(notification.getLastAttemptOn())
+                .link(notification.getLink())
                 .build();
         return notificationEntity;
     }
@@ -51,6 +52,7 @@ public class NotificationMapper {
                  .receiver(notificationEntity.getReceiver())
                  .sent(notificationEntity.getSent())
                  .numberOfAttempts(notificationEntity.getNumberOfAttempts())
+                 .link(notificationEntity.getLink())
                  .build();
         return notification;
 
