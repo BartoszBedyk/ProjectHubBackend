@@ -24,7 +24,7 @@ public class ResourceEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "value")
+    @Column(name = "value", columnDefinition = "TEXT")
     private String value;
 
     @Enumerated(EnumType.STRING)

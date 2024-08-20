@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Reset</title>
+    <style>
+        body {
+            background-color: #F4F4F9;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #1D82E6;
+            margin-bottom: 20px;
+            font-family: 'Trebuchet MS', sans-serif;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #1D82E6;
+        }
+
+        .footer {
+            border-top: 1px solid #E0E0E0;
+            padding: 20px;
+            color: #d4d1d1;
+            font-size: 14px;
+            text-align: center;
+            background-color: #FFFFFF;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+            border-radius: 0 0 12px 12px;
+            line-height: 1.1;
+        }
+
+        .footer p {
+            margin: 0 0;
+        }
+
+        a {
+            color: #1D82E6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>You Have Been Assigned to a New Project!</h1>
+    <p>Hello, <span th:text="${FIRST_NAME}">First Name</span> <span th:text="${LAST_NAME}">Last Name</span>,</p>
+    <p>We’re excited to inform you that you have been assigned to a new project. Please review the details and get started at your earliest convenience.</p>
+    <p>If you have any questions or need further information, don't hesitate to reach out this page:</p>
+    <a th:href="${link}"><p th:text="${link}">{link}</p></a>
+    <p>Thank you for your continued dedication and hard work!</p>
+    <p>Best regards,<br/></p>
+    <p>ProjectHub Team</p>
+
+    <p>We hope you enjoy using our platform!</p>
+
+    <div class="footer">
+        <p>Request sent at: <span th:text="${sendTime}">no time</span></p>
+        <p>&copy; 2024 ProjectHub Solutions</p>
+        <p>projecthub.sl.noreply@gmail.com</p>
+        <p>Płock 09-400</p>
+    </div>
+</div>
+</body>
+</html>

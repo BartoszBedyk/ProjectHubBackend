@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file:
+        classpath:db/changelog/resource/create-resource-table.xml
+  - include:
+      file:
+        classpath:db/changelog/resource/update-resource-table-v1.xml
+  - include:
+      file:
+        classpath:db/changelog/resource/update-resource-table-v2.xml
+  - include:
+      file:
+        classpath:db/changelog/resource/update-resource-table-v3.xml
+
+
+

@@ -5,6 +5,8 @@ import com.sensilabs.projecthub.activity.forms.DocumentOpenForm;
 import com.sensilabs.projecthub.activity.forms.KeyOpenForm;
 import com.sensilabs.projecthub.cipher.DataEncryptionServiceImpl;
 import com.sensilabs.projecthub.commons.*;
+import com.sensilabs.projecthub.project.ProjectService;
+import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
 import com.sensilabs.projecthub.resources.forms.ResourceForm;
 import com.sensilabs.projecthub.resources.forms.UpdateResourceForm;
 import com.sensilabs.projecthub.resources.model.Resource;
@@ -23,13 +25,15 @@ public class ResourceServiceImpl implements ResourceService {
     private final DataEncryptionServiceImpl dataEncryptionService;
     private final LoggedUser loggedUser;
     private final ActivityService activityService;
+    private final ProjectEnvironmentService projectEnvironmentService;
 
-    public ResourceServiceImpl(ResourceRepository resourceRepository, ResourceAccess resourceAccess, DataEncryptionServiceImpl dataEncryptionService, LoggedUser loggedUser, ActivityService activityService) {
+    public ResourceServiceImpl(ResourceRepository resourceRepository, ResourceAccess resourceAccess, DataEncryptionServiceImpl dataEncryptionService, LoggedUser loggedUser, ActivityService activityService, ProjectEnvironmentService projectEnvironmentService) {
         this.resourceRepository = resourceRepository;
         this.resourceAccess = resourceAccess;
         this.dataEncryptionService = dataEncryptionService;
         this.loggedUser = loggedUser;
         this.activityService = activityService;
+        this.projectEnvironmentService = projectEnvironmentService;
     }
 
     @Override
@@ -39,14 +43,17 @@ public class ResourceServiceImpl implements ResourceService {
             throw new  RuntimeException("Access denied to save the resource for user.");
         }
 
-        String encryptedValue = dataEncryptionService.encryptString(resourceForm.getValue());
+       String value = resourceForm.getValue();
+       if(projectEnvironmentService.findById(resourceForm.getEnvironmentId()).isEncrypted()){
+            value = dataEncryptionService.encryptString(resourceForm.getValue());
+       }
 
         Instant now = Instant.now();
         Resource resource = Resource.builder()
                 .id(UUID.randomUUID().toString())
                 .name(resourceForm.getName())
                 .description(resourceForm.getDescription())
-                .value(encryptedValue)
+                .value(value)
                 .resourceType(resourceForm.getType())
                 .environmentId(resourceForm.getEnvironmentId())
                 .projectId(resourceForm.getProjectId())
@@ -75,8 +82,11 @@ public class ResourceServiceImpl implements ResourceService {
         }
         return resource
                 .map(res -> {
-                    String decryptedValue = dataEncryptionService.decryptString(res.getValue());
-                    res.setValue(decryptedValue);
+                    if(projectEnvironmentService.findById(res.getEnvironmentId()).isEncrypted()) {
+                        String decryptedValue = dataEncryptionService.decryptString(res.getValue());
+                        res.setValue(decryptedValue);
+                        return res;
+                    }
                     return res;
                 });
     }
@@ -85,8 +95,12 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Resource update(UpdateResourceForm updateResourceForm) {
         String value = updateResourceForm.getValue();
-        String encryptedValue = dataEncryptionService.encryptString(value);
-        updateResourceForm.setValue(encryptedValue);
+        if(projectEnvironmentService.findById(resourceRepository.findById(updateResourceForm.getId()).get().getEnvironmentId()).isEncrypted()) {
+            String encryptedValue = dataEncryptionService.encryptString(value);
+            updateResourceForm.setValue(encryptedValue);
+            return resourceRepository.update(updateResourceForm);
+
+        }
         return resourceRepository.update(updateResourceForm);
     }
 
@@ -96,7 +110,9 @@ public class ResourceServiceImpl implements ResourceService {
 
         SearchResponse<Resource> searchResponse = resourceRepository.search(searchFrom);
         searchResponse.getItems().forEach(resource -> {
-            resource.setValue(dataEncryptionService.decryptString(resource.getValue()));
+            if(projectEnvironmentService.findById(resource.getEnvironmentId()).isEncrypted()) {
+                resource.setValue(dataEncryptionService.decryptString(resource.getValue()));
+            }
             if (resource.getResourceType() == ResourceType.SECRET) {
                 resource.setValue("*".repeat(resource.getValue().length()));
             }

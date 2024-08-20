@@ -2,6 +2,8 @@ import com.sensilabs.projecthub.activity.ActivityRepository;
 import com.sensilabs.projecthub.activity.ActivityService;
 import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.commons.LoggedUser;
+import com.sensilabs.projecthub.notification.EmailingService;
+import com.sensilabs.projecthub.notification.NotificationService;
 import com.sensilabs.projecthub.project.*;
 import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
 import com.sensilabs.projecthub.project.environment.forms.CreateProjectEnvironmentForm;
@@ -34,7 +36,9 @@ public class ProjectEnvironmentServiceTest {
     ActivityService activityService = new ActivityServiceImpl(activityRepository);
     UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
     ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
-    ProjectService projectService = new ProjectServiceImpl(projectRepository, service, projectMemberService, userManagementService);
+    NotificationService notificationService;
+    EmailingService emailingService;
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, service, projectMemberService, userManagementService, notificationService, emailingService);
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
 
