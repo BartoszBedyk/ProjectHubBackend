@@ -71,5 +71,11 @@ public class ResourceRepositoryAdapter implements ResourceRepository {
         return repositoryJpa.checkAccess(projectId, environmentId, userId);
     }
 
+    @Override
+    public List<Resource> findByUser(String userID) {
+        List<ResourceEntity> resourceEntities =  repositoryJpa.findResourcesForUser(userID);
+        return resourceEntities.stream().map(ResourceMapper::toResource).collect(Collectors.toList());
+    }
+
 
 }

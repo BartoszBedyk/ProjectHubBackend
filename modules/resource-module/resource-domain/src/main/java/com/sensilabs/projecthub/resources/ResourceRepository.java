@@ -18,4 +18,5 @@ public interface ResourceRepository {
     SearchResponse search(SearchForm searchForm);
 
     Boolean checkAccess(String projectId, String environmentId, String userId);
+    List<Resource> findByUser(String userID);
 }
