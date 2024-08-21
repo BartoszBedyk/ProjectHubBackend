@@ -11,6 +11,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 @Entity(name = "resource")
+@Table(name = "resource", schema = "public")
 
 public class ResourceEntity {
     @Id
@@ -23,7 +24,7 @@ public class ResourceEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "value")
+    @Column(name = "value", columnDefinition = "TEXT")
     private String value;
 
     @Enumerated(EnumType.STRING)

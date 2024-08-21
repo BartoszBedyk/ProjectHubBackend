@@ -2,10 +2,16 @@ package com.sensilabs.projecthub.project;
 
 import com.sensilabs.projecthub.activity.ActivityService;
 import com.sensilabs.projecthub.commons.*;
+import com.sensilabs.projecthub.notification.EmailingService;
+import com.sensilabs.projecthub.notification.NotificationService;
+import com.sensilabs.projecthub.notification.forms.ResetPasswordMailFrom;
+import com.sensilabs.projecthub.notification.model.Notification;
 import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
 import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
 import com.sensilabs.projecthub.user.management.User;
 import com.sensilabs.projecthub.user.management.service.UserManagementService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -17,18 +23,23 @@ import java.util.stream.Collectors;
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
+    private static final Logger log = LoggerFactory.getLogger(ProjectServiceImpl.class);
     private final ProjectRepository projectRepository;
     private final ProjectEnvironmentService projectEnvironmentService;
     private final ProjectMemberService projectMemberService;
     private final UserManagementService userManagementService;
     private final ActivityService activityService;
+    private final NotificationService notificationService;
+    private final EmailingService emailingService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService, ProjectMemberService projectMemberService, UserManagementService userManagementService, ActivityService activityService) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService, ProjectMemberService projectMemberService, UserManagementService userManagementService, ActivityService activityService, NotificationService notificationService, EmailingService emailingService) {
         this.projectRepository = projectRepository;
         this.projectEnvironmentService = projectEnvironmentService;
         this.projectMemberService = projectMemberService;
         this.userManagementService = userManagementService;
         this.activityService = activityService;
+        this.notificationService = notificationService;
+        this.emailingService = emailingService;
     }
 
     private Project getOrThrow(String id) {
@@ -56,6 +67,9 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
         User user = userManagementService.get(createdById);
         projectMemberService.save(new CreateProjectMemberForm(user.getFirstName(),user.getLastName(),Role.OWNER,savedProject.getId(), createdById, defaultEnvironmentIds),createdById);
+        String link = "http://localhost:3000/project/" + savedProject.getId();
+        Notification notification = notificationService.save(new ResetPasswordMailFrom(user.getFirstName(), user.getLastName(), user.getEmail(), link), "SYSTEM");
+        emailingService.send(notification);
         return savedProject;
     }
 

@@ -72,14 +72,15 @@
 </head>
 <body>
 <div class="container">
-    <h1>Password Reset Request</h1>
+    <h1>You Have Been Assigned to a New Project!</h1>
     <p>Hello, <span th:text="${FIRST_NAME}">First Name</span> <span th:text="${LAST_NAME}">Last Name</span>,</p>
-    <p>We have received a request to reset the password for your account:</p>
-    <p class="highlight" th:text="${toMail}">userEmail@gmail.com</p>
-    <p>Here is link to reset password:</p>
+    <p>We’re excited to inform you that you have been assigned to a new project. Please review the details and get started at your earliest convenience.</p>
+    <p>If you have any questions or need further information, don't hesitate to reach out this page:</p>
     <a th:href="${link}"><p th:text="${link}">{link}</p></a>
-    <p>If you did not request a password reset, please ignore this email. No changes will be made to your account.</p>
-    <p>Remember to keep your login details confidential and stay safe while using our services.</p>
+    <p>Thank you for your continued dedication and hard work!</p>
+    <p>Best regards,<br/></p>
+    <p>ProjectHub Team</p>
+
     <p>We hope you enjoy using our platform!</p>
 
     <div class="footer">

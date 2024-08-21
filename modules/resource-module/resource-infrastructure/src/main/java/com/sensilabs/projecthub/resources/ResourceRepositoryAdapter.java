@@ -68,7 +68,7 @@ public class ResourceRepositoryAdapter implements ResourceRepository {
 
     @Override
     public Boolean checkAccess(String projectId, String environmentId, String userId) {
-        return null;
+        return repositoryJpa.checkAccess(projectId, environmentId, userId);
     }
 
 

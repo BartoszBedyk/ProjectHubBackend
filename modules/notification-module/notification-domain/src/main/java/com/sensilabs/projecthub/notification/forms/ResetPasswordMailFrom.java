@@ -34,6 +34,10 @@ public class ResetPasswordMailFrom implements NotificationForm {
     @NotNull(message = "Email cannot be null.")
     private String email;
 
+    @NotNull(message = "Link can not be null")
+    @NotBlank(message = "Link can not be blank.")
+    private String link;
+
     @Override
     public NotificationType getType() {
         return NotificationType.PASSWORD_RESET;
@@ -55,6 +59,11 @@ public class ResetPasswordMailFrom implements NotificationForm {
     @Override
     public String getReceiver() {
         return this.email;
+    }
+
+    @Override
+    public String getLink(){
+        return this.link;
     }
 
 

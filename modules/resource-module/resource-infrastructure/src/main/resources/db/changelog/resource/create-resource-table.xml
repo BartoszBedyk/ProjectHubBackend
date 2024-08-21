@@ -1,6 +1,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
     <changeSet id="create-resource-table" author="Bartosz Bedyk">
         <createTable tableName="resource">
             <column name="id" type="varchar(255)" >
@@ -12,7 +13,7 @@
             <column name="description" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="value" type="varchar(255)">
+            <column name="value" type="text">
                 <constraints nullable="false"/>
             </column>
             <column name="resource_type" type="varchar(255)">
@@ -31,9 +32,12 @@
                 <constraints nullable="false"/>
             </column>
             <column name="last_modified_on" type="timestamp(6)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
     </changeSet>
 
+
+
 </databaseChangeLog>
+

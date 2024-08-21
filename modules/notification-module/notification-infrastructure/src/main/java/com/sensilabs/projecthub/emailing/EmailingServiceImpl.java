@@ -29,7 +29,7 @@ public class EmailingServiceImpl implements EmailingService {
         notification.increaseAttempts();
         try {
             emailSender.send(notification.getReceiver(), notification.getType().getSubject(), EmailingServiceImpl.toMap(notification.getParams()),
-                    notification.getType().getTemplateId());
+                    notification.getType().getTemplateId(), notification.getLink());
             notification.finalizeSent();
         } catch (Exception e) {
             e.getStackTrace();

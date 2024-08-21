@@ -4,6 +4,8 @@ import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.commons.LoggedUser;
+import com.sensilabs.projecthub.notification.EmailingService;
+import com.sensilabs.projecthub.notification.NotificationService;
 import com.sensilabs.projecthub.project.*;
 import com.sensilabs.projecthub.project.environment.repository.ProjectEnvironmentRepository;
 import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
@@ -34,7 +36,9 @@ public class ProjectMemberServiceTest {
     UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
     ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository, activityService);
     ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository, activityService);
-    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService, activityService);
+   NotificationService notificationService;
+    EmailingService emailingService;
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService, activityService, notificationService, emailingService);
 
     @Test
     void saveMemberTest() throws InterruptedException {

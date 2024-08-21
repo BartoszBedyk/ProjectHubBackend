@@ -118,7 +118,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 .build();
 
         authorizationRepository.saveResetPasswordRequest(request);
-        Notification notification = notificationService.save(new ResetPasswordMailFrom(user.getFirstName(), user.getLastName(), resetPasswordRequest.getEmail()), "SYSTEM");
+        String link = "http://localhost:3000/auth/reset-password/" + request.getId();
+        Notification notification = notificationService.save(new ResetPasswordMailFrom(user.getFirstName(), user.getLastName(), resetPasswordRequest.getEmail(), link), "SYSTEM");
         emailingService.send(notification);
     }
 

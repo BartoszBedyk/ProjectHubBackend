@@ -17,7 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Setter
 @Getter
-public class AccountCreatedMailForm implements NotificationForm {
+public class AddToProjectMailForm implements NotificationForm {
 
     @NotNull(message = "First name cannot be null.")
     @NotBlank(message = "First name cannot be blank.")
@@ -34,10 +34,14 @@ public class AccountCreatedMailForm implements NotificationForm {
     @NotNull(message = "Email cannot be null.")
     private String email;
 
+    @NotNull(message = "Link can not be null")
+    @NotBlank(message = "Link can not be blank.")
+    private String link;
+
 
     @Override
     public NotificationType getType() {
-        return NotificationType.ACCOUNT_CREATE;
+        return NotificationType.ASSIGN_TO_PROJECT;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class AccountCreatedMailForm implements NotificationForm {
 
     @Override
     public String getLink() {
-        return "";
+        return this.link;
     }
 
 
