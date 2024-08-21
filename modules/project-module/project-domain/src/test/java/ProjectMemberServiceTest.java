@@ -32,9 +32,9 @@ public class ProjectMemberServiceTest {
     ActivityRepository activityRepository = new ActivityRepositoryMock();
     ActivityService activityService = new ActivityServiceImpl(activityRepository);
     UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
-    ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
-    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
-    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService);
+    ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository, activityService);
+    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository, activityService);
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService, activityService);
 
     @Test
     void saveMemberTest() throws InterruptedException {
@@ -180,7 +180,7 @@ public class ProjectMemberServiceTest {
         List<String> envIds = projectMemberRepository.findById(user.getId(), project.getId()).get().getEnvironmentIds();
         CreateProjectMemberForm createProjectMemberForm = new CreateProjectMemberForm("Mariusz", "Szpakowski", Role.MAINTAINER, project.getId(), secondUser.getId(), envIds);
         ProjectMember projectMember = projectMemberService.save(createProjectMemberForm, user.getId());
-        projectMemberService.remove(projectMember.getUserId(), projectMember.getProjectId());
+        projectMemberService.remove(projectMember.getUserId(), projectMember.getProjectId(), loggedUser.getUserId());
         assertThrows(RuntimeException.class, () -> projectMemberService.getById(projectMember.getUserId(), projectMember.getProjectId()));
     }
 }

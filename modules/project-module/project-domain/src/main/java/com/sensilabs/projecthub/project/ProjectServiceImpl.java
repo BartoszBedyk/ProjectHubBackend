@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.activity.ActivityService;
 import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
 import com.sensilabs.projecthub.project.environment.service.ProjectEnvironmentService;
@@ -20,12 +21,14 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectEnvironmentService projectEnvironmentService;
     private final ProjectMemberService projectMemberService;
     private final UserManagementService userManagementService;
+    private final ActivityService activityService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService, ProjectMemberService projectMemberService, UserManagementService userManagementService) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService, ProjectMemberService projectMemberService, UserManagementService userManagementService, ActivityService activityService) {
         this.projectRepository = projectRepository;
         this.projectEnvironmentService = projectEnvironmentService;
         this.projectMemberService = projectMemberService;
         this.userManagementService = userManagementService;
+        this.activityService = activityService;
     }
 
     private Project getOrThrow(String id) {
@@ -69,6 +72,9 @@ public class ProjectServiceImpl implements ProjectService {
         if(!projectMemberService.getById(userId, existingProject.getId()).getRole().equals(Role.OWNER)){
             throw new ApplicationException(ErrorCode.NOT_PROJECT_OWNER);
         }
+
+        activityService.save(new com.sensilabs.projecthub.activity.forms.UpdateProjectForm(updateProjectForm.getId()), userId);
+
             existingProject.setName(updateProjectForm.getName());
             existingProject.setDescription(updateProjectForm.getDescription());
             existingProject.setTechnologies(new ArrayList<>());

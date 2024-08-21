@@ -11,7 +11,7 @@ public interface ProjectMemberService {
 
     ProjectMember update(@Valid UpdateProjectMemberForm updateProjectMemberForm, String loggedUser);
 
-    void remove(String userId, String projectId);
+    void remove(String userId, String projectId, String loggedUser);
 
     List<ProjectMember> findAllByProjectId(String projectId);
 

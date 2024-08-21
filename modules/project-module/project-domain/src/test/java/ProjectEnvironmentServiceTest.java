@@ -26,15 +26,15 @@ public class ProjectEnvironmentServiceTest {
 
     ProjectRepository projectRepository = new ProjectRepositoryMock();
     ProjectEnvironmentRepository projectEnvironmentRepository = new ProjectEnvironmentRepositoryMock();
-    ProjectEnvironmentService service = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
+    ActivityRepository activityRepository = new ActivityRepositoryMock();
+    ActivityService activityService = new ActivityServiceImpl(activityRepository);
+    ProjectEnvironmentService service = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository, activityService);
     ProjectMemberRepository projectMemberRepository = new ProjectMemberRepositoryMock();
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
     LoggedUser loggedUser = new LoggedUserMock();
-    ActivityRepository activityRepository = new ActivityRepositoryMock();
-    ActivityService activityService = new ActivityServiceImpl(activityRepository);
     UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
-    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
-    ProjectService projectService = new ProjectServiceImpl(projectRepository, service, projectMemberService, userManagementService);
+    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository, activityService);
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, service, projectMemberService, userManagementService, activityService);
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
 
@@ -101,7 +101,7 @@ public class ProjectEnvironmentServiceTest {
         Optional<ProjectEnvironment> env = projectEnvironmentRepository.findById("testId");
         if(env.isPresent()) {
             UpdateProjectEnvironmentForm updateProjectEnvironmentForm = new UpdateProjectEnvironmentForm(env.get().getId(), "NewTestEnv", true);
-            service.update(updateProjectEnvironmentForm);
+            service.update(updateProjectEnvironmentForm, loggedUser.getUserId());
             Optional<ProjectEnvironment> envUpdated = projectEnvironmentRepository.findById(env.get().getId());
             if (envUpdated.isPresent()) {
                 assertEquals(envUpdated.get().getName(), "NewTestEnv");

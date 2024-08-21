@@ -1,5 +1,8 @@
 package com.sensilabs.projecthub.resource;
 
+import com.sensilabs.projecthub.activity.ActivityRepository;
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.ActivityServiceImpl;
 import com.sensilabs.projecthub.cipher.CipherProps;
 import com.sensilabs.projecthub.cipher.DataEncryptionServiceImpl;
 import com.sensilabs.projecthub.resources.ResourceService;
@@ -18,7 +21,9 @@ public class ResourceServiceTest {
 
     ResourceRepositoryMock resourceRepository = new ResourceRepositoryMock();
     DataEncryptionServiceImpl dataEncryptionService;
-    ResourceService resourceService = new ResourceServiceImpl(resourceRepository, null,dataEncryptionService );
+    ActivityRepository activityRepository;
+    ActivityService activityService = new ActivityServiceImpl(activityRepository);
+    ResourceService resourceService = new ResourceServiceImpl(resourceRepository, null,dataEncryptionService, activityService );
 
     @Test
     void createAttachmentResourceTest() throws InterruptedException, AccessDeniedException {
@@ -227,7 +232,7 @@ public class ResourceServiceTest {
 
         UpdateResourceForm updateForm = new UpdateResourceForm(resource.getId().toString(), "UpdatedName", "UpdatedDescription", "UpdatedValue");
 
-        Resource updated = resourceService.update(updateForm);
+        Resource updated = resourceService.update(updateForm, createdById);
         Thread.sleep(1000);
         Instant afterUpdate = Instant.now();
 

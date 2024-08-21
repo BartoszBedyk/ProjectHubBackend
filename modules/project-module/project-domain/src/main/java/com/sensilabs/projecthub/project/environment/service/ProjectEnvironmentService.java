@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProjectEnvironmentService {
     ProjectEnvironment create(CreateProjectEnvironmentForm createProjectEnvironmentForm, String createdById);
     void createDefaultEnvironments(String projectId);
-    ProjectEnvironment update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm);
+    ProjectEnvironment update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm,String loggedUser);
     void delete(String id, String deletedById);
     List<ProjectEnvironment> getAllEnvironments(String projectId);
 

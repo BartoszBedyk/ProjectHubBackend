@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.forms.DeleteProjectMemberForm;
 import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.project.environment.ProjectEnvironment;
 import com.sensilabs.projecthub.project.environment.repository.ProjectEnvironmentRepository;
@@ -14,11 +16,13 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectRepository projectRepository;
     private final ProjectEnvironmentRepository projectEnvironmentRepository;
+    private final ActivityService activityService;
 
-    public ProjectMemberServiceImpl(ProjectMemberRepository projectMemberRepository, ProjectRepository projectRepository, ProjectEnvironmentRepository projectEnvironmentRepository) {
+    public ProjectMemberServiceImpl(ProjectMemberRepository projectMemberRepository, ProjectRepository projectRepository, ProjectEnvironmentRepository projectEnvironmentRepository, ActivityService activityService) {
         this.projectMemberRepository = projectMemberRepository;
         this.projectRepository = projectRepository;
         this.projectEnvironmentRepository = projectEnvironmentRepository;
+        this.activityService = activityService;
     }
 
     @Override
@@ -37,6 +41,8 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         if (environments.size() != createProjectMemberForm.getEnvironmentIds().size()) {
             throw new ApplicationException(ErrorCode.PROJECT_ENVIRONMENT_NOT_FOUND);
         }
+
+        activityService.save(new com.sensilabs.projecthub.activity.forms.CreateProjectMemberForm(project.getId(), createProjectMemberForm.getUserId(), createProjectMemberForm.getRole().toString()), createdById);
 
         ProjectMember projectMember = ProjectMember.builder()
                 .role(createProjectMemberForm.getRole())
@@ -68,6 +74,9 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
         }
 
         ProjectMember existingMember = getOrThrow(updateProjectMemberForm.getUserId(), updateProjectMemberForm.getProjectId());
+
+        activityService.save(new com.sensilabs.projecthub.activity.forms.UpdateProjectMemberForm(updateProjectMemberForm.getProjectId(), updateProjectMemberForm.getUserId(), existingMember.getRole().toString(), updateProjectMemberForm.getRole().toString()), loggedUser);
+
         existingMember.setRole(updateProjectMemberForm.getRole());
         existingMember.getEnvironmentIds().clear();
         existingMember.setEnvironmentIds(updateProjectMemberForm.getEnvironmentIds());
@@ -76,8 +85,11 @@ public class ProjectMemberServiceImpl implements ProjectMemberService {
     }
 
     @Override
-    public void remove(String userId, String projectId) {
+    public void remove(String userId, String projectId, String loggedUser) {
         ProjectMember existingMember = getOrThrow(userId, projectId);
+
+        activityService.save(new DeleteProjectMemberForm(projectId, userId), loggedUser);
+
         projectMemberRepository.delete(existingMember);
     }
 
