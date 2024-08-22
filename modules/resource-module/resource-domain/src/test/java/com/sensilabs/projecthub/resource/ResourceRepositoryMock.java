@@ -53,4 +53,9 @@ public class ResourceRepositoryMock implements ResourceRepository {
     public Boolean checkAccess(String projectId, String environmentId, String userId) {
         return null;
     }
+
+    @Override
+    public List<Resource> findByUser(String userID) {
+        return List.of();
+    }
 }

@@ -84,4 +84,9 @@ public class ResourceController {
         return  resourceService.delete(id,  loggedUser.getUserId());
     }
 
+    @PostMapping("/user/{userId}")
+    public List<Resource> findByUserId(@PathVariable String userId){
+        return resourceService.findByUser(userId);
+    }
+
 }

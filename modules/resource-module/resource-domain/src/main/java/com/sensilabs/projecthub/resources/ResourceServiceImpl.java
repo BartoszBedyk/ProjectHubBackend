@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -132,6 +133,20 @@ public class ResourceServiceImpl implements ResourceService {
         existingResource.setDeletedOn(Instant.now());
         activityService.save(new DeleteResourceForm(existingResource.getId(), existingResource.getResourceType().toString()), userId);
         return  resourceRepository.save(existingResource);
+    }
+
+    @Override
+    public List<Resource> findByUser(String userID) {
+         List<Resource> resources = resourceRepository.findByUser(userID);
+         resources.forEach(resource -> {
+             if(projectEnvironmentService.findById(resource.getEnvironmentId()).isEncrypted()) {
+                 resource.setValue("*".repeat(resource.getValue().length()));
+             }
+             if (resource.getResourceType() == ResourceType.SECRET) {
+                 resource.setValue("*".repeat(resource.getValue().length()));
+             }
+         });
+         return resources;
     }
 
 }
