@@ -77,14 +77,6 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Optional<Resource> findById(String id) {
         Optional<Resource> resource = resourceRepository.findById(id);
-        switch (resource.get().getResourceType()) {
-            case SECRET -> {
-                activityService.save(new KeyOpenForm(loggedUser.getUserId(), resource.get().getId()), loggedUser.getUserId());
-            }
-            case TEXT -> {
-                activityService.save(new DocumentOpenForm(loggedUser.getUserId(), resource.get().getId()), loggedUser.getUserId());
-            }
-        }
         return resource
                 .map(res -> {
                     if(projectEnvironmentService.findById(res.getEnvironmentId()).isEncrypted()) {
