@@ -1,5 +1,7 @@
 package com.sensilabs.projecthub.project.environment.service;
 
+import com.sensilabs.projecthub.activity.ActivityService;
+import com.sensilabs.projecthub.activity.forms.DeleteProjectEnvironmentForm;
 import com.sensilabs.projecthub.commons.ApplicationException;
 import com.sensilabs.projecthub.commons.ErrorCode;
 import com.sensilabs.projecthub.project.ProjectRepository;
@@ -18,10 +20,12 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
 
     private final ProjectEnvironmentRepository projectEnvironmentRepository;
     private final ProjectRepository projectRepository;
+    private final ActivityService activityService;
 
-    public ProjectEnvironmentServiceImpl(ProjectEnvironmentRepository projectEnvironmentRepository, ProjectRepository projectRepository) {
+    public ProjectEnvironmentServiceImpl(ProjectEnvironmentRepository projectEnvironmentRepository, ProjectRepository projectRepository, ActivityService activityService) {
         this.projectEnvironmentRepository = projectEnvironmentRepository;
         this.projectRepository = projectRepository;
+        this.activityService = activityService;
     }
 
     private ProjectEnvironment getOrThrow(String id) {
@@ -42,6 +46,9 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
                     .deletedById(null)
                     .createdById(createdById)
                     .build();
+
+            activityService.save(new com.sensilabs.projecthub.activity.forms.CreateProjectEnvironmentForm(projectEnvironment.getProjectId(), projectEnvironment.getId()), createdById);
+
             return projectEnvironmentRepository.save(projectEnvironment);
         } else {
             throw new ApplicationException(ErrorCode.PROJECT_NOT_FOUND);
@@ -55,11 +62,12 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
     }
 
     @Override
-    public ProjectEnvironment update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm) {
+    public ProjectEnvironment update(UpdateProjectEnvironmentForm updateProjectEnvironmentForm, String loggedUser) {
         ProjectEnvironment existingEnvironment = getOrThrow(updateProjectEnvironmentForm.getId());
         existingEnvironment.setName(updateProjectEnvironmentForm.getName());
         existingEnvironment.setEncrypted(updateProjectEnvironmentForm.isEncrypted());
         existingEnvironment.setUpdatedOn(Instant.now());
+        activityService.save(new com.sensilabs.projecthub.activity.forms.UpdateProjectEnvironmentForm(existingEnvironment.getProjectId(), updateProjectEnvironmentForm.getId()), loggedUser);
         return projectEnvironmentRepository.save(existingEnvironment);
     }
 
@@ -68,6 +76,7 @@ public class ProjectEnvironmentServiceImpl implements ProjectEnvironmentService 
         ProjectEnvironment existingEnvironment = getOrThrow(id);
         existingEnvironment.setDeletedOn(Instant.now());
         existingEnvironment.setDeletedById(deletedById);
+        activityService.save(new DeleteProjectEnvironmentForm(existingEnvironment.getProjectId(), id), deletedById);
         projectEnvironmentRepository.save(existingEnvironment);
     }
 

@@ -1,5 +1,6 @@
 package com.sensilabs.projecthub.project;
 
+import com.sensilabs.projecthub.activity.ActivityService;
 import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.notification.EmailingService;
 import com.sensilabs.projecthub.notification.NotificationService;
@@ -27,14 +28,16 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectEnvironmentService projectEnvironmentService;
     private final ProjectMemberService projectMemberService;
     private final UserManagementService userManagementService;
+    private final ActivityService activityService;
     private final NotificationService notificationService;
     private final EmailingService emailingService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService, ProjectMemberService projectMemberService, UserManagementService userManagementService, NotificationService notificationService, EmailingService emailingService) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectEnvironmentService projectEnvironmentService, ProjectMemberService projectMemberService, UserManagementService userManagementService, ActivityService activityService, NotificationService notificationService, EmailingService emailingService) {
         this.projectRepository = projectRepository;
         this.projectEnvironmentService = projectEnvironmentService;
         this.projectMemberService = projectMemberService;
         this.userManagementService = userManagementService;
+        this.activityService = activityService;
         this.notificationService = notificationService;
         this.emailingService = emailingService;
     }
@@ -83,6 +86,9 @@ public class ProjectServiceImpl implements ProjectService {
         if(!projectMemberService.getById(userId, existingProject.getId()).getRole().equals(Role.OWNER)){
             throw new ApplicationException(ErrorCode.NOT_PROJECT_OWNER);
         }
+
+        activityService.save(new com.sensilabs.projecthub.activity.forms.UpdateProjectForm(updateProjectForm.getId()), userId);
+
             existingProject.setName(updateProjectForm.getName());
             existingProject.setDescription(updateProjectForm.getDescription());
             existingProject.setTechnologies(new ArrayList<>());
@@ -92,9 +98,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public SearchResponse<Project> search(SearchForm searchForm, String loggedUserId) {
-        searchForm.getCriteria().add(new SearchFormCriteria("members.userId",loggedUserId,CriteriaOperator.EQUALS));
-        searchForm.getCriteria().add(new SearchFormCriteria("deletedOn",null,CriteriaOperator.EQUALS));
-        searchForm.getCriteria().add(new SearchFormCriteria("deletedById",null,CriteriaOperator.EQUALS));
         return projectRepository.search(searchForm);
     }
 

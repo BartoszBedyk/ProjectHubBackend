@@ -30,15 +30,14 @@ public class ProjectServiceTest {
     ProjectMemberRepository projectMemberRepository = new ProjectMemberRepositoryMock();
     LoggedUser loggedUser = new LoggedUserMock();
     UserManagementRepository userManagementRepository = new UserManagementRepositoryMock();
-
-    ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository);
-    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository);
     ActivityRepository activityRepository = new ActivityRepositoryMock();
     ActivityService activityService = new ActivityServiceImpl(activityRepository);
+    ProjectEnvironmentService projectEnvironmentService = new ProjectEnvironmentServiceImpl(projectEnvironmentRepository, projectRepository, activityService);
+    ProjectMemberService projectMemberService = new ProjectMemberServiceImpl(projectMemberRepository, projectRepository, projectEnvironmentRepository, activityService);
     UserManagementService userManagementService = new UserManagementServiceImpl(userManagementRepository, activityService);
     NotificationService notificationService;
     EmailingService emailingService;
-    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService, notificationService, emailingService);
+    ProjectService projectService = new ProjectServiceImpl(projectRepository, projectEnvironmentService, projectMemberService, userManagementService,activityService, notificationService, emailingService);
 
     @Test
     void createProjectTest() throws InterruptedException {

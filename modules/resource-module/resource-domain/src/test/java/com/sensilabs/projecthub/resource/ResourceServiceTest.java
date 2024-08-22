@@ -233,7 +233,7 @@ public class ResourceServiceTest {
 
         UpdateResourceForm updateForm = new UpdateResourceForm(resource.getId().toString(), "UpdatedName", "UpdatedDescription", "UpdatedValue");
 
-        Resource updated = resourceService.update(updateForm);
+        Resource updated = resourceService.update(updateForm, createdById);
         Thread.sleep(1000);
         Instant afterUpdate = Instant.now();
 

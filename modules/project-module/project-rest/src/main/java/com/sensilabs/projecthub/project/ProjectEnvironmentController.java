@@ -27,7 +27,7 @@ public class ProjectEnvironmentController {
 
     @PutMapping("/update")
     public ProjectEnvironment update(@RequestBody UpdateProjectEnvironmentForm form) {
-        return service.update(form);
+        return service.update(form, loggedUser.getUserId());
     }
 
     @DeleteMapping("/delete/{id}")

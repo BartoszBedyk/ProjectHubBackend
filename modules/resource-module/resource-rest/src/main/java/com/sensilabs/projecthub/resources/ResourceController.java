@@ -52,7 +52,7 @@ public class ResourceController {
 
     @PutMapping("/update")
     public Resource updateResource(@RequestBody UpdateResourceForm form) {
-        return resourceService.update(form);
+        return resourceService.update(form, loggedUser.getUserId());
     }
 
 

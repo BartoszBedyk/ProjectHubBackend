@@ -3,6 +3,8 @@ package com.sensilabs.projecthub.resources;
 import com.sensilabs.projecthub.activity.ActivityService;
 import com.sensilabs.projecthub.activity.forms.DocumentOpenForm;
 import com.sensilabs.projecthub.activity.forms.KeyOpenForm;
+import com.sensilabs.projecthub.activity.forms.CreateResourceForm;
+import com.sensilabs.projecthub.activity.forms.DeleteResourceForm;
 import com.sensilabs.projecthub.cipher.DataEncryptionServiceImpl;
 import com.sensilabs.projecthub.commons.*;
 import com.sensilabs.projecthub.project.ProjectService;
@@ -64,6 +66,9 @@ public class ResourceServiceImpl implements ResourceService {
                 .deletedOn(null)
                 .deletedById(null)
                 .build();
+
+        activityService.save(new CreateResourceForm(resource.getId(), resource.getResourceType().toString()), createdById);
+
         return resourceRepository.save(resource);
 
 
@@ -73,14 +78,6 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Optional<Resource> findById(String id) {
         Optional<Resource> resource = resourceRepository.findById(id);
-        switch (resource.get().getResourceType()) {
-            case SECRET -> {
-                activityService.save(new KeyOpenForm(loggedUser.getUserId(), resource.get().getId()), loggedUser.getUserId());
-            }
-            case TEXT -> {
-                activityService.save(new DocumentOpenForm(loggedUser.getUserId(), resource.get().getId()), loggedUser.getUserId());
-            }
-        }
         return resource
                 .map(res -> {
                     if(projectEnvironmentService.findById(res.getEnvironmentId()).isEncrypted()) {
@@ -94,14 +91,16 @@ public class ResourceServiceImpl implements ResourceService {
 
 
     @Override
-    public Resource update(UpdateResourceForm updateResourceForm) {
-        String value = updateResourceForm.getValue();
+    public Resource update(UpdateResourceForm updateResourceForm, String loggedUserId) {
+        String value = updateResourceForm.getValue();Resource resource = getOrThrow(updateResourceForm.getId());
         if(projectEnvironmentService.findById(resourceRepository.findById(updateResourceForm.getId()).get().getEnvironmentId()).isEncrypted()) {
             String encryptedValue = dataEncryptionService.encryptString(value);
             updateResourceForm.setValue(encryptedValue);
+            activityService.save(new com.sensilabs.projecthub.activity.forms.UpdateResourceForm(updateResourceForm.getId(), resource.getResourceType().toString()), loggedUserId);
             return resourceRepository.update(updateResourceForm);
 
         }
+        activityService.save(new com.sensilabs.projecthub.activity.forms.UpdateResourceForm(updateResourceForm.getId(), resource.getResourceType().toString()), loggedUserId);
         return resourceRepository.update(updateResourceForm);
     }
 
@@ -132,7 +131,7 @@ public class ResourceServiceImpl implements ResourceService {
         Resource existingResource = getOrThrow(id);
         existingResource.setDeletedById(userId);
         existingResource.setDeletedOn(Instant.now());
-
+        activityService.save(new DeleteResourceForm(existingResource.getId(), existingResource.getResourceType().toString()), userId);
         return  resourceRepository.save(existingResource);
     }
 
