@@ -19,4 +19,5 @@ public interface ResourceService {
     Resource update(@Valid UpdateResourceForm updateResourceForm);
     SearchResponse<Resource> search(SearchForm searchFrom);
     Resource delete(String id, String userID);
+    List<Resource> findByUser(String userID);
 }
