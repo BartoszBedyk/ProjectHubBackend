@@ -22,11 +22,11 @@ public interface ResourceRepositoryJpa extends JpaRepository<ResourceEntity, Str
                         @Param("environmentId") String environmentId,
                         @Param("userId") String userId);
 
-
     @Query("SELECT re " +
             "FROM resource re " +
             "JOIN ProjectMemberEntity pme ON re.projectId = pme.projectId " +
             "JOIN pme.environmentIds env ON re.environmentId = env " +
-            "WHERE pme.userId = :userId")
+            "WHERE pme.userId = :userId " +
+            "ORDER BY re.lastModifiedOn DESC")
     List<ResourceEntity> findResourcesForUser(@Param("userId") String userId);
 }
